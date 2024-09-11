@@ -27,25 +27,23 @@ public class fSach extends javax.swing.JFrame {
     private void initComponents() {
 
         btn_xoa = new javax.swing.JButton();
-        txt_tensach1 = new javax.swing.JTextField();
-        txt_tensach2 = new javax.swing.JTextField();
+        txt_namSX = new javax.swing.JTextField();
+        txt_timkiem = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTB_sach = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jComboBox_tacGia = new javax.swing.JComboBox<>();
         txt_tensach = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jSpinner_soLuong = new javax.swing.JSpinner();
         jComboBox_theLoai = new javax.swing.JComboBox<>();
         btn_them = new javax.swing.JButton();
         jComboBox_nhaXB = new javax.swing.JComboBox<>();
         btn_timkiem = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         btn_sua = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenuBar_sach = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
         menu_theLoai = new javax.swing.JMenu();
         menu_tacGia = new javax.swing.JMenu();
@@ -58,10 +56,10 @@ public class fSach extends javax.swing.JFrame {
 
         btn_xoa.setText("Xóa");
         getContentPane().add(btn_xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, -1, -1));
-        getContentPane().add(txt_tensach1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 371, -1));
-        getContentPane().add(txt_tensach2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 170, 217, -1));
+        getContentPane().add(txt_namSX, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 371, -1));
+        getContentPane().add(txt_timkiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, 217, -1));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTB_sach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -72,7 +70,7 @@ public class fSach extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable2);
+        jScrollPane1.setViewportView(jTB_sach);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 816, 278));
 
@@ -83,21 +81,20 @@ public class fSach extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 61, -1));
 
         jComboBox_tacGia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox_tacGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, 192, -1));
+        getContentPane().add(jComboBox_tacGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, 210, -1));
         getContentPane().add(txt_tensach, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 371, -1));
 
         jLabel3.setText("Thể Loại:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, 61, -1));
-        getContentPane().add(jSpinner_soLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 371, -1));
 
         jComboBox_theLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox_theLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 70, 194, -1));
+        getContentPane().add(jComboBox_theLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 210, -1));
 
         btn_them.setText("Thêm");
         getContentPane().add(btn_them, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
 
         jComboBox_nhaXB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox_nhaXB, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 120, 194, -1));
+        getContentPane().add(jComboBox_nhaXB, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 370, -1));
 
         btn_timkiem.setText("Tìm Kiếm");
         btn_timkiem.addActionListener(new java.awt.event.ActionListener() {
@@ -108,19 +105,16 @@ public class fSach extends javax.swing.JFrame {
         getContentPane().add(btn_timkiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 170, -1, -1));
 
         jLabel4.setText("Nhà XB: ");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, 61, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 50, -1));
 
         btn_sua.setText("Sửa");
         getContentPane().add(btn_sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, -1, -1));
-
-        jLabel6.setText("Số Lượng:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 93, -1));
 
         jLabel5.setText("Năm Sản Xuất: ");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 93, -1));
 
         menu_Sach.setText("Sách");
-        jMenuBar1.add(menu_Sach);
+        jMenuBar_sach.add(menu_Sach);
 
         menu_theLoai.setText("Thể Loại");
         menu_theLoai.addActionListener(new java.awt.event.ActionListener() {
@@ -128,7 +122,7 @@ public class fSach extends javax.swing.JFrame {
                 menu_theLoaiActionPerformed(evt);
             }
         });
-        jMenuBar1.add(menu_theLoai);
+        jMenuBar_sach.add(menu_theLoai);
 
         menu_tacGia.setText("Tác Giả");
         menu_tacGia.addMenuListener(new javax.swing.event.MenuListener() {
@@ -145,7 +139,7 @@ public class fSach extends javax.swing.JFrame {
                 menu_tacGiaActionPerformed(evt);
             }
         });
-        jMenuBar1.add(menu_tacGia);
+        jMenuBar_sach.add(menu_tacGia);
 
         menu_nhaXB.setText("Nhà XB");
         menu_nhaXB.addActionListener(new java.awt.event.ActionListener() {
@@ -153,7 +147,7 @@ public class fSach extends javax.swing.JFrame {
                 menu_nhaXBActionPerformed(evt);
             }
         });
-        jMenuBar1.add(menu_nhaXB);
+        jMenuBar_sach.add(menu_nhaXB);
 
         menu_khoSach.setText("Kho Sách");
         menu_khoSach.addActionListener(new java.awt.event.ActionListener() {
@@ -161,9 +155,9 @@ public class fSach extends javax.swing.JFrame {
                 menu_khoSachActionPerformed(evt);
             }
         });
-        jMenuBar1.add(menu_khoSach);
+        jMenuBar_sach.add(menu_khoSach);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenuBar_sach);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -215,18 +209,16 @@ public class fSach extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar_sach;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner_soLuong;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTB_sach;
     private javax.swing.JMenu menu_Sach;
     private javax.swing.JMenu menu_khoSach;
     private javax.swing.JMenu menu_nhaXB;
     private javax.swing.JMenu menu_tacGia;
     private javax.swing.JMenu menu_theLoai;
+    private javax.swing.JTextField txt_namSX;
     private javax.swing.JTextField txt_tensach;
-    private javax.swing.JTextField txt_tensach1;
-    private javax.swing.JTextField txt_tensach2;
+    private javax.swing.JTextField txt_timkiem;
     // End of variables declaration//GEN-END:variables
 }

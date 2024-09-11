@@ -28,14 +28,14 @@ public class fTacGia extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         btn_xoa = new javax.swing.JButton();
-        txt_tensach2 = new javax.swing.JTextField();
+        txt_timkiem = new javax.swing.JTextField();
         btn_them = new javax.swing.JButton();
         btn_timkiem = new javax.swing.JButton();
         btn_sua = new javax.swing.JButton();
         txt_tenTacGia = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jTB_tac_gia = new javax.swing.JTable();
+        jMenuBar_tacgia = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
         menu_theLoai = new javax.swing.JMenu();
         menu_tacGia = new javax.swing.JMenu();
@@ -61,7 +61,7 @@ public class fTacGia extends javax.swing.JFrame {
 
         btn_sua.setText("Sửa");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTB_tac_gia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -72,63 +72,63 @@ public class fTacGia extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTB_tac_gia);
 
         menu_Sach.setText("Sách");
-        jMenuBar1.add(menu_Sach);
+        jMenuBar_tacgia.add(menu_Sach);
 
         menu_theLoai.setText("Thể Loại");
-        jMenuBar1.add(menu_theLoai);
+        jMenuBar_tacgia.add(menu_theLoai);
 
         menu_tacGia.setText("Tác Giả");
-        jMenuBar1.add(menu_tacGia);
+        jMenuBar_tacgia.add(menu_tacGia);
 
         menu_nhaXB.setText("Nhà XB");
-        jMenuBar1.add(menu_nhaXB);
+        jMenuBar_tacgia.add(menu_nhaXB);
 
         menu_khoSach.setText("Kho Sách");
-        jMenuBar1.add(menu_khoSach);
+        jMenuBar_tacgia.add(menu_khoSach);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenuBar_tacgia);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(jLabel1)
-                .addGap(14, 14, 14)
-                .addComponent(txt_tenTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(221, 221, 221))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(btn_them)
-                .addGap(14, 14, 14)
-                .addComponent(btn_sua)
-                .addGap(14, 14, 14)
-                .addComponent(btn_xoa)
-                .addGap(24, 24, 24)
-                .addComponent(txt_tensach2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(btn_timkiem))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jLabel1)
+                    .addGap(14, 14, 14)
+                    .addComponent(txt_tenTacGia)
+                    .addContainerGap())
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(btn_them)
+                    .addGap(14, 14, 14)
+                    .addComponent(btn_sua)
+                    .addGap(14, 14, 14)
+                    .addComponent(btn_xoa)
+                    .addGap(24, 24, 24)
+                    .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(33, 33, 33)
+                    .addComponent(btn_timkiem)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(txt_tenTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_them)
                     .addComponent(btn_sua)
                     .addComponent(btn_xoa)
-                    .addComponent(txt_tensach2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_timkiem))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
                 .addGap(29, 29, 29))
         );
 
@@ -180,15 +180,15 @@ public class fTacGia extends javax.swing.JFrame {
     private javax.swing.JButton btn_timkiem;
     private javax.swing.JButton btn_xoa;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar_tacgia;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTB_tac_gia;
     private javax.swing.JMenu menu_Sach;
     private javax.swing.JMenu menu_khoSach;
     private javax.swing.JMenu menu_nhaXB;
     private javax.swing.JMenu menu_tacGia;
     private javax.swing.JMenu menu_theLoai;
     private javax.swing.JTextField txt_tenTacGia;
-    private javax.swing.JTextField txt_tensach2;
+    private javax.swing.JTextField txt_timkiem;
     // End of variables declaration//GEN-END:variables
 }

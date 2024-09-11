@@ -34,8 +34,8 @@ public class fTheLoai extends javax.swing.JFrame {
         btn_sua = new javax.swing.JButton();
         txt_theLoai = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jTB_the_loai = new javax.swing.JTable();
+        jMenBar_theloai = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
         menu_theLoai = new javax.swing.JMenu();
         menu_tacGia = new javax.swing.JMenu();
@@ -48,14 +48,14 @@ public class fTheLoai extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Thể loại:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 27, 65, 36));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 65, 20));
 
         btn_xoa.setText("Xóa");
-        getContentPane().add(btn_xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, -1, -1));
-        getContentPane().add(txt_tensach2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 217, -1));
+        getContentPane().add(btn_xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, -1, -1));
+        getContentPane().add(txt_tensach2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, 217, -1));
 
         btn_them.setText("Thêm");
-        getContentPane().add(btn_them, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, -1, -1));
+        getContentPane().add(btn_them, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, -1));
 
         btn_timkiem.setText("Tìm Kiếm");
         btn_timkiem.addActionListener(new java.awt.event.ActionListener() {
@@ -63,13 +63,13 @@ public class fTheLoai extends javax.swing.JFrame {
                 btn_timkiemActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_timkiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, 90, -1));
+        getContentPane().add(btn_timkiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 90, -1));
 
         btn_sua.setText("Sửa");
-        getContentPane().add(btn_sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, -1, -1));
-        getContentPane().add(txt_theLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 150, -1));
+        getContentPane().add(btn_sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, -1, -1));
+        getContentPane().add(txt_theLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 500, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTB_the_loai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -80,9 +80,9 @@ public class fTheLoai extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTB_the_loai);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 580, 160));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 580, 200));
 
         menu_Sach.setText("Sách");
         menu_Sach.addActionListener(new java.awt.event.ActionListener() {
@@ -90,7 +90,7 @@ public class fTheLoai extends javax.swing.JFrame {
                 menu_SachActionPerformed(evt);
             }
         });
-        jMenuBar1.add(menu_Sach);
+        jMenBar_theloai.add(menu_Sach);
 
         menu_theLoai.setText("Thể Loại");
         menu_theLoai.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +98,7 @@ public class fTheLoai extends javax.swing.JFrame {
                 menu_theLoaiActionPerformed(evt);
             }
         });
-        jMenuBar1.add(menu_theLoai);
+        jMenBar_theloai.add(menu_theLoai);
 
         menu_tacGia.setText("Tác Giả");
         menu_tacGia.addActionListener(new java.awt.event.ActionListener() {
@@ -106,7 +106,7 @@ public class fTheLoai extends javax.swing.JFrame {
                 menu_tacGiaActionPerformed(evt);
             }
         });
-        jMenuBar1.add(menu_tacGia);
+        jMenBar_theloai.add(menu_tacGia);
 
         menu_nhaXB.setText("Nhà XB");
         menu_nhaXB.addActionListener(new java.awt.event.ActionListener() {
@@ -114,7 +114,7 @@ public class fTheLoai extends javax.swing.JFrame {
                 menu_nhaXBActionPerformed(evt);
             }
         });
-        jMenuBar1.add(menu_nhaXB);
+        jMenBar_theloai.add(menu_nhaXB);
 
         menu_khoSach.setText("Kho Sách");
         menu_khoSach.addActionListener(new java.awt.event.ActionListener() {
@@ -122,9 +122,9 @@ public class fTheLoai extends javax.swing.JFrame {
                 menu_khoSachActionPerformed(evt);
             }
         });
-        jMenuBar1.add(menu_khoSach);
+        jMenBar_theloai.add(menu_khoSach);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenBar_theloai);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -194,9 +194,9 @@ public class fTheLoai extends javax.swing.JFrame {
     private javax.swing.JButton btn_timkiem;
     private javax.swing.JButton btn_xoa;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenBar_theloai;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTB_the_loai;
     private javax.swing.JMenu menu_Sach;
     private javax.swing.JMenu menu_khoSach;
     private javax.swing.JMenu menu_nhaXB;

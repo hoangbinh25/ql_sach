@@ -27,15 +27,17 @@ public class fNhaXB extends javax.swing.JFrame {
     private void initComponents() {
 
         btn_xoa = new javax.swing.JButton();
-        txt_tensach2 = new javax.swing.JTextField();
+        txt_timkiem = new javax.swing.JTextField();
         btn_them = new javax.swing.JButton();
         btn_timkiem = new javax.swing.JButton();
         btn_sua = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txt_nhaXB = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jTB_nhaXB = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        txt_diachi = new javax.swing.JTextField();
+        jMenuBar_nhaXB = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
         menu_theLoai = new javax.swing.JMenu();
         menu_tacGia = new javax.swing.JMenu();
@@ -60,7 +62,7 @@ public class fNhaXB extends javax.swing.JFrame {
 
         jLabel1.setText("Nhà Xuất Bản: ");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTB_nhaXB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -71,24 +73,26 @@ public class fNhaXB extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTB_nhaXB);
+
+        jLabel2.setText("Địa chỉ: ");
 
         menu_Sach.setText("Sách");
-        jMenuBar1.add(menu_Sach);
+        jMenuBar_nhaXB.add(menu_Sach);
 
         menu_theLoai.setText("Thể Loại");
-        jMenuBar1.add(menu_theLoai);
+        jMenuBar_nhaXB.add(menu_theLoai);
 
         menu_tacGia.setText("Tác Giả");
-        jMenuBar1.add(menu_tacGia);
+        jMenuBar_nhaXB.add(menu_tacGia);
 
         menu_nhaXB.setText("Nhà XB");
-        jMenuBar1.add(menu_nhaXB);
+        jMenuBar_nhaXB.add(menu_nhaXB);
 
         menu_khoSach.setText("Kho Sách");
-        jMenuBar1.add(menu_khoSach);
+        jMenuBar_nhaXB.add(menu_khoSach);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenuBar_nhaXB);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -98,42 +102,47 @@ public class fNhaXB extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_nhaXB)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_diachi, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_them)
                         .addGap(14, 14, 14)
                         .addComponent(btn_sua)
                         .addGap(14, 14, 14)
                         .addComponent(btn_xoa)
                         .addGap(24, 24, 24)
-                        .addComponent(txt_tensach2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
-                        .addComponent(btn_timkiem)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(btn_timkiem)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(139, 139, 139)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_nhaXB, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txt_nhaXB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txt_diachi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(txt_nhaXB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_them)
                     .addComponent(btn_sua)
                     .addComponent(btn_xoa)
-                    .addComponent(txt_tensach2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_timkiem))
-                .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -185,15 +194,17 @@ public class fNhaXB extends javax.swing.JFrame {
     private javax.swing.JButton btn_timkiem;
     private javax.swing.JButton btn_xoa;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenuBar jMenuBar_nhaXB;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTB_nhaXB;
     private javax.swing.JMenu menu_Sach;
     private javax.swing.JMenu menu_khoSach;
     private javax.swing.JMenu menu_nhaXB;
     private javax.swing.JMenu menu_tacGia;
     private javax.swing.JMenu menu_theLoai;
+    private javax.swing.JTextField txt_diachi;
     private javax.swing.JTextField txt_nhaXB;
-    private javax.swing.JTextField txt_tensach2;
+    private javax.swing.JTextField txt_timkiem;
     // End of variables declaration//GEN-END:variables
 }
