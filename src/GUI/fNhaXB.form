@@ -8,16 +8,25 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="S&#xe1;ch"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menu_SachMouseClicked"/>
+          </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menu_theLoai">
           <Properties>
             <Property name="text" type="java.lang.String" value="Th&#x1ec3; Lo&#x1ea1;i"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menu_theLoaiMouseClicked"/>
+          </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menu_tacGia">
           <Properties>
             <Property name="text" type="java.lang.String" value="T&#xe1;c Gi&#x1ea3;"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menu_tacGiaMouseClicked"/>
+          </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menu_nhaXB">
           <Properties>
@@ -28,6 +37,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Kho S&#xe1;ch"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menu_khoSachMouseClicked"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Menu>

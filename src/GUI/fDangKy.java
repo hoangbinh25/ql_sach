@@ -53,7 +53,6 @@ public class fDangKy extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Đăng ký");
-        setPreferredSize(new java.awt.Dimension(684, 394));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         jLabel1.setText("Đăng ký");
@@ -80,6 +79,11 @@ public class fDangKy extends javax.swing.JFrame {
 
         btn_dNhap.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btn_dNhap.setText("Đăng nhập");
+        btn_dNhap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_dNhapMouseClicked(evt);
+            }
+        });
         btn_dNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_dNhapActionPerformed(evt);
@@ -160,11 +164,15 @@ public class fDangKy extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_dkyActionPerformed
 
     private void btn_dNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dNhapActionPerformed
+
+    }//GEN-LAST:event_btn_dNhapActionPerformed
+
+    private void btn_dNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dNhapMouseClicked
         fDangNhap DnhapFrame = new fDangNhap();
         DnhapFrame.setVisible(true);
         DnhapFrame.setLocationRelativeTo(null);
-//        this.dispose();
-    }//GEN-LAST:event_btn_dNhapActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_dNhapMouseClicked
 
     public static void main(String args[]) {
         /* Create and display the form */

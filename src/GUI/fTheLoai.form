@@ -9,6 +9,7 @@
             <Property name="text" type="java.lang.String" value="S&#xe1;ch"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menu_SachMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_SachActionPerformed"/>
           </Events>
         </Menu>
@@ -25,6 +26,7 @@
             <Property name="text" type="java.lang.String" value="T&#xe1;c Gi&#x1ea3;"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menu_tacGiaMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_tacGiaActionPerformed"/>
           </Events>
         </Menu>
@@ -33,6 +35,7 @@
             <Property name="text" type="java.lang.String" value="Nh&#xe0; XB"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menu_nhaXBMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_nhaXBActionPerformed"/>
           </Events>
         </Menu>
@@ -41,6 +44,7 @@
             <Property name="text" type="java.lang.String" value="Kho S&#xe1;ch"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menu_khoSachMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_khoSachActionPerformed"/>
           </Events>
         </Menu>

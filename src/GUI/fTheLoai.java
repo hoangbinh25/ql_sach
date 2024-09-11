@@ -85,6 +85,11 @@ public class fTheLoai extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 580, 200));
 
         menu_Sach.setText("Sách");
+        menu_Sach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_SachMouseClicked(evt);
+            }
+        });
         menu_Sach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_SachActionPerformed(evt);
@@ -101,6 +106,11 @@ public class fTheLoai extends javax.swing.JFrame {
         jMenBar_theloai.add(menu_theLoai);
 
         menu_tacGia.setText("Tác Giả");
+        menu_tacGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_tacGiaMouseClicked(evt);
+            }
+        });
         menu_tacGia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_tacGiaActionPerformed(evt);
@@ -109,6 +119,11 @@ public class fTheLoai extends javax.swing.JFrame {
         jMenBar_theloai.add(menu_tacGia);
 
         menu_nhaXB.setText("Nhà XB");
+        menu_nhaXB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_nhaXBMouseClicked(evt);
+            }
+        });
         menu_nhaXB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_nhaXBActionPerformed(evt);
@@ -117,6 +132,11 @@ public class fTheLoai extends javax.swing.JFrame {
         jMenBar_theloai.add(menu_nhaXB);
 
         menu_khoSach.setText("Kho Sách");
+        menu_khoSach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_khoSachMouseClicked(evt);
+            }
+        });
         menu_khoSach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_khoSachActionPerformed(evt);
@@ -134,11 +154,11 @@ public class fTheLoai extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_timkiemActionPerformed
 
     private void menu_theLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_theLoaiActionPerformed
-        
+
     }//GEN-LAST:event_menu_theLoaiActionPerformed
 
     private void menu_SachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_SachActionPerformed
-        
+
     }//GEN-LAST:event_menu_SachActionPerformed
 
     private void menu_tacGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_tacGiaActionPerformed
@@ -152,6 +172,38 @@ public class fTheLoai extends javax.swing.JFrame {
     private void menu_khoSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_khoSachActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menu_khoSachActionPerformed
+
+    private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
+        fSach sachFrame = new fSach();
+        sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
+        sachFrame.setLocationRelativeTo(null);
+        sachFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_SachMouseClicked
+
+    private void menu_tacGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_tacGiaMouseClicked
+        fTacGia tacGiaFrame = new fTacGia();
+        tacGiaFrame.setDefaultCloseOperation(fTacGia.EXIT_ON_CLOSE);
+        tacGiaFrame.setLocationRelativeTo(null);
+        tacGiaFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_tacGiaMouseClicked
+
+    private void menu_nhaXBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_nhaXBMouseClicked
+        fNhaXB NXBFrame = new fNhaXB();
+        NXBFrame.setDefaultCloseOperation(fNhaXB.EXIT_ON_CLOSE);
+        NXBFrame.setLocationRelativeTo(null);
+        NXBFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_nhaXBMouseClicked
+
+    private void menu_khoSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_khoSachMouseClicked
+        fKhoSach khoSachFrame = new fKhoSach();
+        khoSachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
+        khoSachFrame.setLocationRelativeTo(null);
+        khoSachFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_khoSachMouseClicked
 
     /**
      * @param args the command line arguments
@@ -183,7 +235,10 @@ public class fTheLoai extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new fTheLoai().setVisible(true);
+                fTheLoai theLoaiFrame = new fTheLoai();
+                theLoaiFrame.setDefaultCloseOperation(fTheLoai.EXIT_ON_CLOSE);
+                theLoaiFrame.setLocationRelativeTo(null);
+                theLoaiFrame.setVisible(true);
             }
         });
     }

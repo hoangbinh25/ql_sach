@@ -78,18 +78,38 @@ public class fNhaXB extends javax.swing.JFrame {
         jLabel2.setText("Địa chỉ: ");
 
         menu_Sach.setText("Sách");
+        menu_Sach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_SachMouseClicked(evt);
+            }
+        });
         jMenuBar_nhaXB.add(menu_Sach);
 
         menu_theLoai.setText("Thể Loại");
+        menu_theLoai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_theLoaiMouseClicked(evt);
+            }
+        });
         jMenuBar_nhaXB.add(menu_theLoai);
 
         menu_tacGia.setText("Tác Giả");
+        menu_tacGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_tacGiaMouseClicked(evt);
+            }
+        });
         jMenuBar_nhaXB.add(menu_tacGia);
 
         menu_nhaXB.setText("Nhà XB");
         jMenuBar_nhaXB.add(menu_nhaXB);
 
         menu_khoSach.setText("Kho Sách");
+        menu_khoSach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_khoSachMouseClicked(evt);
+            }
+        });
         jMenuBar_nhaXB.add(menu_khoSach);
 
         setJMenuBar(jMenuBar_nhaXB);
@@ -153,15 +173,39 @@ public class fNhaXB extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_timkiemActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
+        fSach sachFrame = new fSach();
+        sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
+        sachFrame.setLocationRelativeTo(null);
+        sachFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_SachMouseClicked
+
+    private void menu_theLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_theLoaiMouseClicked
+        fTheLoai theLoaiFrame = new fTheLoai();
+        theLoaiFrame.setDefaultCloseOperation(fTheLoai.EXIT_ON_CLOSE);
+        theLoaiFrame.setLocationRelativeTo(null);
+        theLoaiFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_theLoaiMouseClicked
+
+    private void menu_tacGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_tacGiaMouseClicked
+        fTacGia tacGiaFrame = new fTacGia();
+        tacGiaFrame.setDefaultCloseOperation(fTacGia.EXIT_ON_CLOSE);
+        tacGiaFrame.setLocationRelativeTo(null);
+        tacGiaFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_tacGiaMouseClicked
+
+    private void menu_khoSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_khoSachMouseClicked
+        fKhoSach khoSachFrame = new fKhoSach();
+        khoSachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
+        khoSachFrame.setLocationRelativeTo(null);
+        khoSachFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_khoSachMouseClicked
+
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -183,7 +227,10 @@ public class fNhaXB extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new fNhaXB().setVisible(true);
+                fNhaXB NXBFrame = new fNhaXB();
+                NXBFrame.setDefaultCloseOperation(fNhaXB.EXIT_ON_CLOSE);
+                NXBFrame.setLocationRelativeTo(null);
+                NXBFrame.setVisible(true);
             }
         });
     }

@@ -103,18 +103,38 @@ public class fKhoSach extends javax.swing.JFrame {
 
         menu_Sach.setText("Sách");
         menu_Sach.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu_Sach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_SachMouseClicked(evt);
+            }
+        });
         jMenuBar_khosach.add(menu_Sach);
 
         menu_theLoai.setText("Thể Loại");
         menu_theLoai.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu_theLoai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_theLoaiMouseClicked(evt);
+            }
+        });
         jMenuBar_khosach.add(menu_theLoai);
 
         menu_tacGia.setText("Tác Giả");
         menu_tacGia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu_tacGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_tacGiaMouseClicked(evt);
+            }
+        });
         jMenuBar_khosach.add(menu_tacGia);
 
         menu_nhaXB.setText("Nhà XB");
         menu_nhaXB.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu_nhaXB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_nhaXBMouseClicked(evt);
+            }
+        });
         jMenuBar_khosach.add(menu_nhaXB);
 
         menu_khoSach.setText("Kho Sách");
@@ -212,6 +232,38 @@ public class fKhoSach extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_formWindowActivated
 
+    private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
+        fSach sachFrame = new fSach();
+        sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
+        sachFrame.setLocationRelativeTo(null);
+        sachFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_SachMouseClicked
+
+    private void menu_theLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_theLoaiMouseClicked
+        fTheLoai theLoaiFrame = new fTheLoai();
+        theLoaiFrame.setDefaultCloseOperation(fTheLoai.EXIT_ON_CLOSE);
+        theLoaiFrame.setLocationRelativeTo(null);
+        theLoaiFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_theLoaiMouseClicked
+
+    private void menu_tacGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_tacGiaMouseClicked
+        fTacGia tacGiaFrame = new fTacGia();
+        tacGiaFrame.setDefaultCloseOperation(fTacGia.EXIT_ON_CLOSE);
+        tacGiaFrame.setLocationRelativeTo(null);
+        tacGiaFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_tacGiaMouseClicked
+
+    private void menu_nhaXBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_nhaXBMouseClicked
+        fNhaXB NXBFrame = new fNhaXB();
+        NXBFrame.setDefaultCloseOperation(fNhaXB.EXIT_ON_CLOSE);
+        NXBFrame.setLocationRelativeTo(null);
+        NXBFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_nhaXBMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -242,7 +294,11 @@ public class fKhoSach extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new fKhoSach().setVisible(true);
+                fKhoSach khoSachFrame = new fKhoSach();
+                khoSachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
+                khoSachFrame.setLocationRelativeTo(null);
+                khoSachFrame.setVisible(true);
+                
             }
         });
     }

@@ -117,6 +117,11 @@ public class fSach extends javax.swing.JFrame {
         jMenuBar_sach.add(menu_Sach);
 
         menu_theLoai.setText("Thể Loại");
+        menu_theLoai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_theLoaiMouseClicked(evt);
+            }
+        });
         menu_theLoai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_theLoaiActionPerformed(evt);
@@ -134,6 +139,11 @@ public class fSach extends javax.swing.JFrame {
                 menu_tacGiaMenuSelected(evt);
             }
         });
+        menu_tacGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_tacGiaMouseClicked(evt);
+            }
+        });
         menu_tacGia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_tacGiaActionPerformed(evt);
@@ -142,6 +152,11 @@ public class fSach extends javax.swing.JFrame {
         jMenuBar_sach.add(menu_tacGia);
 
         menu_nhaXB.setText("Nhà XB");
+        menu_nhaXB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_nhaXBMouseClicked(evt);
+            }
+        });
         menu_nhaXB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_nhaXBActionPerformed(evt);
@@ -150,6 +165,11 @@ public class fSach extends javax.swing.JFrame {
         jMenuBar_sach.add(menu_nhaXB);
 
         menu_khoSach.setText("Kho Sách");
+        menu_khoSach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_khoSachMouseClicked(evt);
+            }
+        });
         menu_khoSach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_khoSachActionPerformed(evt);
@@ -167,33 +187,69 @@ public class fSach extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_timkiemActionPerformed
 
     private void menu_theLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_theLoaiActionPerformed
-        
+
     }//GEN-LAST:event_menu_theLoaiActionPerformed
 
     private void menu_tacGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_tacGiaActionPerformed
-       
+
     }//GEN-LAST:event_menu_tacGiaActionPerformed
 
     private void menu_nhaXBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_nhaXBActionPerformed
-        
+
     }//GEN-LAST:event_menu_nhaXBActionPerformed
 
     private void menu_khoSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_khoSachActionPerformed
-        
+
     }//GEN-LAST:event_menu_khoSachActionPerformed
 
     private void menu_tacGiaMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_menu_tacGiaMenuSelected
-        
+
     }//GEN-LAST:event_menu_tacGiaMenuSelected
 
+    private void menu_theLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_theLoaiMouseClicked
+        fTheLoai theLoaiFrame = new fTheLoai();
+        theLoaiFrame.setDefaultCloseOperation(fTheLoai.EXIT_ON_CLOSE);
+        theLoaiFrame.setLocationRelativeTo(null);
+        theLoaiFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_theLoaiMouseClicked
+
+    private void menu_tacGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_tacGiaMouseClicked
+        fTacGia tacGiaFrame = new fTacGia();
+        tacGiaFrame.setDefaultCloseOperation(fTacGia.EXIT_ON_CLOSE);
+        tacGiaFrame.setLocationRelativeTo(null);
+        tacGiaFrame.setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_menu_tacGiaMouseClicked
+
+    private void menu_nhaXBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_nhaXBMouseClicked
+        fNhaXB NXBFrame = new fNhaXB();
+        NXBFrame.setDefaultCloseOperation(fNhaXB.EXIT_ON_CLOSE);
+        NXBFrame.setLocationRelativeTo(null);
+        NXBFrame.setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_menu_nhaXBMouseClicked
+
+    private void menu_khoSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_khoSachMouseClicked
+        fKhoSach khoSachFrame = new fKhoSach();
+        khoSachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
+        khoSachFrame.setLocationRelativeTo(null);
+        khoSachFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_khoSachMouseClicked
+
     public static void main(String args[]) {
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new fSach().setVisible(true);
+                fSach sachFrame = new fSach();
+                sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
+                sachFrame.setLocationRelativeTo(null);
+                sachFrame.setVisible(true);
             }
         });
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
