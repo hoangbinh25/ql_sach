@@ -32,8 +32,7 @@ CREATE TABLE Sach (
     ma_tac_gia INT,                     -- Mã tác giả (khóa ngoại)
     ma_the_loai INT,                    -- Mã thể loại (khóa ngoại)
     ma_nxb INT,                         -- Mã nhà xuất bản (khóa ngoại)
-    nam_xuat_ban INT,                   -- Năm xuất bản
-    so_luong INT,                       -- Số lượng sách
+    nam_xuat_ban INT,                   -- Năm xuất bản                 
     FOREIGN KEY (ma_tac_gia) REFERENCES TacGia(ma_tac_gia),    -- Khóa ngoại tham chiếu đến bảng TacGia
     FOREIGN KEY (ma_the_loai) REFERENCES TheLoai(ma_the_loai), -- Khóa ngoại tham chiếu đến bảng TheLoai
     FOREIGN KEY (ma_nxb) REFERENCES NhaXuatBan(ma_nxb)         -- Khóa ngoại tham chiếu đến bảng NhaXuatBan
@@ -78,11 +77,11 @@ INSERT INTO NhaXuatBan (ten_nxb, dia_chi) VALUES
 (N'Nhà xuất bản Phụ Nữ', N'Hà Nội');
 GO
 -- Chèn dữ liệu vào bảng Sách (Sach)
-INSERT INTO Sach (ten_sach, ma_tac_gia, ma_the_loai, ma_nxb, isbn, nam_xuat_ban, so_luong) VALUES
-(N'Mắt Biếc', 1, 1, 1, N'9786042096010', 2019, 20),
-(N'Harry Potter và Hòn Đá Phù Thủy', 2, 1, 2, N'9780747532743', 1997, 15),
-(N'1984', 3, 3, 3, N'9780451524935', 1949, 10),
-(N'Làm Thế Nào Để Thành Công Trong Cuộc Sống', 4, 5, 4, N'9781982113482', 2020, 25);
+INSERT INTO Sach (ten_sach, ma_tac_gia, ma_the_loai, ma_nxb, nam_xuat_ban) VALUES
+(N'Mắt Biếc', 1, 1, 1, 2019),
+(N'Harry Potter và Hòn Đá Phù Thủy', 2, 1, 2, 1997),
+(N'1984', 3, 3, 3, 1949),
+(N'Làm Thế Nào Để Thành Công Trong Cuộc Sống', 4, 5, 4, 2020);
 GO
 -- Chèn dữ liệu vào bảng Kho Sách (KhoSach)
 INSERT INTO KhoSach (ma_sach, vi_tri) VALUES
