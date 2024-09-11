@@ -1,6 +1,10 @@
 package GUI;
 
 import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.*;
+
+import Class.ConnectToSQLServer;
 
 public class fDangNhap extends javax.swing.JFrame {
 
@@ -93,24 +97,37 @@ public class fDangNhap extends javax.swing.JFrame {
     }//GEN-LAST:event_cb_showPassActionPerformed
 
     private void btn_dnhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dnhapActionPerformed
-        if (txt_tendnhap.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Bạn chưa điền tên đăng nhập");
-        } else if (txt_mkhau.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Bạn chưa nhập mật khẩu");
-        } else if (txt_tendnhap.getText().equals("admin") && txt_mkhau.getText().equals("12345")) {
-            JOptionPane.showMessageDialog(null, "Đăng nhập thành công");
-            fSach sachFrame = new fSach();
-            sachFrame.setVisible(true);
-            sachFrame.pack();
-            sachFrame.setLocationRelativeTo(null);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Sai tên đăng nhập hoặc mật khẩu", "Message", JOptionPane.ERROR_MESSAGE);
+       
+        String user = txt_tendnhap.getText();
+        String pass = txt_mkhau.getText();
+        
+        if (user.isEmpty() || pass.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+        String sql_login = "Select * from TaiKhoan where ten_tai_khoan = ? and mat_khau = ?";
+
+        try(Connection conn = ConnectToSQLServer.getConnection()) {
+            
+            PreparedStatement ps = conn.prepareStatement(sql_login);
+            ps.setString(1, user);
+            ps.setString(2, pass);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+                fSach sachFrame = new fSach();
+                sachFrame.setLocationRelativeTo(null);
+                sachFrame.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Sai tên đăng nhập hoặc mật khẩu");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_btn_dnhapActionPerformed
 
     private void btn_dkiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dkiActionPerformed
-
 
     }//GEN-LAST:event_btn_dkiActionPerformed
 

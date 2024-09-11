@@ -1,5 +1,6 @@
 ﻿USE master
 DROP DATABASE IF EXISTS QL_SACH;
+DROP TABLE IF EXISTS TaiKhoan;
 CREATE DATABASE QL_SACH
 GO
 USE QL_SACH
@@ -92,13 +93,9 @@ INSERT INTO KhoSach (ma_sach, vi_tri) VALUES
 GO
 -- Chèn dữ liệu mẫu vào bảng TaiKhoan
 INSERT INTO TaiKhoan(ten_tai_khoan, mat_khau, email) VALUES
-(N'Nguyen Van A', N'123', N'nguyenvana@example.com'),
-(N'Tran Thi B', N'123', N'tranthib@example.com')
+(N'user1', N'123', N'nguyenvana@example.com'),
+(N'user2', N'123', N'tranthib@example.com')
 GO
-UPDATE TaiKhoan
-SET ten_tai_khoan = N'user2'
-WHERE ma_tai_khoan = 2;
-
 
 SELECT * FROM Sach;
 

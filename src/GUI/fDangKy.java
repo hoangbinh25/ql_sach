@@ -1,18 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
 
+import Class.ConnectToSQLServer;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.sql.*;
 
-/**
- *
- * @author admin
- */
 public class fDangKy extends javax.swing.JFrame {
 
     public fDangKy() {
@@ -160,17 +154,58 @@ public class fDangKy extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_dkyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dkyActionPerformed
-       
+String email = txt_email.getText();
+        String user = txt_tendnhap.getText();
+        String pass = txt_mkhau.getText();
+
+        if (email.isEmpty() || user.isEmpty() || pass.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String sql_check = "SELECT * FROM TaiKhoan WHERE email = ? OR ten_tai_khoan = ?";
+
+        String sql_dky = "INSERT INTO TaiKhoan(email, ten_tai_khoan, mat_khau) VALUES(?, ?, ?)";
+
+        try (Connection conn = ConnectToSQLServer.getConnection()) {
+            // Kiểm tra xem tài khoản đã tồn tại chưa
+            PreparedStatement psCheck = conn.prepareStatement(sql_check);
+            psCheck.setString(1, email);
+            psCheck.setString(2, user);
+
+            ResultSet rs = psCheck.executeQuery();
+
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(this, "Email hoặc tên tài khoản đã tồn tại", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            } else {
+                PreparedStatement psInsert = conn.prepareStatement(sql_dky);
+                psInsert.setString(1, email);
+                psInsert.setString(2, user);
+                psInsert.setString(3, pass);
+                
+                int rowsInsert = psInsert.executeUpdate();
+                if (rowsInsert > 0) {
+                    JOptionPane.showMessageDialog(this, "Đăng ký thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    fDangNhap dNhapFrame = new fDangNhap();
+                    dNhapFrame.setLocationRelativeTo(null);
+                    dNhapFrame.setVisible(true);
+                    this.dispose();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btn_dkyActionPerformed
 
     private void btn_dNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dNhapActionPerformed
-
+        
     }//GEN-LAST:event_btn_dNhapActionPerformed
 
     private void btn_dNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dNhapMouseClicked
-        fDangNhap DnhapFrame = new fDangNhap();
-        DnhapFrame.setVisible(true);
-        DnhapFrame.setLocationRelativeTo(null);
+        fDangNhap dNhapFrame = new fDangNhap();
+        dNhapFrame.setVisible(true);
+        dNhapFrame.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btn_dNhapMouseClicked
 
@@ -178,10 +213,10 @@ public class fDangKy extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                fDangKy dNKyFrame = new fDangKy();
-                dNKyFrame.setDefaultCloseOperation(fDangKy.EXIT_ON_CLOSE);
-                dNKyFrame.setLocationRelativeTo(null);
-                dNKyFrame.setVisible(true);
+                fDangKy dKyFrame = new fDangKy();
+                dKyFrame.setDefaultCloseOperation(fDangKy.EXIT_ON_CLOSE);
+                dKyFrame.setLocationRelativeTo(null);
+                dKyFrame.setVisible(true);
             }
         });
     }
