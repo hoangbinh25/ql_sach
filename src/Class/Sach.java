@@ -4,6 +4,8 @@
  */
 package Class;
 
+import java.util.Date;
+
 /**
  *
  * @author admin
@@ -13,6 +15,15 @@ public class Sach {
     protected int ma_tacgia;
     protected int ma_theloai;
     protected int ma_nhaXB;
+    protected Date namXB;
+
+    public Date getNamXB() {
+        return namXB;
+    }
+
+    public void setNamXB(Date namXB) {
+        this.namXB = namXB;
+    }
 
     public Sach() {
     }
@@ -49,12 +60,15 @@ public class Sach {
         this.ma_nhaXB = ma_nhaXB;
     }
 
-    public Sach(String ten_sach, int ma_tacgia, int ma_theloai, int ma_nhaXB) {
+    public Sach(String ten_sach, int ma_tacgia, int ma_theloai, int ma_nhaXB, Date namXB) {
         this.ten_sach = ten_sach;
         this.ma_tacgia = ma_tacgia;
         this.ma_theloai = ma_theloai;
         this.ma_nhaXB = ma_nhaXB;
+        this.namXB = namXB;
     }
+
+    
 }
 
 class SachChitiet extends Sach{
@@ -64,8 +78,8 @@ class SachChitiet extends Sach{
         super();
     }
 
-    public SachChitiet(String ten_sach, int ma_tacgia, int ma_theloai, int ma_nhaXB, String loai_sach) {
-        super( ten_sach,  ma_tacgia,  ma_theloai,  ma_nhaXB);
+    public SachChitiet(String ten_sach, int ma_tacgia, int ma_theloai, int ma_nhaXB, Date namXB, String loai_sach) {
+        super( ten_sach,  ma_tacgia,  ma_theloai,  ma_nhaXB, namXB);
         this.loai_sach = loai_sach;
     }
 

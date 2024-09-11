@@ -4,6 +4,19 @@
  */
 package GUI;
 
+import Class.ConnectToSQLServer;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import javax.naming.spi.DirStateFactory;
+import Class.Sach;
+import Class.TheLoai;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author admin
@@ -15,6 +28,151 @@ public class fSach extends javax.swing.JFrame {
      */
     public fSach() {
         initComponents();
+        loadData();
+    }
+
+    private void loadData() {
+        loadTacGiaData();
+        loadTheLoaiData();
+        loadNhaXBData();
+        loadTbaleData();
+    }
+
+    private void loadTacGiaData() {
+        String sqlQuery = "SELECT * FROM TacGia";
+        try (Connection conn = ConnectToSQLServer.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sqlQuery);
+            ResultSet res = ps.executeQuery();
+
+            jComboBox_tacGia.removeAllItems();
+            jComboBox_tacGia.addItem("Chon 1");
+            while (res.next()) {
+                String tenTacGia = res.getString("ten_tac_gia");
+                jComboBox_tacGia.addItem(tenTacGia);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadTheLoaiData() {
+        String sqlQuery = "SELECT * FROM TheLoai";
+        try (Connection conn = ConnectToSQLServer.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sqlQuery);
+            ResultSet res = ps.executeQuery();
+
+            jComboBox_theLoai.removeAllItems();
+            jComboBox_theLoai.addItem("Chon 1");
+            while (res.next()) {
+                String tenTheLoai = res.getString("ten_the_loai");
+                jComboBox_theLoai.addItem(tenTheLoai);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadNhaXBData() {
+        String sqlQuery = "SELECT * FROM NhaXuatBan";
+        try (Connection conn = ConnectToSQLServer.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sqlQuery);
+            ResultSet res = ps.executeQuery();
+            jComboBox_nhaXB.removeAllItems();
+            jComboBox_nhaXB.addItem("Chon 1");
+            while (res.next()) {
+                String tenNhaXB = res.getString("ten_nxb");
+                jComboBox_nhaXB.addItem(tenNhaXB);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadTbaleData() {
+        String sqlQuery = "SELECT * FROM Sach";
+    try (Connection conn = ConnectToSQLServer.getConnection()) {
+        PreparedStatement ps = conn.prepareStatement(sqlQuery);
+        ResultSet res = ps.executeQuery();
+
+        // Khởi tạo mô hình dữ liệu cho bảng
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Mã Sách");
+        model.addColumn("Tên Sách");
+        model.addColumn("Tác Giả");
+        model.addColumn("Thể Loại");
+        model.addColumn("Nhà XB");
+        model.addColumn("Năm Sản Xuất");
+
+        // Định dạng ngày tháng theo kiểu yyyy-MM-dd
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Đọc dữ liệu từ ResultSet và thêm vào mô hình dữ liệu
+        while (res.next()) {
+            int maSach = res.getInt("ma_sach");
+            String tenSach = res.getString("ten_sach");
+            String tacGia = getTacGiaById(res.getInt("ma_tac_gia")); // Lấy tên tác giả từ ID
+            String theLoai = getTheLoaiById(res.getInt("ma_the_loai")); // Lấy tên thể loại từ ID
+            String nhaXB = getNhaXBById(res.getInt("ma_nxb")); // Lấy tên nhà xuất bản từ ID
+            
+            // Chuyển đổi "Năm Sản Xuất" từ Date sang định dạng yyyy-MM-dd
+            Date namSX = res.getDate("nam_xuat_ban");
+            String namSXFormatted = dateFormatter.format(namSX); // Định dạng ngày tháng
+            
+            // Thêm dữ liệu vào mô hình của bảng
+            model.addRow(new Object[]{maSach, tenSach, tacGia, theLoai, nhaXB, namSXFormatted});
+        }
+
+        // Cập nhật JTable với mô hình dữ liệu
+        jTB_sach.setModel(model);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    }
+
+    private String getTacGiaById(int id) {
+        String sqlQuery = "SELECT ten_tac_gia FROM TacGia WHERE ma_tac_gia = ?";
+        try (Connection conn = ConnectToSQLServer.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sqlQuery);
+            ps.setInt(1, id);
+            ResultSet res = ps.executeQuery();
+            if (res.next()) {
+                return res.getString("ten_tac_gia");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private String getTheLoaiById(int id) {
+        String sqlQuery = "SELECT ten_the_loai FROM TheLoai WHERE ma_the_loai = ?";
+        try (Connection conn = ConnectToSQLServer.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sqlQuery);
+            ps.setInt(1, id);
+            ResultSet res = ps.executeQuery();
+            if (res.next()) {
+                return res.getString("ten_the_loai");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private String getNhaXBById(int id) {
+        String sqlQuery = "SELECT ten_nxb FROM NhaXuatBan WHERE ma_nxb = ?";
+        try (Connection conn = ConnectToSQLServer.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sqlQuery);
+            ps.setInt(1, id);
+            ResultSet res = ps.executeQuery();
+            if (res.next()) {
+                return res.getString("ten_nxb");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     /**
@@ -88,12 +246,27 @@ public class fSach extends javax.swing.JFrame {
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, 61, -1));
 
         jComboBox_theLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_theLoai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_theLoaiActionPerformed(evt);
+            }
+        });
         getContentPane().add(jComboBox_theLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 210, -1));
 
         btn_them.setText("Thêm");
+        btn_them.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_themActionPerformed(evt);
+            }
+        });
         getContentPane().add(btn_them, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
 
         jComboBox_nhaXB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_nhaXB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_nhaXBActionPerformed(evt);
+            }
+        });
         getContentPane().add(jComboBox_nhaXB, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 370, -1));
 
         btn_timkiem.setText("Tìm Kiếm");
@@ -239,6 +412,65 @@ public class fSach extends javax.swing.JFrame {
         khoSachFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_menu_khoSachMouseClicked
+
+    private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
+        // TODO add your handling code here:
+        Sach sach = new Sach();
+        sach.setTen_sach(txt_tensach.getText());
+        sach.setMa_tacgia(jComboBox_tacGia.getSelectedIndex());
+        sach.setMa_theloai(jComboBox_theLoai.getSelectedIndex());
+        sach.setMa_nhaXB(jComboBox_nhaXB.getSelectedIndex());
+
+        // Chuyển đổi chuỗi sang kiểu ngày tháng cho năm xuất bản
+        try {
+            String dateString = txt_namSX.getText(); // Lấy chuỗi ngày tháng từ TextField
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng chuỗi ngày tháng
+            Date namXB = formatter.parse(dateString); // Chuyển đổi chuỗi thành đối tượng Date
+            sach.setNamXB(namXB); // Thiết lập năm xuất bản cho đối tượng Sach
+        } catch (Exception e) {
+            System.out.println("Lỗi: Định dạng ngày tháng không hợp lệ. Vui lòng nhập đúng định dạng yyyy-MM-dd.");
+            return; // Kết thúc phương thức nếu có lỗi
+        }
+
+        // Chuẩn bị câu truy vấn SQL
+        String sqlQuery = "INSERT INTO Sach (ten_sach, ma_tac_gia, ma_the_loai, ma_nxb, nam_xuat_ban) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = ConnectToSQLServer.getConnection()) {
+            // Tạo PreparedStatement để thực thi câu truy vấn
+            PreparedStatement ps = conn.prepareStatement(sqlQuery);
+
+            // Thiết lập giá trị cho các tham số
+            ps.setString(1, sach.getTen_sach());
+            ps.setInt(2, sach.getMa_tacgia());
+            ps.setInt(3, sach.getMa_theloai());
+            ps.setInt(4, sach.getMa_nhaXB());
+            ps.setDate(5, new java.sql.Date(sach.getNamXB().getTime())); // Chuyển đổi Date sang java.sql.Date
+
+            // Thực thi câu truy vấn
+            int rowsAffected = ps.executeUpdate();
+
+            // Kiểm tra xem việc thêm dữ liệu có thành công hay không
+            if (rowsAffected > 0) {
+                System.out.println("Thêm sách thành công!");
+                loadData();
+            } else {
+                System.out.println("Thêm sách thất bại!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btn_themActionPerformed
+
+    private void jComboBox_nhaXBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_nhaXBActionPerformed
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_jComboBox_nhaXBActionPerformed
+
+    private void jComboBox_theLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_theLoaiActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jComboBox_theLoaiActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
