@@ -254,7 +254,6 @@ public class fSach extends javax.swing.JFrame {
     private void initComponents() {
 
         btn_xoa = new javax.swing.JButton();
-        txt_namSX = new javax.swing.JTextField();
         txt_timkiem = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTB_sach = new javax.swing.JTable();
@@ -272,6 +271,7 @@ public class fSach extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txt_masach = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jDate_namSX = new com.toedter.calendar.JDateChooser();
         jMenuBar_sach = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
         menu_theLoai = new javax.swing.JMenu();
@@ -281,7 +281,6 @@ public class fSach extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sách");
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btn_xoa.setText("Xóa");
         btn_xoa.addActionListener(new java.awt.event.ActionListener() {
@@ -289,9 +288,6 @@ public class fSach extends javax.swing.JFrame {
                 btn_xoaActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, -1, -1));
-        getContentPane().add(txt_namSX, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 280, -1));
-        getContentPane().add(txt_timkiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, 217, -1));
 
         jTB_sach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -311,20 +307,13 @@ public class fSach extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTB_sach);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 816, 278));
-
         jLabel1.setText("Tên Sách: ");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 61, -1));
 
         jLabel2.setText("Tác Giả: ");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 61, -1));
 
         jComboBox_tacGia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox_tacGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, 250, -1));
-        getContentPane().add(txt_tensach, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 280, -1));
 
         jLabel3.setText("Thể Loại:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 70, 61, -1));
 
         jComboBox_theLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox_theLoai.addActionListener(new java.awt.event.ActionListener() {
@@ -332,7 +321,6 @@ public class fSach extends javax.swing.JFrame {
                 jComboBox_theLoaiActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox_theLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 70, 250, -1));
 
         btn_them.setText("Thêm");
         btn_them.addActionListener(new java.awt.event.ActionListener() {
@@ -340,7 +328,6 @@ public class fSach extends javax.swing.JFrame {
                 btn_themActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_them, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
 
         jComboBox_nhaXB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox_nhaXB.addActionListener(new java.awt.event.ActionListener() {
@@ -348,7 +335,6 @@ public class fSach extends javax.swing.JFrame {
                 jComboBox_nhaXBActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox_nhaXB, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, 250, -1));
 
         btn_timkiem.setText("Tìm Kiếm");
         btn_timkiem.addActionListener(new java.awt.event.ActionListener() {
@@ -356,10 +342,8 @@ public class fSach extends javax.swing.JFrame {
                 btn_timkiemActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_timkiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 170, -1, -1));
 
         jLabel4.setText("Nhà XB: ");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 50, -1));
 
         btn_sua.setText("Sửa");
         btn_sua.addActionListener(new java.awt.event.ActionListener() {
@@ -367,14 +351,12 @@ public class fSach extends javax.swing.JFrame {
                 btn_suaActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, -1, -1));
 
         jLabel5.setText("Năm Sản Xuất: ");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 93, -1));
-        getContentPane().add(txt_masach, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 280, -1));
 
         jLabel6.setText("Mã sách:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 61, -1));
+
+        jDate_namSX.setDateFormatString("dd-MM-YYYY");
 
         menu_Sach.setText("Sách");
         jMenuBar_sach.add(menu_Sach);
@@ -442,6 +424,89 @@ public class fSach extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar_sach);
 
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(txt_masach, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jComboBox_tacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(btn_them)
+                .addGap(84, 84, 84)
+                .addComponent(btn_sua)
+                .addGap(74, 74, 74)
+                .addComponent(btn_xoa)
+                .addGap(64, 64, 64)
+                .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
+                .addComponent(btn_timkiem))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 816, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jDate_namSX, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(txt_tensach, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jComboBox_theLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jComboBox_nhaXB, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(txt_masach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox_tacGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(txt_tensach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jComboBox_theLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jDate_namSX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jComboBox_nhaXB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_them)
+                    .addComponent(btn_sua)
+                    .addComponent(btn_xoa)
+                    .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_timkiem))
+                .addGap(13, 13, 13)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -506,7 +571,7 @@ public class fSach extends javax.swing.JFrame {
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         // TODO add your handling code here:
-        if (txt_tensach.getText().isEmpty() || txt_namSX.getText().isEmpty()
+        if (txt_tensach.getText().isEmpty() || jDate_namSX.getDate() == null
                 || jComboBox_tacGia.getSelectedIndex() == 1 || jComboBox_theLoai.getSelectedIndex() == 1
                 || jComboBox_nhaXB.getSelectedIndex() == 1) {
 
@@ -518,17 +583,6 @@ public class fSach extends javax.swing.JFrame {
         sach.setMa_tacgia(jComboBox_tacGia.getSelectedIndex());
         sach.setMa_theloai(jComboBox_theLoai.getSelectedIndex());
         sach.setMa_nhaXB(jComboBox_nhaXB.getSelectedIndex());
-
-        // Chuyển đổi chuỗi sang kiểu ngày tháng cho năm xuất bản
-        try {
-            String dateString = txt_namSX.getText(); // Lấy chuỗi ngày tháng từ TextField
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng chuỗi ngày tháng
-            Date namXB = formatter.parse(dateString); // Chuyển đổi chuỗi thành đối tượng Date
-            sach.setNamXB(namXB); // Thiết lập năm xuất bản cho đối tượng Sach
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Định dạng ngày tháng không hợp lệ. Vui lòng nhập đúng định dạng yyyy-MM-dd", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
-            return; // Kết thúc phương thức nếu có lỗi
-        }
 
         // Chuẩn bị câu truy vấn SQL
         String sqlQuery = "INSERT INTO Sach (ten_sach, ma_tac_gia, ma_the_loai, ma_nxb, nam_xuat_ban) VALUES (?, ?, ?, ?, ?)";
@@ -603,9 +657,7 @@ public class fSach extends javax.swing.JFrame {
         String ma = String.valueOf(s.getMa_sach());//ép kiểu về String
         txt_masach.setText(ma);
         txt_tensach.setText(s.getTen_sach());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng ngày tháng năm theo ý muốn
-        String namXBString = sdf.format(s.getNamXB()); // Chuyển đổi Date thành String
-        txt_namSX.setText(namXBString); // Đặt giá trị vào JTextField
+        jDate_namSX.getDate(); // Đặt giá trị vào JTextField
         jComboBox_nhaXB.setSelectedIndex(s.getMa_nhaXB());
         jComboBox_tacGia.setSelectedIndex(s.getMa_tacgia());
         jComboBox_theLoai.setSelectedIndex(s.getMa_theloai());
@@ -615,7 +667,7 @@ public class fSach extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (txt_masach.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng điền Mã sách!", "Lỗi", JOptionPane.WARNING_MESSAGE);
-            if (txt_tensach.getText().isEmpty() || txt_namSX.getText().isEmpty()
+            if (txt_tensach.getText().isEmpty() || jDate_namSX.getDate() == null
                     || jComboBox_tacGia.getSelectedIndex() == 1 || jComboBox_theLoai.getSelectedIndex() == 1
                     || jComboBox_nhaXB.getSelectedIndex() == 1) {
 
@@ -628,17 +680,6 @@ public class fSach extends javax.swing.JFrame {
         sach.setMa_tacgia(jComboBox_tacGia.getSelectedIndex());
         sach.setMa_theloai(jComboBox_theLoai.getSelectedIndex());
         sach.setMa_nhaXB(jComboBox_nhaXB.getSelectedIndex());
-
-        // Chuyển đổi chuỗi sang kiểu ngày tháng cho năm xuất bản
-        try {
-            String dateString = txt_namSX.getText(); // Lấy chuỗi ngày tháng từ TextField
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng chuỗi ngày tháng
-            Date namXB = formatter.parse(dateString); // Chuyển đổi chuỗi thành đối tượng Date
-            sach.setNamXB(namXB); // Thiết lập năm xuất bản cho đối tượng Sach
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Định dạng ngày tháng không hợp lệ. Vui lòng nhập đúng định dạng yyyy-MM-dd", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
-            return; // Kết thúc phương thức nếu có lỗi
-        }
 
         // Chuẩn bị câu truy vấn SQL
         String sqlQuery = "UPDATE Sach \n"
@@ -693,6 +734,7 @@ public class fSach extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox_nhaXB;
     private javax.swing.JComboBox<String> jComboBox_tacGia;
     private javax.swing.JComboBox<String> jComboBox_theLoai;
+    private com.toedter.calendar.JDateChooser jDate_namSX;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -708,7 +750,6 @@ public class fSach extends javax.swing.JFrame {
     private javax.swing.JMenu menu_tacGia;
     private javax.swing.JMenu menu_theLoai;
     private javax.swing.JTextField txt_masach;
-    private javax.swing.JTextField txt_namSX;
     private javax.swing.JTextField txt_tensach;
     private javax.swing.JTextField txt_timkiem;
     // End of variables declaration//GEN-END:variables

@@ -1,15 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Class;
 
 import java.util.Date;
 
-/**
- *
- * @author admin
- */
 public class Sach {
     protected int ma_sach;
     protected String ten_sach;

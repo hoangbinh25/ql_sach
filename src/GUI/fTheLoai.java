@@ -35,6 +35,8 @@ public class fTheLoai extends javax.swing.JFrame {
         txt_theLoai = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTB_the_loai = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        txt_theLoai1 = new javax.swing.JTextField();
         jMenBar_theloai = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
         menu_theLoai = new javax.swing.JMenu();
@@ -44,18 +46,13 @@ public class fTheLoai extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Thể loại");
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Thể loại:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 65, 20));
 
         btn_xoa.setText("Xóa");
-        getContentPane().add(btn_xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, -1, -1));
-        getContentPane().add(txt_tensach2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, 217, -1));
 
         btn_them.setText("Thêm");
-        getContentPane().add(btn_them, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, -1));
 
         btn_timkiem.setText("Tìm Kiếm");
         btn_timkiem.addActionListener(new java.awt.event.ActionListener() {
@@ -63,11 +60,8 @@ public class fTheLoai extends javax.swing.JFrame {
                 btn_timkiemActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_timkiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 90, -1));
 
         btn_sua.setText("Sửa");
-        getContentPane().add(btn_sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, -1, -1));
-        getContentPane().add(txt_theLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 500, -1));
 
         jTB_the_loai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,7 +76,8 @@ public class fTheLoai extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTB_the_loai);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 580, 200));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Mã thể loại:");
 
         menu_Sach.setText("Sách");
         menu_Sach.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -145,6 +140,60 @@ public class fTheLoai extends javax.swing.JFrame {
         jMenBar_theloai.add(menu_khoSach);
 
         setJMenuBar(jMenBar_theloai);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(8, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_them)
+                        .addGap(14, 14, 14)
+                        .addComponent(btn_sua)
+                        .addGap(14, 14, 14)
+                        .addComponent(btn_xoa)
+                        .addGap(14, 14, 14)
+                        .addComponent(txt_tensach2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)
+                        .addComponent(btn_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_theLoai1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_theLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(15, 15, 15))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(txt_theLoai1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(txt_theLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_them)
+                    .addComponent(btn_sua)
+                    .addComponent(btn_xoa)
+                    .addComponent(txt_tensach2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_timkiem))
+                .addGap(13, 13, 13)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -249,6 +298,7 @@ public class fTheLoai extends javax.swing.JFrame {
     private javax.swing.JButton btn_timkiem;
     private javax.swing.JButton btn_xoa;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenBar_theloai;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTB_the_loai;
@@ -259,5 +309,6 @@ public class fTheLoai extends javax.swing.JFrame {
     private javax.swing.JMenu menu_theLoai;
     private javax.swing.JTextField txt_tensach2;
     private javax.swing.JTextField txt_theLoai;
+    private javax.swing.JTextField txt_theLoai1;
     // End of variables declaration//GEN-END:variables
 }

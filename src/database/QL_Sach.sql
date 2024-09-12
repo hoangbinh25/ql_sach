@@ -1,6 +1,12 @@
 ﻿USE master
 DROP DATABASE IF EXISTS QL_SACH;
-DROP TABLE IF EXISTS TaiKhoan;
+DROP TABLE IF EXISTS TacGia;
+DROP TABLE IF EXISTS TheLoai;
+DROP TABLE IF EXISTS NhaXuatBan;
+DROP TABLE IF EXISTS Sach;
+DROP TABLE IF EXISTS KhoSach;
+
+
 CREATE DATABASE QL_SACH
 GO
 USE QL_SACH
@@ -44,6 +50,9 @@ CREATE TABLE KhoSach (
     ma_kho INT PRIMARY KEY IDENTITY(1,1),             -- Mã kho (khóa chính)
     ma_sach INT,                        -- Mã sách (khóa ngoại)
     vi_tri NVARCHAR(255),                -- Vị trí lưu trữ của sách trong kho
+	so_luong INT,
+	ngay_nhap date, 
+	ngay_xuat date NULL,
     FOREIGN KEY (ma_sach) REFERENCES Sach(ma_sach)  -- Khóa ngoại tham chiếu đến bảng Sach
 );
 GO
@@ -102,3 +111,5 @@ SELECT * FROM Sach;
 SELECT * FROM TaiKhoan;
 
 SELECT * FROM NhaXuatBan;
+
+SELECT * FROM KhoSach;

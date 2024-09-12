@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Class;
 
-/**
- *
- * @author admin
- */
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class TacGia {
     protected String ten_tacgia;
 
@@ -25,6 +21,19 @@ public class TacGia {
     public TacGia(String ten_tacgia) {
         this.ten_tacgia = ten_tacgia;
     }
-    
-    
+
+    public boolean addTacGia(String tenTacGia) {
+        String query = "INSERT INTO TacGia (ten_tac_gia) VALUES (?)";  
+        try (Connection conn = ConnectToSQLServer.getConnection()){
+            PreparedStatement pst = conn.prepareStatement(query);
+            pst.setString(1, tenTacGia);
+            int rowsAffected = pst.executeUpdate();
+            
+            return rowsAffected > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }   
+    }
 }

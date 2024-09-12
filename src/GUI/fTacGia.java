@@ -1,9 +1,16 @@
 package GUI;
 
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import Class.TacGia;
+
 public class fTacGia extends javax.swing.JFrame {
+
 
     public fTacGia() {
         initComponents();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -35,6 +42,11 @@ public class fTacGia extends javax.swing.JFrame {
         btn_xoa.setText("Xóa");
 
         btn_them.setText("Thêm");
+        btn_them.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_themActionPerformed(evt);
+            }
+        });
 
         btn_timkiem.setText("Tìm Kiếm");
         btn_timkiem.addActionListener(new java.awt.event.ActionListener() {
@@ -47,15 +59,25 @@ public class fTacGia extends javax.swing.JFrame {
 
         jTB_tac_gia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã tác giả", "Tên tác giả"
             }
         ));
+        jTB_tac_gia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTB_tac_giaMouseClicked(evt);
+            }
+        });
+        jTB_tac_gia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTB_tac_giaKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTB_tac_gia);
 
         jMenuBar_tacgia.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -109,28 +131,31 @@ public class fTacGia extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jLabel1)
-                    .addGap(14, 14, 14)
-                    .addComponent(txt_tenTacGia)
-                    .addContainerGap())
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(btn_them)
-                    .addGap(14, 14, 14)
-                    .addComponent(btn_sua)
-                    .addGap(14, 14, 14)
-                    .addComponent(btn_xoa)
-                    .addGap(24, 24, 24)
-                    .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(33, 33, 33)
-                    .addComponent(btn_timkiem)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 596, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(14, 14, 14)
+                            .addComponent(txt_tenTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btn_them)
+                            .addGap(14, 14, 14)
+                            .addComponent(btn_sua)
+                            .addGap(14, 14, 14)
+                            .addComponent(btn_xoa)
+                            .addGap(24, 24, 24)
+                            .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_timkiem))))
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(txt_tenTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -139,11 +164,12 @@ public class fTacGia extends javax.swing.JFrame {
                     .addComponent(btn_them)
                     .addComponent(btn_sua)
                     .addComponent(btn_xoa)
-                    .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_timkiem))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_timkiem)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                .addGap(29, 29, 29))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+                .addGap(37, 37, 37))
         );
 
         pack();
@@ -188,6 +214,19 @@ public class fTacGia extends javax.swing.JFrame {
         khoSachFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_menu_khoSachMouseClicked
+
+    private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
+        
+    }//GEN-LAST:event_btn_themActionPerformed
+
+    private void jTB_tac_giaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTB_tac_giaMouseClicked
+
+
+    }//GEN-LAST:event_jTB_tac_giaMouseClicked
+
+    private void jTB_tac_giaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTB_tac_giaKeyReleased
+
+    }//GEN-LAST:event_jTB_tac_giaKeyReleased
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

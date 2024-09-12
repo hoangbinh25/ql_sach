@@ -21,7 +21,6 @@ public class fDangNhap extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txt_tendnhap = new javax.swing.JTextField();
         btn_dnhap = new javax.swing.JButton();
-        btn_quenmkhau1 = new javax.swing.JButton();
         cb_showPass = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
         btn_dki = new javax.swing.JButton();
@@ -32,18 +31,13 @@ public class fDangNhap extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setFocusTraversalPolicyProvider(true);
         setMinimumSize(new java.awt.Dimension(687, 434));
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         jLabel1.setText("Đăng nhập");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(231, 35, 267, -1));
 
         jLabel2.setText("Tên đăng nhập:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 137, -1, -1));
 
         jLabel3.setText("Mật khẩu:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 186, -1, -1));
-        getContentPane().add(txt_tendnhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 132, 170, -1));
 
         btn_dnhap.setText("Đăng nhập");
         btn_dnhap.addActionListener(new java.awt.event.ActionListener() {
@@ -51,10 +45,6 @@ public class fDangNhap extends javax.swing.JFrame {
                 btn_dnhapActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_dnhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, -1, -1));
-
-        btn_quenmkhau1.setText("Quên mật khẩu");
-        getContentPane().add(btn_quenmkhau1, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 305, 164, -1));
 
         cb_showPass.setText("Hiện mật khẩu");
         cb_showPass.addActionListener(new java.awt.event.ActionListener() {
@@ -62,11 +52,9 @@ public class fDangNhap extends javax.swing.JFrame {
                 cb_showPassActionPerformed(evt);
             }
         });
-        getContentPane().add(cb_showPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Bạn chưa có tài khoản");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 354, -1, -1));
 
         btn_dki.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btn_dki.setText("Đăng ký");
@@ -80,8 +68,66 @@ public class fDangNhap extends javax.swing.JFrame {
                 btn_dkiActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_dki, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 350, -1, 30));
-        getContentPane().add(txt_mkhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 181, 170, -1));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(231, 231, 231)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(185, 185, 185)
+                        .addComponent(jLabel2)
+                        .addGap(6, 6, 6)
+                        .addComponent(txt_tendnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(185, 185, 185)
+                        .addComponent(jLabel3)
+                        .addGap(35, 35, 35)
+                        .addComponent(txt_mkhau, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(270, 270, 270)
+                        .addComponent(cb_showPass))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(310, 310, 310)
+                        .addComponent(btn_dnhap))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(230, 230, 230)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_dki)))
+                .addGap(189, 189, 189))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jLabel1)
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel2))
+                    .addComponent(txt_tendnhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel3))
+                    .addComponent(txt_mkhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(3, 3, 3)
+                .addComponent(cb_showPass)
+                .addGap(30, 30, 30)
+                .addComponent(btn_dnhap)
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(btn_dki, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10))
+        );
 
         getAccessibleContext().setAccessibleDescription("");
 
@@ -154,7 +200,6 @@ public class fDangNhap extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_dki;
     private javax.swing.JButton btn_dnhap;
-    private javax.swing.JButton btn_quenmkhau1;
     private javax.swing.JCheckBox cb_showPass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
