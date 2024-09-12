@@ -88,7 +88,7 @@ INSERT INTO NhaXuatBan (ten_nxb, dia_chi) VALUES
 GO
 -- Chèn dữ liệu vào bảng Sách (Sach)
 INSERT INTO Sach (ten_sach, ma_tac_gia, ma_the_loai, ma_nxb, nam_xuat_ban) VALUES
-(N'Mắt Biếc', 1, 1, 1, '2019-2-3'),
+(N'Mắt Biếcc', 1, 1, 1, '03-12-2012'),
 (N'Harry Potter và Hòn Đá Phù Thủy', 2, 1, 2, '1997-4-2'),
 (N'1984', 3, 3, 3, '1949-6-1'),
 (N'Làm Thế Nào Để Thành Công Trong Cuộc Sống', 4, 5, 4, '2020-4-2');

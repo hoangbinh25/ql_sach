@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
-
+import com.toedter.calendar.*;
 /**
  *
  * @author admin
@@ -33,6 +33,7 @@ public class fSach extends javax.swing.JFrame {
     public fSach() {
         initComponents();
         loadData();
+        txt_masach.setEditable(false);
     }
 
     private void loadData() {
@@ -46,7 +47,7 @@ public class fSach extends javax.swing.JFrame {
     private void clearForm() {
         txt_masach.setText("");
         txt_tensach.setText("");
-        txt_namSX.setText("");
+        jDate_namSX.setDate(null);
         jComboBox_nhaXB.setSelectedIndex(0);
         jComboBox_tacGia.setSelectedIndex(0);
         jComboBox_theLoai.setSelectedIndex(0);
@@ -583,6 +584,7 @@ public class fSach extends javax.swing.JFrame {
         sach.setMa_tacgia(jComboBox_tacGia.getSelectedIndex());
         sach.setMa_theloai(jComboBox_theLoai.getSelectedIndex());
         sach.setMa_nhaXB(jComboBox_nhaXB.getSelectedIndex());
+        sach.setNamXB(jDate_namSX.getDate());
 
         // Chuẩn bị câu truy vấn SQL
         String sqlQuery = "INSERT INTO Sach (ten_sach, ma_tac_gia, ma_the_loai, ma_nxb, nam_xuat_ban) VALUES (?, ?, ?, ?, ?)";
