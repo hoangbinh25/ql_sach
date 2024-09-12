@@ -11,11 +11,20 @@ import java.util.Date;
  * @author admin
  */
 public class Sach {
+    protected int ma_sach;
     protected String ten_sach;
     protected int ma_tacgia;
     protected int ma_theloai;
     protected int ma_nhaXB;
     protected Date namXB;
+
+    public int getMa_sach() {
+        return ma_sach;
+    }
+
+    public void setMa_sach(int ma_sach) {
+        this.ma_sach = ma_sach;
+    }
 
     public Date getNamXB() {
         return namXB;
@@ -60,7 +69,8 @@ public class Sach {
         this.ma_nhaXB = ma_nhaXB;
     }
 
-    public Sach(String ten_sach, int ma_tacgia, int ma_theloai, int ma_nhaXB, Date namXB) {
+    public Sach(int ma_sach, String ten_sach, int ma_tacgia, int ma_theloai, int ma_nhaXB, Date namXB) {
+        this.ma_sach = ma_sach;
         this.ten_sach = ten_sach;
         this.ma_tacgia = ma_tacgia;
         this.ma_theloai = ma_theloai;
@@ -78,8 +88,8 @@ class SachChitiet extends Sach{
         super();
     }
 
-    public SachChitiet(String ten_sach, int ma_tacgia, int ma_theloai, int ma_nhaXB, Date namXB, String loai_sach) {
-        super( ten_sach,  ma_tacgia,  ma_theloai,  ma_nhaXB, namXB);
+    public SachChitiet(int ma_sach, String ten_sach, int ma_tacgia, int ma_theloai, int ma_nhaXB, Date namXB, String loai_sach) {
+        super(ma_sach, ten_sach,  ma_tacgia,  ma_theloai,  ma_nhaXB, namXB);
         this.loai_sach = loai_sach;
     }
 
