@@ -3,30 +3,25 @@ package DTO;
 import java.util.Date;
 
 public class Sach {
-    protected int ma_sach;
-    protected String ten_sach;
-    protected int ma_tacgia;
-    protected int ma_theloai;
-    protected int ma_nhaXB;
-    protected Date namXB;
+    private String ma_sach;
+    private String ten_sach;
+    private String ngon_ngu_sach;
+    private float gia_tri;
+    private int so_luong;
+    private String tacgia;
+    private String the_loai;
+    private String nha_xuat_ban;
+    private int nam_xuat_ban;
 
-    public int getMa_sach() {
+    public Sach() {
+    }
+
+    public String getMa_sach() {
         return ma_sach;
     }
 
-    public void setMa_sach(int ma_sach) {
+    public void setMa_sach(String ma_sach) {
         this.ma_sach = ma_sach;
-    }
-
-    public Date getNamXB() {
-        return namXB;
-    }
-
-    public void setNamXB(Date namXB) {
-        this.namXB = namXB;
-    }
-
-    public Sach() {
     }
 
     public String getTen_sach() {
@@ -37,57 +32,72 @@ public class Sach {
         this.ten_sach = ten_sach;
     }
 
-    public int getMa_tacgia() {
-        return ma_tacgia;
+    public String getNgon_ngu_sach() {
+        return ngon_ngu_sach;
     }
 
-    public void setMa_tacgia(int ma_tacgia) {
-        this.ma_tacgia = ma_tacgia;
+    public void setNgon_ngu_sach(String ngon_ngu_sach) {
+        this.ngon_ngu_sach = ngon_ngu_sach;
     }
 
-    public int getMa_theloai() {
-        return ma_theloai;
+    public float getGia_tri() {
+        return gia_tri;
     }
 
-    public void setMa_theloai(int ma_theloai) {
-        this.ma_theloai = ma_theloai;
+    public void setGia_tri(float gia_tri) {
+        this.gia_tri = gia_tri;
     }
 
-    public int getMa_nhaXB() {
-        return ma_nhaXB;
+    public int getSo_luong() {
+        return so_luong;
     }
 
-    public void setMa_nhaXB(int ma_nhaXB) {
-        this.ma_nhaXB = ma_nhaXB;
+    public void setSo_luong(int so_luong) {
+        this.so_luong = so_luong;
     }
 
-    public Sach(int ma_sach, String ten_sach, int ma_tacgia, int ma_theloai, int ma_nhaXB, Date namXB) {
+    public String getTacgia() {
+        return tacgia;
+    }
+
+    public void setTacgia(String tacgia) {
+        this.tacgia = tacgia;
+    }
+
+    public String getThe_loai() {
+        return the_loai;
+    }
+
+    public void setThe_loai(String the_loai) {
+        this.the_loai = the_loai;
+    }
+
+    public String getNha_xuat_ban() {
+        return nha_xuat_ban;
+    }
+
+    public void setNha_xuat_ban(String nha_xuat_ban) {
+        this.nha_xuat_ban = nha_xuat_ban;
+    }
+
+    public int getNam_xuat_ban() {
+        return nam_xuat_ban;
+    }
+
+    public void setNam_xuat_ban(int nam_xuat_ban) {
+        this.nam_xuat_ban = nam_xuat_ban;
+    }
+
+    public Sach(String ma_sach, String ten_sach, String ngon_ngu_sach, float gia_tri, int so_luong, String tacgia, String the_loai, String nha_xuat_ban, int nam_xuat_ban) {
         this.ma_sach = ma_sach;
         this.ten_sach = ten_sach;
-        this.ma_tacgia = ma_tacgia;
-        this.ma_theloai = ma_theloai;
-        this.ma_nhaXB = ma_nhaXB;
-        this.namXB = namXB;
+        this.ngon_ngu_sach = ngon_ngu_sach;
+        this.gia_tri = gia_tri;
+        this.so_luong = so_luong;
+        this.tacgia = tacgia;
+        this.the_loai = the_loai;
+        this.nha_xuat_ban = nha_xuat_ban;
+        this.nam_xuat_ban = nam_xuat_ban;
     }
-}
-
-class SachChitiet extends Sach{
-    private String loai_sach;
-
-    public SachChitiet() {
-        super();
-    }
-
-    public SachChitiet(int ma_sach, String ten_sach, int ma_tacgia, int ma_theloai, int ma_nhaXB, Date namXB, String loai_sach) {
-        super(ma_sach, ten_sach,  ma_tacgia,  ma_theloai,  ma_nhaXB, namXB);
-        this.loai_sach = loai_sach;
-    }
-
-    public String getLoai_sach() {
-        return loai_sach;
-    }
-
-    public void setLoai_sach(String loai_sach) {
-        this.loai_sach = loai_sach;
-    }
+    
 }
