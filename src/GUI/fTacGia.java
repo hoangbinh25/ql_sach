@@ -3,7 +3,7 @@ package GUI;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import Class.TacGia;
+import DTO.TacGia;
 
 public class fTacGia extends javax.swing.JFrame {
 
@@ -115,6 +115,11 @@ public class fTacGia extends javax.swing.JFrame {
             public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
             }
         });
+        menu_nhaXB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_nhaXBMouseClicked(evt);
+            }
+        });
         jMenuBar_tacgia.add(menu_nhaXB);
 
         menu_khoSach.setText("Kho Sách");
@@ -200,11 +205,7 @@ public class fTacGia extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_theLoaiMouseClicked
 
     private void menu_nhaXBMenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_menu_nhaXBMenuKeyPressed
-        fNhaXB NXBFrame = new fNhaXB();
-        NXBFrame.setDefaultCloseOperation(fNhaXB.EXIT_ON_CLOSE);
-        NXBFrame.setLocationRelativeTo(null);
-        NXBFrame.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_menu_nhaXBMenuKeyPressed
 
     private void menu_khoSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_khoSachMouseClicked
@@ -227,6 +228,14 @@ public class fTacGia extends javax.swing.JFrame {
     private void jTB_tac_giaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTB_tac_giaKeyReleased
 
     }//GEN-LAST:event_jTB_tac_giaKeyReleased
+
+    private void menu_nhaXBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_nhaXBMouseClicked
+        fNhaXB NXBFrame = new fNhaXB();
+        NXBFrame.setDefaultCloseOperation(fNhaXB.EXIT_ON_CLOSE);
+        NXBFrame.setLocationRelativeTo(null);
+        NXBFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_nhaXBMouseClicked
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

@@ -1,4 +1,4 @@
-package Class;
+package DTO;
 
 import java.util.Date;
 
@@ -69,8 +69,6 @@ public class Sach {
         this.ma_nhaXB = ma_nhaXB;
         this.namXB = namXB;
     }
-
-    
 }
 
 class SachChitiet extends Sach{

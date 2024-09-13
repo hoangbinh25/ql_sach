@@ -1,4 +1,4 @@
-package Class;
+package DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;

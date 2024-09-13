@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package Class;
+package DTO;
 
-/**
- *
- * @author admin
- */
 public class NhaXB {
     protected String ten_nhaXB;
     protected String dia_chi;

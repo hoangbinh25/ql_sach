@@ -1,5 +1,6 @@
-package Class;
+package DTO;
 
+import DAL.ConnectToSQLServer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

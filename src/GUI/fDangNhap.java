@@ -1,10 +1,6 @@
 package GUI;
 
 import javax.swing.JOptionPane;
-import java.sql.Connection;
-import java.sql.*;
-
-import Class.ConnectToSQLServer;
 
 public class fDangNhap extends javax.swing.JFrame {
 
@@ -22,8 +18,6 @@ public class fDangNhap extends javax.swing.JFrame {
         txt_tendnhap = new javax.swing.JTextField();
         btn_dnhap = new javax.swing.JButton();
         cb_showPass = new javax.swing.JCheckBox();
-        jLabel4 = new javax.swing.JLabel();
-        btn_dki = new javax.swing.JButton();
         txt_mkhau = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -40,6 +34,11 @@ public class fDangNhap extends javax.swing.JFrame {
         jLabel3.setText("Mật khẩu:");
 
         btn_dnhap.setText("Đăng nhập");
+        btn_dnhap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_dnhapMouseClicked(evt);
+            }
+        });
         btn_dnhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_dnhapActionPerformed(evt);
@@ -50,22 +49,6 @@ public class fDangNhap extends javax.swing.JFrame {
         cb_showPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_showPassActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setText("Bạn chưa có tài khoản");
-
-        btn_dki.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn_dki.setText("Đăng ký");
-        btn_dki.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_dkiMouseClicked(evt);
-            }
-        });
-        btn_dki.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_dkiActionPerformed(evt);
             }
         });
 
@@ -93,12 +76,7 @@ public class fDangNhap extends javax.swing.JFrame {
                         .addComponent(cb_showPass))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(310, 310, 310)
-                        .addComponent(btn_dnhap))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(230, 230, 230)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_dki)))
+                        .addComponent(btn_dnhap)))
                 .addGap(189, 189, 189))
         );
         layout.setVerticalGroup(
@@ -122,11 +100,7 @@ public class fDangNhap extends javax.swing.JFrame {
                 .addComponent(cb_showPass)
                 .addGap(30, 30, 30)
                 .addComponent(btn_dnhap)
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(btn_dki, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10))
+                .addGap(59, 59, 59))
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -143,47 +117,26 @@ public class fDangNhap extends javax.swing.JFrame {
     }//GEN-LAST:event_cb_showPassActionPerformed
 
     private void btn_dnhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dnhapActionPerformed
-       
-        String user = txt_tendnhap.getText();
-        String pass = txt_mkhau.getText();
-        
-        if (user.isEmpty() || pass.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin!", "Thông báo", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-        String sql_login = "Select * from TaiKhoan where ten_tai_khoan = ? and mat_khau = ?";
 
-        try(Connection conn = ConnectToSQLServer.getConnection()) {
-            
-            PreparedStatement ps = conn.prepareStatement(sql_login);
-            ps.setString(1, user);
-            ps.setString(2, pass);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-                fSach sachFrame = new fSach();
-                sachFrame.setLocationRelativeTo(null);
-                sachFrame.setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Sai tên đăng nhập hoặc mật khẩu");
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }//GEN-LAST:event_btn_dnhapActionPerformed
 
-    private void btn_dkiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dkiActionPerformed
+    private void btn_dnhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dnhapMouseClicked
+        // Lấy giá trị từ các trường nhập liệu
+        String tenDangNhap = txt_tendnhap.getText();
+        String matKhau = new String(txt_mkhau.getPassword());
 
-    }//GEN-LAST:event_btn_dkiActionPerformed
-
-    private void btn_dkiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dkiMouseClicked
-        fDangKy DkyFrame = new fDangKy();
-        DkyFrame.setVisible(true);
-        DkyFrame.pack();
-        DkyFrame.setLocationRelativeTo(null);
-        this.dispose();
-    }//GEN-LAST:event_btn_dkiMouseClicked
+        // Kiểm tra điều kiện đăng nhập
+        if (tenDangNhap.equals("admin") && matKhau.equals("12345")) {
+            JOptionPane.showMessageDialog(this, "Đăng nhập thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            fSach sachFrame = new fSach();
+            sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
+            sachFrame.setLocationRelativeTo(null);
+            sachFrame.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Sai tên tài khoản hoặc mật khẩu", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_dnhapMouseClicked
 
     public static void main(String args[]) {
 
@@ -198,13 +151,11 @@ public class fDangNhap extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_dki;
     private javax.swing.JButton btn_dnhap;
     private javax.swing.JCheckBox cb_showPass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPasswordField txt_mkhau;
     private javax.swing.JTextField txt_tendnhap;
     // End of variables declaration//GEN-END:variables

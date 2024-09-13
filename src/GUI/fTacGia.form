@@ -34,6 +34,7 @@
           </Properties>
           <Events>
             <EventHandler event="menuKeyPressed" listener="javax.swing.event.MenuKeyListener" parameters="javax.swing.event.MenuKeyEvent" handler="menu_nhaXBMenuKeyPressed"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menu_nhaXBMouseClicked"/>
           </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menu_khoSach">

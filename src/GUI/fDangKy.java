@@ -1,6 +1,6 @@
 package GUI;
 
-import Class.ConnectToSQLServer;
+import DAL.ConnectToSQLServer;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -25,13 +25,14 @@ public class fDangKy extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txt_mkhau = new javax.swing.JTextField();
         txt_tendnhap = new javax.swing.JTextField();
         btn_dky = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         txt_email = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         btn_dNhap = new javax.swing.JButton();
+        cb_checkPass = new javax.swing.JCheckBox();
+        txt_mkhau = new javax.swing.JPasswordField();
 
         popupMenu1.setLabel("popupMenu1");
 
@@ -84,39 +85,54 @@ public class fDangKy extends javax.swing.JFrame {
             }
         });
 
+        cb_checkPass.setText("Hiện mật khẩu");
+        cb_checkPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cb_checkPassMouseClicked(evt);
+            }
+        });
+        cb_checkPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_checkPassActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(287, 287, 287)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(186, 186, 186)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)
-                        .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(186, 186, 186)
-                        .addComponent(jLabel2)
-                        .addGap(6, 6, 6)
-                        .addComponent(txt_tendnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(328, 328, 328)
-                        .addComponent(btn_dky))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(186, 186, 186)
                         .addComponent(jLabel3)
                         .addGap(39, 39, 39)
-                        .addComponent(txt_mkhau, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cb_checkPass)
+                            .addComponent(txt_mkhau)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(186, 186, 186)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(56, 56, 56)
+                                .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_tendnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(200, 200, 200))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_dNhap)
                 .addGap(240, 240, 240))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(btn_dky)
+                .addGap(300, 300, 300))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,14 +152,14 @@ public class fDangKy extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addComponent(txt_tendnhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel3))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
                     .addComponent(txt_mkhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(4, 4, 4)
+                .addComponent(cb_checkPass)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_dky)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_dNhap)
                     .addComponent(jLabel5))
@@ -154,7 +170,7 @@ public class fDangKy extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_dkyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dkyActionPerformed
-String email = txt_email.getText();
+        String email = txt_email.getText();
         String user = txt_tendnhap.getText();
         String pass = txt_mkhau.getText();
 
@@ -182,7 +198,7 @@ String email = txt_email.getText();
                 psInsert.setString(1, email);
                 psInsert.setString(2, user);
                 psInsert.setString(3, pass);
-                
+
                 int rowsInsert = psInsert.executeUpdate();
                 if (rowsInsert > 0) {
                     JOptionPane.showMessageDialog(this, "Đăng ký thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -199,7 +215,7 @@ String email = txt_email.getText();
     }//GEN-LAST:event_btn_dkyActionPerformed
 
     private void btn_dNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dNhapActionPerformed
-        
+
     }//GEN-LAST:event_btn_dNhapActionPerformed
 
     private void btn_dNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dNhapMouseClicked
@@ -208,6 +224,18 @@ String email = txt_email.getText();
         dNhapFrame.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btn_dNhapMouseClicked
+
+    private void cb_checkPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cb_checkPassMouseClicked
+
+    }//GEN-LAST:event_cb_checkPassMouseClicked
+
+    private void cb_checkPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_checkPassActionPerformed
+        if (cb_checkPass.isSelected()) {
+            txt_mkhau.setEchoChar((char) 0);
+        } else {
+            txt_mkhau.setEchoChar('*');
+        }
+    }//GEN-LAST:event_cb_checkPassActionPerformed
 
     public static void main(String args[]) {
         /* Create and display the form */
@@ -224,6 +252,7 @@ String email = txt_email.getText();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_dNhap;
     private javax.swing.JButton btn_dky;
+    private javax.swing.JCheckBox cb_checkPass;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JLabel jLabel1;
@@ -235,7 +264,7 @@ String email = txt_email.getText();
     private javax.swing.JMenu jMenu2;
     private java.awt.PopupMenu popupMenu1;
     private javax.swing.JTextField txt_email;
-    private javax.swing.JTextField txt_mkhau;
+    private javax.swing.JPasswordField txt_mkhau;
     private javax.swing.JTextField txt_tendnhap;
     // End of variables declaration//GEN-END:variables
 }

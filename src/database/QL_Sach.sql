@@ -6,7 +6,6 @@ DROP TABLE IF EXISTS NhaXuatBan;
 DROP TABLE IF EXISTS Sach;
 DROP TABLE IF EXISTS KhoSach;
 
-
 CREATE DATABASE QL_SACH
 GO
 USE QL_SACH
@@ -56,14 +55,6 @@ CREATE TABLE KhoSach (
     FOREIGN KEY (ma_sach) REFERENCES Sach(ma_sach)  -- Khóa ngoại tham chiếu đến bảng Sach
 );
 GO
-CREATE TABLE TaiKhoan (
-    ma_tai_khoan INT PRIMARY KEY IDENTITY(1,1),  -- Mã người dùng (khóa chính và tự động tăng)
-    ten_tai_khoan NVARCHAR(255) NOT NULL,        -- Tên người dùng
-    mat_khau NVARCHAR(255) NOT NULL,              -- Mật khẩu người dùng
-    email NVARCHAR(255) NOT NULL,                 -- Email người dùng
-    CONSTRAINT UQ_email UNIQUE (email)            -- Ràng buộc duy nhất cho cột email (email không được trùng)
-);
-GO
 -- Chèn dữ liệu vào bảng Tác Giả (TacGia)
 INSERT INTO TacGia (ten_tac_gia) VALUES
 (N'Nguyễn Nhật Ánh'),
@@ -100,15 +91,8 @@ INSERT INTO KhoSach (ma_sach, vi_tri) VALUES
 (3, N'Kệ C2'),
 (4, N'Kệ D4');
 GO
--- Chèn dữ liệu mẫu vào bảng TaiKhoan
-INSERT INTO TaiKhoan(ten_tai_khoan, mat_khau, email) VALUES
-(N'user1', N'123', N'nguyenvana@example.com'),
-(N'user2', N'123', N'tranthib@example.com')
-GO
 
 SELECT * FROM Sach;
-
-SELECT * FROM TaiKhoan;
 
 SELECT * FROM NhaXuatBan;
 
