@@ -9,31 +9,30 @@ public class fKhoSach extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btn_xoa = new javax.swing.JButton();
-        txt_timkiem = new javax.swing.JTextField();
         btn_them = new javax.swing.JButton();
-        btn_timkiem = new javax.swing.JButton();
-        btn_sua = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_khosach = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        txt_vitri = new javax.swing.JTextField();
-        jComboBox_tenSach = new javax.swing.JComboBox<>();
-        txt_soluong = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        txt_masach = new javax.swing.JTextField();
         txt_ngayNhap = new javax.swing.JTextField();
         txt_ngayXuat = new javax.swing.JTextField();
-        jMenuBar_khosach = new javax.swing.JMenuBar();
+        btn_timkiem = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        btn_sua = new javax.swing.JButton();
+        txt_maKho = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        btn_xoa = new javax.swing.JButton();
+        txt_timkiem = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTB_sach = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txt_maSach = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txt_viTri = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txt_soLuong = new javax.swing.JTextField();
+        jMenuBar_sach = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
-        menu_theLoai = new javax.swing.JMenu();
-        menu_tacGia = new javax.swing.JMenu();
-        menu_nhaXB = new javax.swing.JMenu();
         menu_khoSach = new javax.swing.JMenu();
+        menu_muonTra = new javax.swing.JMenu();
+        menu_thongKe = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kho sách");
@@ -43,231 +42,247 @@ public class fKhoSach extends javax.swing.JFrame {
             }
         });
 
-        btn_xoa.setText("Xóa");
-        btn_xoa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
         btn_them.setText("Thêm");
-        btn_them.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_them.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_themActionPerformed(evt);
+            }
+        });
 
         btn_timkiem.setText("Tìm Kiếm");
-        btn_timkiem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_timkiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_timkiemActionPerformed(evt);
             }
         });
 
+        jLabel4.setText("Ngày nhập");
+
         btn_sua.setText("Sửa");
-        btn_sua.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jTable_khosach.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Mã sách", "Tên sách", "Vị trí", "Ngày nhập kho", "Ngày xuất kho", "Số lượng"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable_khosach);
-
-        jLabel2.setText("Tên sách:");
-
-        jLabel5.setText("Ngày xuất kho:");
-
-        jLabel6.setText("Ngày nhập kho:");
-
-        jLabel7.setText("Vị trí:");
-
-        jComboBox_tenSach.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jComboBox_tenSach.setEditor(null);
-        jComboBox_tenSach.addActionListener(new java.awt.event.ActionListener() {
+        btn_sua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_tenSachActionPerformed(evt);
+                btn_suaActionPerformed(evt);
             }
         });
 
-        jLabel8.setText("Số lượng:");
+        jLabel6.setText("Mã kho:");
 
-        jLabel1.setText("Mã sách");
+        btn_xoa.setText("Xóa");
+        btn_xoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_xoaActionPerformed(evt);
+            }
+        });
 
-        menu_Sach.setText("Sách");
-        menu_Sach.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTB_sach.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Mã sách", "Tên sách", "Ngôn ngữ", "Giá trị", "Số lượng", "Tác giả", "Thể loại", "Nhà xuất bản", "Năm xuất bản"
+            }
+        ));
+        jTB_sach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTB_sachMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTB_sach);
+
+        jLabel1.setText("Mã sách: ");
+
+        jLabel2.setText("Số lượng");
+
+        txt_maSach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_maSachActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Vị trí:");
+
+        jLabel3.setText("Ngày xuất");
+
+        menu_Sach.setText("Quản lý sách");
         menu_Sach.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menu_SachMouseClicked(evt);
             }
         });
-        jMenuBar_khosach.add(menu_Sach);
+        jMenuBar_sach.add(menu_Sach);
 
-        menu_theLoai.setText("Thể Loại");
-        menu_theLoai.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menu_theLoai.addMouseListener(new java.awt.event.MouseAdapter() {
+        menu_khoSach.setText("Quản lý kho sách");
+        menu_khoSach.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menu_theLoaiMouseClicked(evt);
+                menu_khoSachMouseClicked(evt);
             }
         });
-        jMenuBar_khosach.add(menu_theLoai);
-
-        menu_tacGia.setText("Tác Giả");
-        menu_tacGia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menu_tacGia.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menu_tacGiaMouseClicked(evt);
+        menu_khoSach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_khoSachActionPerformed(evt);
             }
         });
-        jMenuBar_khosach.add(menu_tacGia);
+        jMenuBar_sach.add(menu_khoSach);
 
-        menu_nhaXB.setText("Nhà XB");
-        menu_nhaXB.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menu_nhaXB.addMouseListener(new java.awt.event.MouseAdapter() {
+        menu_muonTra.setText("Mượn trả sách");
+        menu_muonTra.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menu_nhaXBMouseClicked(evt);
+                menu_muonTraMouseClicked(evt);
             }
         });
-        jMenuBar_khosach.add(menu_nhaXB);
+        jMenuBar_sach.add(menu_muonTra);
 
-        menu_khoSach.setText("Kho Sách");
-        menu_khoSach.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenuBar_khosach.add(menu_khoSach);
+        menu_thongKe.setText("Thống kê");
+        jMenuBar_sach.add(menu_thongKe);
 
-        setJMenuBar(jMenuBar_khosach);
+        setJMenuBar(jMenuBar_sach);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 816, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(26, 26, 26)
+                            .addComponent(btn_them)
+                            .addGap(84, 84, 84)
+                            .addComponent(btn_sua)
+                            .addGap(74, 74, 74)
+                            .addComponent(btn_xoa)
+                            .addGap(64, 64, 64)
+                            .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(28, 28, 28)
+                            .addComponent(btn_timkiem)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel7)
-                        .addGap(43, 43, 43)
-                        .addComponent(txt_vitri, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8)
-                        .addGap(58, 58, 58)
-                        .addComponent(txt_soluong, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(btn_them)
-                        .addGap(14, 14, 14)
-                        .addComponent(btn_sua)
-                        .addGap(14, 14, 14)
-                        .addComponent(btn_xoa)
-                        .addGap(24, 24, 24)
-                        .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(btn_timkiem))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txt_viTri, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_maKho, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_maSach, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(156, 156, 156)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(50, 50, 50)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox_tenSach, 0, 257, Short.MAX_VALUE)
-                            .addComponent(txt_masach))
-                        .addGap(9, 9, 9)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_ngayNhap)
-                            .addComponent(txt_ngayXuat, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txt_soLuong, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                            .addComponent(txt_ngayXuat)
+                            .addComponent(txt_ngayNhap, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(txt_masach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
+                        .addGap(16, 16, 16)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(txt_ngayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox_tenSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5)
-                    .addComponent(txt_ngayXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_maKho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)))
-                    .addComponent(txt_soluong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_vitri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                            .addComponent(txt_soLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))))
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_maSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_ngayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_ngayXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_viTri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_them)
                     .addComponent(btn_sua)
                     .addComponent(btn_xoa)
                     .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_timkiem))
-                .addGap(45, 45, 45)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(63, 63, 63)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_timkiemActionPerformed
-
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
 
     }//GEN-LAST:event_formWindowActivated
 
+    private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
+        
+    }//GEN-LAST:event_btn_themActionPerformed
+
+    private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
+       
+    }//GEN-LAST:event_btn_timkiemActionPerformed
+
+    private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
+        
+    }//GEN-LAST:event_btn_suaActionPerformed
+
+    private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
+        
+    }//GEN-LAST:event_btn_xoaActionPerformed
+
+    private void jTB_sachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTB_sachMouseClicked
+    }//GEN-LAST:event_jTB_sachMouseClicked
+
+    private void menu_khoSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_khoSachMouseClicked
+        fKhoSach khoSachFrame = new fKhoSach();
+        khoSachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
+        khoSachFrame.setLocationRelativeTo(null);
+        khoSachFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_khoSachMouseClicked
+
+    private void menu_khoSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_khoSachActionPerformed
+
+    }//GEN-LAST:event_menu_khoSachActionPerformed
+
+    private void txt_maSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maSachActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_maSachActionPerformed
+
     private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
         fSach sachFrame = new fSach();
-        sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
+        sachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
         sachFrame.setLocationRelativeTo(null);
         sachFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_menu_SachMouseClicked
 
-    private void menu_theLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_theLoaiMouseClicked
-        fTheLoai theLoaiFrame = new fTheLoai();
-        theLoaiFrame.setDefaultCloseOperation(fTheLoai.EXIT_ON_CLOSE);
-        theLoaiFrame.setLocationRelativeTo(null);
-        theLoaiFrame.setVisible(true);
+    private void menu_muonTraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_muonTraMouseClicked
+        fMuonTra muonTraFrame = new fMuonTra();
+        muonTraFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
+        muonTraFrame.setLocationRelativeTo(null);
+        muonTraFrame.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_menu_theLoaiMouseClicked
-
-    private void menu_tacGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_tacGiaMouseClicked
-        fTacGia tacGiaFrame = new fTacGia();
-        tacGiaFrame.setDefaultCloseOperation(fTacGia.EXIT_ON_CLOSE);
-        tacGiaFrame.setLocationRelativeTo(null);
-        tacGiaFrame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_menu_tacGiaMouseClicked
-
-    private void menu_nhaXBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_nhaXBMouseClicked
-        fNhaXB NXBFrame = new fNhaXB();
-        NXBFrame.setDefaultCloseOperation(fNhaXB.EXIT_ON_CLOSE);
-        NXBFrame.setLocationRelativeTo(null);
-        NXBFrame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_menu_nhaXBMouseClicked
-
-    private void jComboBox_tenSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_tenSachActionPerformed
-        
-    }//GEN-LAST:event_jComboBox_tenSachActionPerformed
+    }//GEN-LAST:event_menu_muonTraMouseClicked
 
     public static void main(String args[]) {
 
@@ -277,7 +292,6 @@ public class fKhoSach extends javax.swing.JFrame {
                 khoSachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
                 khoSachFrame.setLocationRelativeTo(null);
                 khoSachFrame.setVisible(true);
-
             }
         });
     }
@@ -287,26 +301,25 @@ public class fKhoSach extends javax.swing.JFrame {
     private javax.swing.JButton btn_them;
     private javax.swing.JButton btn_timkiem;
     private javax.swing.JButton btn_xoa;
-    private javax.swing.JComboBox<String> jComboBox_tenSach;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JMenuBar jMenuBar_khosach;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenuBar jMenuBar_sach;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable_khosach;
+    private javax.swing.JTable jTB_sach;
     private javax.swing.JMenu menu_Sach;
     private javax.swing.JMenu menu_khoSach;
-    private javax.swing.JMenu menu_nhaXB;
-    private javax.swing.JMenu menu_tacGia;
-    private javax.swing.JMenu menu_theLoai;
-    private javax.swing.JTextField txt_masach;
+    private javax.swing.JMenu menu_muonTra;
+    private javax.swing.JMenu menu_thongKe;
+    private javax.swing.JTextField txt_maKho;
+    private javax.swing.JTextField txt_maSach;
     private javax.swing.JTextField txt_ngayNhap;
     private javax.swing.JTextField txt_ngayXuat;
-    private javax.swing.JTextField txt_soluong;
+    private javax.swing.JTextField txt_soLuong;
     private javax.swing.JTextField txt_timkiem;
-    private javax.swing.JTextField txt_vitri;
+    private javax.swing.JTextField txt_viTri;
     // End of variables declaration//GEN-END:variables
 }

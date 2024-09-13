@@ -1,5 +1,11 @@
 ﻿USE master;
 DROP DATABASE IF EXISTS QL_SACH;
+DROP TABLE IF EXISTS Sach;
+DROP TABLE IF EXISTS KhoSach;
+DROP TABLE IF EXISTS docGia;
+DROP TABLE IF EXISTS muonTra;
+
+
 CREATE DATABASE QL_SACH;
 GO
 USE QL_SACH;
@@ -13,7 +19,7 @@ CREATE TABLE Sach (
     so_luong INT,
     tac_gia NVARCHAR(255) NOT NULL,                    
     the_loai NVARCHAR(255) NOT NULL,                    
-    ma_nxb NVARCHAR(255) NOT NULL,                        
+    nxb NVARCHAR(255) NOT NULL,                        
     nam_xuat_ban int   
 );
 GO
@@ -54,12 +60,13 @@ CREATE TABLE muonTra (
 GO
 
 
-INSERT INTO Sach (ten_sach, so_trang, ngon_ngu, gia_tri, so_luong, tac_gia, the_loai, ma_nxb, nam_xuat_ban) VALUES
-(N'Lập Trình C Căn Bản', 300, N'Tiếng Việt', 100000, 50, N'Nguyễn Văn A', 'Giáo trình', N'NXB Giáo Dục', 2019),
-(N'Học Python Trong 24 Giờ', 250, N'Tiếng Việt', 150000, 30, N'Trần Thị B', 'Giáo trình', N'NXB Trẻ', 2021),
-(N'Dế Mèn Phiêu Lưu Ký', 200, N'Tiếng Việt', 50000, 70, N'Tô Hoài', 'Văn học', N'NXB Kim Đồng', 2020);
+INSERT INTO Sach (ten_sach, ngon_ngu, gia_tri, so_luong, tac_gia, the_loai, nxb, nam_xuat_ban) VALUES
+(N'Lập Trình C Căn Bản', N'Tiếng Việt', 100000, 50, N'Nguyễn Văn A', 'Giáo trình', N'NXB Giáo Dục', 2019),
+(N'Học Python Trong 24 Giờ', N'Tiếng Việt', 150000, 30, N'Trần Thị B', 'Giáo trình', N'NXB Trẻ', 2021),
+(N'Dế Mèn Phiêu Lưu Ký', N'Tiếng Việt', 50000, 70, N'Tô Hoài', 'Văn học', N'NXB Kim Đồng', 2020);
 GO
 
+SELECT * FROM Sach;
 
 INSERT INTO KhoSach (ma_sach, vi_tri, so_luong, ngay_nhap, ngay_xuat) VALUES
 (1, N'Kệ A1', 30, 20230101, NULL),
