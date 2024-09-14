@@ -1,15 +1,13 @@
 package DTO;
 
-import java.util.Date;
-
 public class Sach {
     private String ma_sach;
     private String ten_sach;
     private String ngon_ngu_sach;
     private float gia_tri;
     private int so_luong;
-    private String tacgia;
-    private String the_loai;
+    private int tacgia;
+    private int the_loai;
     private String nha_xuat_ban;
     private int nam_xuat_ban;
 
@@ -56,19 +54,19 @@ public class Sach {
         this.so_luong = so_luong;
     }
 
-    public String getTacgia() {
+    public int getTacgia() {
         return tacgia;
     }
 
-    public void setTacgia(String tacgia) {
+    public void setTacgia(int tacgia) {
         this.tacgia = tacgia;
     }
 
-    public String getThe_loai() {
+    public int getThe_loai() {
         return the_loai;
     }
 
-    public void setThe_loai(String the_loai) {
+    public void setThe_loai(int the_loai) {
         this.the_loai = the_loai;
     }
 
@@ -88,7 +86,7 @@ public class Sach {
         this.nam_xuat_ban = nam_xuat_ban;
     }
 
-    public Sach(String ma_sach, String ten_sach, String ngon_ngu_sach, float gia_tri, int so_luong, String tacgia, String the_loai, String nha_xuat_ban, int nam_xuat_ban) {
+    public Sach(String ma_sach, String ten_sach, String ngon_ngu_sach, float gia_tri, int so_luong, int tacgia, int the_loai, String nha_xuat_ban, int nam_xuat_ban) {
         this.ma_sach = ma_sach;
         this.ten_sach = ten_sach;
         this.ngon_ngu_sach = ngon_ngu_sach;
@@ -99,5 +97,6 @@ public class Sach {
         this.nha_xuat_ban = nha_xuat_ban;
         this.nam_xuat_ban = nam_xuat_ban;
     }
+    
     
 }

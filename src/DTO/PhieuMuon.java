@@ -4,36 +4,38 @@
  */
 package DTO;
 
+import java.util.Date;
+
 /**
  *
  * @author admin
  */
-public class MuonTra {
-    private int ma_muon;
-    private int ma_sach;
+public class PhieuMuon {
+    private int ma_phieu_muon;
+    private int ma_thu_thu;
     private int ma_doc_gia;
-    private int ngay_muon;
-    private int ngay_hen_tra;
-    private int ngay_tra;
+    private Date ngay_muon;
+    private Date ngay_hen_tra;
+    private Date ngay_tra;
     private int trang_thai;
 
-    public MuonTra() {
+    public PhieuMuon() {
     }
 
-    public int getMa_muon() {
-        return ma_muon;
+    public int getMa_phieu_muon() {
+        return ma_phieu_muon;
     }
 
-    public void setMa_muon(int ma_muon) {
-        this.ma_muon = ma_muon;
+    public void setMa_phieu_muon(int ma_phieu_muon) {
+        this.ma_phieu_muon = ma_phieu_muon;
     }
 
-    public int getMa_sach() {
-        return ma_sach;
+    public int getMa_thu_thu() {
+        return ma_thu_thu;
     }
 
-    public void setMa_sach(int ma_sach) {
-        this.ma_sach = ma_sach;
+    public void setMa_thu_thu(int ma_thu_thu) {
+        this.ma_thu_thu = ma_thu_thu;
     }
 
     public int getMa_doc_gia() {
@@ -44,27 +46,27 @@ public class MuonTra {
         this.ma_doc_gia = ma_doc_gia;
     }
 
-    public int getNgay_muon() {
+    public Date getNgay_muon() {
         return ngay_muon;
     }
 
-    public void setNgay_muon(int ngay_muon) {
+    public void setNgay_muon(Date ngay_muon) {
         this.ngay_muon = ngay_muon;
     }
 
-    public int getNgay_hen_tra() {
+    public Date getNgay_hen_tra() {
         return ngay_hen_tra;
     }
 
-    public void setNgay_hen_tra(int ngay_hen_tra) {
+    public void setNgay_hen_tra(Date ngay_hen_tra) {
         this.ngay_hen_tra = ngay_hen_tra;
     }
 
-    public int getNgay_tra() {
+    public Date getNgay_tra() {
         return ngay_tra;
     }
 
-    public void setNgay_tra(int ngay_tra) {
+    public void setNgay_tra(Date ngay_tra) {
         this.ngay_tra = ngay_tra;
     }
 
@@ -75,11 +77,10 @@ public class MuonTra {
     public void setTrang_thai(int trang_thai) {
         this.trang_thai = trang_thai;
     }
-    
 
-    public MuonTra(int ma_muon, int ma_sach, int ma_doc_gia, int ngay_muon, int ngay_hen_tra, int ngay_tra, int trang_thai) {
-        this.ma_muon = ma_muon;
-        this.ma_sach = ma_sach;
+    public PhieuMuon(int ma_phieu_muon, int ma_thu_thu, int ma_doc_gia, Date ngay_muon, Date ngay_hen_tra, Date ngay_tra, int trang_thai) {
+        this.ma_phieu_muon = ma_phieu_muon;
+        this.ma_thu_thu = ma_thu_thu;
         this.ma_doc_gia = ma_doc_gia;
         this.ngay_muon = ngay_muon;
         this.ngay_hen_tra = ngay_hen_tra;

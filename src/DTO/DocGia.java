@@ -15,7 +15,6 @@ public class DocGia {
     private String dia_chi;
     private String cmnd;
     private String sdt;
-    private int chuc_vu;
 
     public DocGia() {
     }
@@ -68,22 +67,14 @@ public class DocGia {
         this.sdt = sdt;
     }
 
-    public int getChuc_vu() {
-        return chuc_vu;
-    }
 
-    public void setChuc_vu(int chuc_vu) {
-        this.chuc_vu = chuc_vu;
-    }
-
-    public DocGia(int ma_doc_gia, String ten_doc_gia, int ngay_sinh, String dia_chi, String cmnd, String sdt, int chuc_vu) {
+    public DocGia(int ma_doc_gia, String ten_doc_gia, int ngay_sinh, String dia_chi, String cmnd, String sdt) {
         this.ma_doc_gia = ma_doc_gia;
         this.ten_doc_gia = ten_doc_gia;
         this.ngay_sinh = ngay_sinh;
         this.dia_chi = dia_chi;
         this.cmnd = cmnd;
         this.sdt = sdt;
-        this.chuc_vu = chuc_vu;
     }
     
     

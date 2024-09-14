@@ -1,89 +1,131 @@
 ﻿USE master;
 DROP DATABASE IF EXISTS QL_SACH;
-DROP TABLE IF EXISTS Sach;
-DROP TABLE IF EXISTS KhoSach;
-DROP TABLE IF EXISTS docGia;
-DROP TABLE IF EXISTS muonTra;
-
 
 CREATE DATABASE QL_SACH;
 GO
 USE QL_SACH;
 GO
 
-CREATE TABLE Sach (
+-- Bảng Tác giả
+CREATE TABLE TAC_GIA (
+    ma_tac_gia INT PRIMARY KEY IDENTITY(1,1),           
+    ten_tac_gia NVARCHAR(255) NOT NULL
+);
+GO
+
+-- Bảng Thể loại
+CREATE TABLE THE_LOAI (
+    ma_the_loai INT PRIMARY KEY IDENTITY(1,1),           
+    ten_the_loai NVARCHAR(255) NOT NULL
+);
+GO
+
+-- Bảng Sách
+CREATE TABLE SACH (
     ma_sach INT PRIMARY KEY IDENTITY(1,1),            
     ten_sach NVARCHAR(255) NOT NULL,    
     ngon_ngu NVARCHAR(255) NOT NULL,
     gia_tri FLOAT,
     so_luong INT,
-    tac_gia NVARCHAR(255) NOT NULL,                    
-    the_loai NVARCHAR(255) NOT NULL,                    
+    ma_tac_gia INT,                             
+    ma_the_loai INT,                     
     nxb NVARCHAR(255) NOT NULL,                        
-    nam_xuat_ban int   
+    nam_xuat_ban DATE,
+    FOREIGN KEY (ma_tac_gia) REFERENCES TAC_GIA(ma_tac_gia),
+    FOREIGN KEY (ma_the_loai) REFERENCES THE_LOAI(ma_the_loai)
 );
 GO
 
-CREATE TABLE KhoSach (
-    ma_kho INT PRIMARY KEY IDENTITY(1,1),           
-    ma_sach INT,                       
-    vi_tri NVARCHAR(255),               
-    so_luong INT,
-    ngay_nhap int, 
-    ngay_xuat int NULL,
-    FOREIGN KEY (ma_sach) REFERENCES Sach(ma_sach) 
-);
-GO
-
-CREATE TABLE docGia (
-    ma_doc_gia INT PRIMARY KEY IDENTITY(1,1),                                 
-    ten_doc_gia NVARCHAR(255) NOT NULL,
-    ngay_sinh int,
-    dia_chi NVARCHAR(255) NOT NULL,
+-- Bảng Thủ thư với thêm email và password
+CREATE TABLE THU_THU (
+    ma_thu_thu INT PRIMARY KEY IDENTITY(1,1),  
+    ten_thu_thu NVARCHAR(255) NOT NULL,
     cmnd VARCHAR(20) NOT NULL,
     sdt VARCHAR(20) NOT NULL,
-    chuc_vu TINYINT
+    email NVARCHAR(255) NOT NULL,
+    password NVARCHAR(255) NOT NULL
 );
 GO
 
-CREATE TABLE muonTra (
-    ma_muon INT PRIMARY KEY IDENTITY(1,1),      
-    ma_sach INT,
+-- Bảng Độc giả
+CREATE TABLE DOC_GIA (
+    ma_doc_gia INT PRIMARY KEY IDENTITY(1,1),                                 
+    ten_doc_gia NVARCHAR(255) NOT NULL,
+    ngay_sinh DATE,
+    dia_chi NVARCHAR(255) NOT NULL,
+    cmnd VARCHAR(20) NOT NULL,
+    sdt VARCHAR(20) NOT NULL
+);
+GO
+
+-- Bảng Phiếu mượn
+CREATE TABLE PHIEU_MUON (
+    ma_phieu_muon INT PRIMARY KEY IDENTITY(1,1),      
+    ma_thu_thu INT,
     ma_doc_gia INT,
-    ngay_muon int,
-    ngay_hen_tra int,
-    ngay_tra int NULL,
-    trang_thai TINYINT,
-    FOREIGN KEY (ma_sach) REFERENCES Sach(ma_sach),
-    FOREIGN KEY (ma_doc_gia) REFERENCES docGia(ma_doc_gia)
+    ngay_muon DATE,
+    ngay_hen_tra DATE,
+    ngay_tra DATE NULL,
+	trang_thai TINYINT,
+    FOREIGN KEY (ma_thu_thu) REFERENCES THU_THU(ma_thu_thu),
+    FOREIGN KEY (ma_doc_gia) REFERENCES DOC_GIA(ma_doc_gia)
 );
 GO
 
-
-INSERT INTO Sach (ten_sach, ngon_ngu, gia_tri, so_luong, tac_gia, the_loai, nxb, nam_xuat_ban) VALUES
-(N'Lập Trình C Căn Bản', N'Tiếng Việt', 100000, 50, N'Nguyễn Văn A', 'Giáo trình', N'NXB Giáo Dục', 2019),
-(N'Học Python Trong 24 Giờ', N'Tiếng Việt', 150000, 30, N'Trần Thị B', 'Giáo trình', N'NXB Trẻ', 2021),
-(N'Dế Mèn Phiêu Lưu Ký', N'Tiếng Việt', 50000, 70, N'Tô Hoài', 'Văn học', N'NXB Kim Đồng', 2020);
+-- Bảng Chi tiết phiếu mượn
+CREATE TABLE CHI_TIET_PHIEU_MUON (
+    ma_chi_tiet INT PRIMARY KEY IDENTITY(1,1),
+    ma_phieu_muon INT,
+    ma_sach INT,
+    so_luong INT,
+    trang_thai TINYINT,
+    FOREIGN KEY (ma_phieu_muon) REFERENCES PHIEU_MUON(ma_phieu_muon),
+    FOREIGN KEY (ma_sach) REFERENCES SACH(ma_sach)
+);
 GO
 
-SELECT * FROM Sach;
-
-INSERT INTO KhoSach (ma_sach, vi_tri, so_luong, ngay_nhap, ngay_xuat) VALUES
-(1, N'Kệ A1', 30, 20230101, NULL),
-(2, N'Kệ B2', 20, 20230301, NULL),
-(3, N'Kệ C3', 40, 20230501, 20230901);
+-- Thêm dữ liệu vào bảng Tác giả
+INSERT INTO TAC_GIA (ten_tac_gia) VALUES
+(N'Nguyễn Văn A'),
+(N'Trần Thị B'),
+(N'Tô Hoài');
 GO
 
-
-INSERT INTO docGia (ten_doc_gia, ngay_sinh, dia_chi, cmnd, sdt, chuc_vu) VALUES
-(N'Nguyễn Văn C', 19900101, N'Hà Nội', '123456789', '0987654321', 0),
-(N'Trần Thị D', 19850615, N'TP Hồ Chí Minh', '987654321', '0912345678', 1),
-(N'Lê Văn E', 19951230, N'Đà Nẵng', '456123789', '0934567890', 0);
+-- Thêm dữ liệu vào bảng Thể loại
+INSERT INTO THE_LOAI (ten_the_loai) VALUES
+(N'Giáo trình'),
+(N'Văn học');
 GO
 
+-- Thêm dữ liệu vào bảng Sách
+INSERT INTO SACH (ten_sach, ngon_ngu, gia_tri, so_luong, ma_tac_gia, ma_the_loai, nxb, nam_xuat_ban) VALUES
+(N'Lập Trình C Căn Bản', N'Tiếng Việt', 100000, 50, 1, 1, N'NXB Giáo Dục', '1990-01-01'),
+(N'Học Python Trong 24 Giờ', N'Tiếng Việt', 150000, 30, 2, 1, N'NXB Trẻ', '1985-06-15'),
+(N'Dế Mèn Phiêu Lưu Ký', N'Tiếng Việt', 50000, 70, 3, 2, N'NXB Kim Đồng', '1995-12-30');
+GO
 
-INSERT INTO muonTra (ma_sach, ma_doc_gia, ngay_muon, ngay_hen_tra, ngay_tra, trang_thai) VALUES
-(1, 1, 20230801, 20230815, NULL, 0),
-(2, 2, 20230905, 20230920, 20230919, 1),
-(3, 3, 20230810, 20230825, NULL, 0);
+-- Thêm dữ liệu vào bảng Thủ thư
+INSERT INTO THU_THU (ten_thu_thu, cmnd, sdt, email, password) VALUES
+(N'Nguyễn Văn Thủ Thư', '123456789', '0987654321', 'thu@thu.com', 'thu123');
+GO
+
+-- Thêm dữ liệu vào bảng Độc giả
+INSERT INTO DOC_GIA (ten_doc_gia, ngay_sinh, dia_chi, cmnd, sdt) VALUES
+(N'Nguyễn Văn C', '1990-01-01', N'Hà Nội', '123456789', '0987654321'),
+(N'Trần Thị D', '1985-06-15', N'TP Hồ Chí Minh', '987654321', '0912345678'),
+(N'Lê Văn E', '1995-12-30', N'Đà Nẵng', '456123789', '0934567890');
+GO
+
+-- Thêm dữ liệu vào bảng Phiếu mượn
+INSERT INTO PHIEU_MUON (ma_thu_thu, ma_doc_gia, ngay_muon, ngay_hen_tra, ngay_tra) VALUES
+(1, 1, '2023-08-01', '2023-08-15', NULL),
+(1, 2, '2023-09-05', '2023-09-20', '2023-09-19'),
+(1, 3, '2023-08-10', '2023-08-25', NULL);
+GO
+
+-- Thêm dữ liệu vào bảng Chi tiết phiếu mượn
+INSERT INTO CHI_TIET_PHIEU_MUON (ma_phieu_muon, ma_sach, so_luong, trang_thai) VALUES
+(1, 1, 1, 0),
+(2, 2, 1, 1),
+(3, 3, 1, 0);
 GO
