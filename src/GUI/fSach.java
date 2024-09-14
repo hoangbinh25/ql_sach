@@ -1,10 +1,132 @@
 package GUI;
 
+import javax.swing.JOptionPane;
+import DAL.SachDAL;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import DTO.Sach;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.table.DefaultTableModel;
 
 public class fSach extends javax.swing.JFrame {
 
     public fSach() {
         initComponents();
+        Load();
+    }
+
+    private void Load() {
+        // load cbb tác giả
+        cbb_tacGia.removeAllItems();
+        try {
+            List<String> tacGiaList = SachDAL.load_cbb_TacGiaData();
+            for (String tenTacGia : tacGiaList) {
+                cbb_tacGia.addItem(tenTacGia);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xử lý dữ liệu từ bảng Tác Giả: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+
+        // load cbb thể loại
+        cbb_theLoai.removeAllItems();
+        try {
+            List<String> theLoaiList = SachDAL.load_cbb_TheLoaiData();
+            for (String tenTheLoai : theLoaiList) {
+                cbb_theLoai.addItem(tenTheLoai);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xử lý dữ liệu từ bảng Thể Loại: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Mã Sách");
+            model.addColumn("Tên Sách");
+            model.addColumn("Ngôn Ngữ");
+            model.addColumn("Giá Trị");
+            model.addColumn("Số Lượng");
+            model.addColumn("Tác Giả");
+            model.addColumn("Thể Loại");
+            model.addColumn("Nhà XB");
+            model.addColumn("Năm Sản Xuất");
+
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+            List<Sach> tacGiaList = SachDAL.loadTbaleData();
+
+            for (Sach s : tacGiaList) {
+                int maSach = s.getMa_sach();
+                String ten_sach = s.getTen_sach();
+                String ngon_ngu_sach = s.getNgon_ngu_sach();
+                float gia_tri = s.getGia_tri();
+                int so_luong = s.getSo_luong();
+                String tacgia = SachDAL.getTacGiaById(s.getTacgia());
+                String the_loai = SachDAL.getTheLoaiById(s.getThe_loai());
+                String nha_xuat_ban = s.getNha_xuat_ban();
+                Date namSX = s.getNam_xuat_ban();
+                String namSXFormatted = dateFormatter.format(namSX);
+                model.addRow(new Object[]{maSach, ten_sach, ngon_ngu_sach, gia_tri, so_luong, tacgia, the_loai, nha_xuat_ban, namSXFormatted});
+            }
+
+            jTB_sach.setModel(model);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xử lý dữ liệu : " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    public void loadTBL_SEARCH(String search) {
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Mã Sách");
+            model.addColumn("Tên Sách");
+            model.addColumn("Ngôn Ngữ");
+            model.addColumn("Giá Trị");
+            model.addColumn("Số Lượng");
+            model.addColumn("Tác Giả");
+            model.addColumn("Thể Loại");
+            model.addColumn("Nhà XB");
+            model.addColumn("Năm Sản Xuất");
+
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+            List<Sach> tacGiaList = SachDAL.loadTbaleDataSearch(search);
+            for (Sach s : tacGiaList) {
+                int maSach = s.getMa_sach();
+                String ten_sach = s.getTen_sach();
+                String ngon_ngu_sach = s.getNgon_ngu_sach();
+                float gia_tri = s.getGia_tri();
+                int so_luong = s.getSo_luong();
+                String tacgia = SachDAL.getTacGiaById(s.getTacgia());
+                String the_loai = SachDAL.getTheLoaiById(s.getThe_loai());
+                String nha_xuat_ban = s.getNha_xuat_ban();
+                Date namSX = s.getNam_xuat_ban();
+                String namSXFormatted = dateFormatter.format(namSX);
+                model.addRow(new Object[]{maSach, ten_sach, ngon_ngu_sach, gia_tri, so_luong, tacgia, the_loai, nha_xuat_ban, namSXFormatted});
+            }
+
+            jTB_sach.setModel(model);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xử lý dữ liệu : " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    private void clearForm() {
+        txt_ngonNgu.setText("");
+        txt_soLuong.setText("");
+        txt_giaTri.setText("");
+        txt_nhaXB.setText("");
+        txt_maSach.setText("");
+        txt_tenSach.setText("");
+        txt_namXB.setText("");
+        cbb_tacGia.setSelectedIndex(0);
+        cbb_theLoai.setSelectedIndex(0);
     }
 
     @SuppressWarnings("unchecked")
@@ -276,22 +398,127 @@ public class fSach extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
+        try {
+        Sach sach = new Sach(
+            // Bỏ qua mã sách vì mã sách sẽ tự động tăng
+            Integer.parseInt(txt_maSach.getText()),
+            txt_tenSach.getText(),
+            txt_ngonNgu.getText(),
+            Float.parseFloat(txt_giaTri.getText()),
+            Integer.parseInt(txt_soLuong.getText()),
+            cbb_tacGia.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của tác giả
+            cbb_theLoai.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của thể loại
+            txt_nhaXB.getText(),
+            java.sql.Date.valueOf(txt_namXB.getText()) // Chuyển đổi sang kiểu Date
+        );
 
+        // Gọi phương thức để thêm sách vào cơ sở dữ liệu
+        SachDAL.themSach(sach);
+
+        // Thông báo thêm thành công
+        JOptionPane.showMessageDialog(null, "Thêm sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        Load();
+        clearForm();
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Thêm sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
-
+        String search = txt_timkiem.getText();
+        if (search.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Chưa có dữ liệu tìm kiếm đầu vào", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            loadTBL_SEARCH(search);
+        }
     }//GEN-LAST:event_btn_timkiemActionPerformed
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
+        try {
+        Sach sach = new Sach(
+            Integer.parseInt(txt_maSach.getText()), // Cập nhật dựa trên mã sách
+            txt_tenSach.getText(),
+            txt_ngonNgu.getText(),
+            Float.parseFloat(txt_giaTri.getText()),
+            Integer.parseInt(txt_soLuong.getText()),
+            cbb_tacGia.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của tác giả
+            cbb_theLoai.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của thể loại
+            txt_nhaXB.getText(),
+            java.sql.Date.valueOf(txt_namXB.getText()) // Chuyển đổi sang kiểu Date
+        );
 
+        // Gọi phương thức để cập nhật sách vào cơ sở dữ liệu
+        SachDAL.capNhatSach(sach);
+
+        // Thông báo cập nhật thành công
+        JOptionPane.showMessageDialog(null, "Cập nhật sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        Load();
+        clearForm();
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Cập nhật sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btn_suaActionPerformed
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
+         try {
+        int maSach = Integer.parseInt(txt_maSach.getText()); // Lấy mã sách từ giao diện người dùng
+        
+        // Gọi phương thức để xóa sách khỏi cơ sở dữ liệu
+        SachDAL.xoaSach(maSach);
 
+        // Thông báo xóa thành công
+        JOptionPane.showMessageDialog(null, "Xóa sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        Load();
+        clearForm();
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Mã sách không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Xóa sách thất bại! Vui lòng kiểm tra mã sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btn_xoaActionPerformed
 
     private void jTB_sachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTB_sachMouseClicked
+        int curent = jTB_sach.getSelectedRow();
+
+        // Lấy hàng hiện tại
+        //int curent = jTB_sach.getSelectedRow();
+// Điền dữ liệu vào các JTextField
+        txt_maSach.setText(String.valueOf(jTB_sach.getValueAt(curent, 0)));
+        txt_tenSach.setText(String.valueOf(jTB_sach.getValueAt(curent, 1)));
+        txt_ngonNgu.setText(String.valueOf(jTB_sach.getValueAt(curent, 2)));
+        txt_giaTri.setText(String.valueOf(jTB_sach.getValueAt(curent, 3)));
+        txt_soLuong.setText(String.valueOf(jTB_sach.getValueAt(curent, 4)));
+
+// Lấy mã tác giả từ bảng (cột 5)
+        String maTacGia = String.valueOf(jTB_sach.getValueAt(curent, 5));
+
+// Duyệt qua các mục trong cbb_tacGia để tìm item khớp với mã tác giả
+        for (int i = 0; i < cbb_tacGia.getItemCount(); i++) {
+            if (cbb_tacGia.getItemAt(i).toString().equals(maTacGia)) {
+                cbb_tacGia.setSelectedIndex(i);
+                break;
+            }
+        }
+
+// Điền dữ liệu vào các JTextField khác
+        txt_nhaXB.setText(String.valueOf(jTB_sach.getValueAt(curent, 7)));
+
+// Lấy mã thể loại từ bảng (cột 7)
+        String maTheLoai = String.valueOf(jTB_sach.getValueAt(curent, 6));
+
+// Duyệt qua các mục trong cbb_theLoai để tìm item khớp với mã thể loại
+        for (int i = 0; i < cbb_theLoai.getItemCount(); i++) {
+            if (cbb_theLoai.getItemAt(i).toString().equals(maTheLoai)) {
+                cbb_theLoai.setSelectedIndex(i);
+                break;
+            }
+        }
+
+// Điền năm xuất bản
+        txt_namXB.setText(String.valueOf(jTB_sach.getValueAt(curent, 8)));
 
     }//GEN-LAST:event_jTB_sachMouseClicked
 

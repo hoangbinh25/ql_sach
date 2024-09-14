@@ -1,7 +1,9 @@
 package DTO;
 
+import java.util.Date;
+
 public class Sach {
-    private String ma_sach;
+    private int ma_sach;
     private String ten_sach;
     private String ngon_ngu_sach;
     private float gia_tri;
@@ -9,16 +11,16 @@ public class Sach {
     private int tacgia;
     private int the_loai;
     private String nha_xuat_ban;
-    private int nam_xuat_ban;
+    private Date nam_xuat_ban;
 
     public Sach() {
     }
 
-    public String getMa_sach() {
+    public int getMa_sach() {
         return ma_sach;
     }
 
-    public void setMa_sach(String ma_sach) {
+    public void setMa_sach(int ma_sach) {
         this.ma_sach = ma_sach;
     }
 
@@ -78,15 +80,15 @@ public class Sach {
         this.nha_xuat_ban = nha_xuat_ban;
     }
 
-    public int getNam_xuat_ban() {
+    public Date getNam_xuat_ban() {
         return nam_xuat_ban;
     }
 
-    public void setNam_xuat_ban(int nam_xuat_ban) {
+    public void setNam_xuat_ban(Date nam_xuat_ban) {
         this.nam_xuat_ban = nam_xuat_ban;
     }
 
-    public Sach(String ma_sach, String ten_sach, String ngon_ngu_sach, float gia_tri, int so_luong, int tacgia, int the_loai, String nha_xuat_ban, int nam_xuat_ban) {
+    public Sach(int ma_sach, String ten_sach, String ngon_ngu_sach, float gia_tri, int so_luong, int tacgia, int the_loai, String nha_xuat_ban, Date nam_xuat_ban) {
         this.ma_sach = ma_sach;
         this.ten_sach = ten_sach;
         this.ngon_ngu_sach = ngon_ngu_sach;
@@ -97,6 +99,4 @@ public class Sach {
         this.nha_xuat_ban = nha_xuat_ban;
         this.nam_xuat_ban = nam_xuat_ban;
     }
-    
-    
 }
