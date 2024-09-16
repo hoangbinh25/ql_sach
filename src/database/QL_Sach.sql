@@ -63,7 +63,7 @@ CREATE TABLE PHIEU_MUON (
     ma_phieu_muon INT PRIMARY KEY,      
     ma_thu_thu INT,
     ma_doc_gia INT,
-    ngay_muon DATE,
+    ngay_muon DATE DEFAULT GETDATE(),
     ngay_hen_tra DATE,
     ngay_tra DATE NULL,
 	trang_thai TINYINT,
@@ -124,10 +124,10 @@ INSERT INTO PHIEU_MUON (ma_phieu_muon, ma_thu_thu, ma_doc_gia, ngay_muon, ngay_h
 GO
 SELECT * FROM CHI_TIET_PHIEU_MUON
 -- Thêm dữ liệu vào bảng Chi tiết phiếu mượn
-INSERT INTO CHI_TIET_PHIEU_MUON (ma_phieu_muon, ma_sach, so_luong, trang_thai) VALUES
-(1, 1, 1, 0),
-(2, 2, 1, 1),
-(3, 3, 1, 0);
+INSERT INTO CHI_TIET_PHIEU_MUON (ma_chi_tiet, ma_phieu_muon, ma_sach, so_luong, trang_thai) VALUES
+(1, 1, 1, 1, 0),
+(2, 2, 2, 1, 1),
+(3, 3, 3, 1, 0);
 GO
 
 DECLARE @keyword NVARCHAR(255) = N'nguye';

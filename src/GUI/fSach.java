@@ -400,24 +400,19 @@ public class fSach extends javax.swing.JFrame {
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         try {
         Sach sach = new Sach(
-            // Bỏ qua mã sách vì mã sách sẽ tự động tăng
             Integer.parseInt(txt_maSach.getText()),
             txt_tenSach.getText(),
             txt_ngonNgu.getText(),
             Float.parseFloat(txt_giaTri.getText()),
             Integer.parseInt(txt_soLuong.getText()),
-            cbb_tacGia.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của tác giả
-            cbb_theLoai.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của thể loại
+            cbb_tacGia.getSelectedIndex() + 1, 
+            cbb_theLoai.getSelectedIndex() + 1, 
             txt_nhaXB.getText(),
-            java.sql.Date.valueOf(txt_namXB.getText()) // Chuyển đổi sang kiểu Date
+            java.sql.Date.valueOf(txt_namXB.getText())
         );
-
-        // Gọi phương thức để thêm sách vào cơ sở dữ liệu
         SachDAL.themSach(sach);
-
-        // Thông báo thêm thành công
-        JOptionPane.showMessageDialog(null, "Thêm sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        Load();
+            JOptionPane.showMessageDialog(null, "Thêm sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
         clearForm();
     } catch (Exception e) {
         e.printStackTrace();

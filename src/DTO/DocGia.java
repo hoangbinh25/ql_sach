@@ -4,6 +4,8 @@
  */
 package DTO;
 
+import java.util.Date;
+
 /**
  *
  * @author admin
@@ -11,7 +13,7 @@ package DTO;
 public class DocGia {
     private int ma_doc_gia;
     private String ten_doc_gia;
-    private int ngay_sinh;
+    private Date ngay_sinh;
     private String dia_chi;
     private String cmnd;
     private String sdt;
@@ -35,11 +37,11 @@ public class DocGia {
         this.ten_doc_gia = ten_doc_gia;
     }
 
-    public int getNgay_sinh() {
+    public Date getNgay_sinh() {
         return ngay_sinh;
     }
 
-    public void setNgay_sinh(int ngay_sinh) {
+    public void setNgay_sinh(Date ngay_sinh) {
         this.ngay_sinh = ngay_sinh;
     }
 
@@ -68,7 +70,7 @@ public class DocGia {
     }
 
 
-    public DocGia(int ma_doc_gia, String ten_doc_gia, int ngay_sinh, String dia_chi, String cmnd, String sdt) {
+    public DocGia(int ma_doc_gia, String ten_doc_gia, Date ngay_sinh, String dia_chi, String cmnd, String sdt) {
         this.ma_doc_gia = ma_doc_gia;
         this.ten_doc_gia = ten_doc_gia;
         this.ngay_sinh = ngay_sinh;
