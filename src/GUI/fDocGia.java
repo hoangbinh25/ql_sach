@@ -35,6 +35,8 @@ public class fDocGia extends javax.swing.JFrame {
         menu_Sach = new javax.swing.JMenu();
         menu_khoSach = new javax.swing.JMenu();
         menu_muonTra = new javax.swing.JMenu();
+        menu_qlTheLoai = new javax.swing.JMenu();
+        menu_qlTacGia = new javax.swing.JMenu();
         menu_thongKe = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -140,6 +142,17 @@ public class fDocGia extends javax.swing.JFrame {
             }
         });
         jMenuBar_sach.add(menu_muonTra);
+
+        menu_qlTheLoai.setText("Quản lý thể loại");
+        menu_qlTheLoai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_qlTheLoaiMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_qlTheLoai);
+
+        menu_qlTacGia.setText("Quản lý tác giả");
+        jMenuBar_sach.add(menu_qlTacGia);
 
         menu_thongKe.setText("Thống kê");
         jMenuBar_sach.add(menu_thongKe);
@@ -277,7 +290,7 @@ public class fDocGia extends javax.swing.JFrame {
 
     private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
         fSach sachFrame = new fSach();
-        sachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
+        sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
         sachFrame.setLocationRelativeTo(null);
         sachFrame.setVisible(true);
         this.dispose();
@@ -292,16 +305,24 @@ public class fDocGia extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_khoSachMouseClicked
 
     private void menu_khoSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_khoSachActionPerformed
-
+        
     }//GEN-LAST:event_menu_khoSachActionPerformed
 
     private void menu_muonTraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_muonTraMouseClicked
         fMuonTra muonTraFrame = new fMuonTra();
-        muonTraFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
+        muonTraFrame.setDefaultCloseOperation(fMuonTra.EXIT_ON_CLOSE);
         muonTraFrame.setLocationRelativeTo(null);
         muonTraFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_menu_muonTraMouseClicked
+
+    private void menu_qlTheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTheLoaiMouseClicked
+        fTheLoai theLoaiFrame = new fTheLoai();
+        theLoaiFrame.setDefaultCloseOperation(fTheLoai.EXIT_ON_CLOSE);
+        theLoaiFrame.setLocationRelativeTo(null);
+        theLoaiFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_qlTheLoaiMouseClicked
 
     public static void main(String args[]) {
 
@@ -333,6 +354,8 @@ public class fDocGia extends javax.swing.JFrame {
     private javax.swing.JMenu menu_Sach;
     private javax.swing.JMenu menu_khoSach;
     private javax.swing.JMenu menu_muonTra;
+    private javax.swing.JMenu menu_qlTacGia;
+    private javax.swing.JMenu menu_qlTheLoai;
     private javax.swing.JMenu menu_thongKe;
     private javax.swing.JTextField txt_CCCD;
     private javax.swing.JTextField txt_SDT;

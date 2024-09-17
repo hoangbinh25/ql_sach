@@ -1,15 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DTO;
 
 import java.util.Date;
 
-/**
- *
- * @author admin
- */
 public class PhieuMuon {
     private int ma_phieu_muon;
     private int ma_thu_thu;

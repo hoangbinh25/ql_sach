@@ -162,6 +162,8 @@ public class fSach extends javax.swing.JFrame {
         menu_Sach = new javax.swing.JMenu();
         menu_khoSach = new javax.swing.JMenu();
         menu_muonTra = new javax.swing.JMenu();
+        menu_qlTheLoai = new javax.swing.JMenu();
+        menu_qlTacGia = new javax.swing.JMenu();
         menu_thongKe = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -240,6 +242,11 @@ public class fSach extends javax.swing.JFrame {
         cbb_theLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         cbb_tacGia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbb_tacGia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbb_tacGiaActionPerformed(evt);
+            }
+        });
 
         menu_Sach.setText("Quản lý sách");
         menu_Sach.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -269,6 +276,17 @@ public class fSach extends javax.swing.JFrame {
             }
         });
         jMenuBar_sach.add(menu_muonTra);
+
+        menu_qlTheLoai.setText("Quản lý thể loại");
+        menu_qlTheLoai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_qlTheLoaiMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_qlTheLoai);
+
+        menu_qlTacGia.setText("Quản lý tác giả");
+        jMenuBar_sach.add(menu_qlTacGia);
 
         menu_thongKe.setText("Thống kê");
         jMenuBar_sach.add(menu_thongKe);
@@ -399,30 +417,30 @@ public class fSach extends javax.swing.JFrame {
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         try {
-        Sach sach = new Sach(
-            // Bỏ qua mã sách vì mã sách sẽ tự động tăng
-            Integer.parseInt(txt_maSach.getText()),
-            txt_tenSach.getText(),
-            txt_ngonNgu.getText(),
-            Float.parseFloat(txt_giaTri.getText()),
-            Integer.parseInt(txt_soLuong.getText()),
-            cbb_tacGia.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của tác giả
-            cbb_theLoai.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của thể loại
-            txt_nhaXB.getText(),
-            java.sql.Date.valueOf(txt_namXB.getText()) // Chuyển đổi sang kiểu Date
-        );
+            Sach sach = new Sach(
+                    // Bỏ qua mã sách vì mã sách sẽ tự động tăng
+                    Integer.parseInt(txt_maSach.getText()),
+                    txt_tenSach.getText(),
+                    txt_ngonNgu.getText(),
+                    Float.parseFloat(txt_giaTri.getText()),
+                    Integer.parseInt(txt_soLuong.getText()),
+                    cbb_tacGia.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của tác giả
+                    cbb_theLoai.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của thể loại
+                    txt_nhaXB.getText(),
+                    java.sql.Date.valueOf(txt_namXB.getText()) // Chuyển đổi sang kiểu Date
+            );
 
-        // Gọi phương thức để thêm sách vào cơ sở dữ liệu
-        SachDAL.themSach(sach);
+            // Gọi phương thức để thêm sách vào cơ sở dữ liệu
+            SachDAL.themSach(sach);
 
-        // Thông báo thêm thành công
-        JOptionPane.showMessageDialog(null, "Thêm sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        Load();
-        clearForm();
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Thêm sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-    }
+            // Thông báo thêm thành công
+            JOptionPane.showMessageDialog(null, "Thêm sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
+            clearForm();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Thêm sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
@@ -436,48 +454,48 @@ public class fSach extends javax.swing.JFrame {
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
         try {
-        Sach sach = new Sach(
-            Integer.parseInt(txt_maSach.getText()), // Cập nhật dựa trên mã sách
-            txt_tenSach.getText(),
-            txt_ngonNgu.getText(),
-            Float.parseFloat(txt_giaTri.getText()),
-            Integer.parseInt(txt_soLuong.getText()),
-            cbb_tacGia.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của tác giả
-            cbb_theLoai.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của thể loại
-            txt_nhaXB.getText(),
-            java.sql.Date.valueOf(txt_namXB.getText()) // Chuyển đổi sang kiểu Date
-        );
+            Sach sach = new Sach(
+                    Integer.parseInt(txt_maSach.getText()), // Cập nhật dựa trên mã sách
+                    txt_tenSach.getText(),
+                    txt_ngonNgu.getText(),
+                    Float.parseFloat(txt_giaTri.getText()),
+                    Integer.parseInt(txt_soLuong.getText()),
+                    cbb_tacGia.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của tác giả
+                    cbb_theLoai.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của thể loại
+                    txt_nhaXB.getText(),
+                    java.sql.Date.valueOf(txt_namXB.getText()) // Chuyển đổi sang kiểu Date
+            );
 
-        // Gọi phương thức để cập nhật sách vào cơ sở dữ liệu
-        SachDAL.capNhatSach(sach);
+            // Gọi phương thức để cập nhật sách vào cơ sở dữ liệu
+            SachDAL.capNhatSach(sach);
 
-        // Thông báo cập nhật thành công
-        JOptionPane.showMessageDialog(null, "Cập nhật sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        Load();
-        clearForm();
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Cập nhật sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-    }
+            // Thông báo cập nhật thành công
+            JOptionPane.showMessageDialog(null, "Cập nhật sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
+            clearForm();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Cập nhật sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_suaActionPerformed
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
-         try {
-        int maSach = Integer.parseInt(txt_maSach.getText()); // Lấy mã sách từ giao diện người dùng
-        
-        // Gọi phương thức để xóa sách khỏi cơ sở dữ liệu
-        SachDAL.xoaSach(maSach);
+        try {
+            int maSach = Integer.parseInt(txt_maSach.getText()); // Lấy mã sách từ giao diện người dùng
 
-        // Thông báo xóa thành công
-        JOptionPane.showMessageDialog(null, "Xóa sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        Load();
-        clearForm();
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Mã sách không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Xóa sách thất bại! Vui lòng kiểm tra mã sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-    }
+            // Gọi phương thức để xóa sách khỏi cơ sở dữ liệu
+            SachDAL.xoaSach(maSach);
+
+            // Thông báo xóa thành công
+            JOptionPane.showMessageDialog(null, "Xóa sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
+            clearForm();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Mã sách không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Xóa sách thất bại! Vui lòng kiểm tra mã sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_xoaActionPerformed
 
     private void jTB_sachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTB_sachMouseClicked
@@ -528,7 +546,7 @@ public class fSach extends javax.swing.JFrame {
 
     private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
         fSach sachFrame = new fSach();
-        sachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
+        sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
         sachFrame.setLocationRelativeTo(null);
         sachFrame.setVisible(true);
         this.dispose();
@@ -548,11 +566,23 @@ public class fSach extends javax.swing.JFrame {
 
     private void menu_muonTraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_muonTraMouseClicked
         fMuonTra muonTraFrame = new fMuonTra();
-        muonTraFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
+        muonTraFrame.setDefaultCloseOperation(fMuonTra.EXIT_ON_CLOSE);
         muonTraFrame.setLocationRelativeTo(null);
         muonTraFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_menu_muonTraMouseClicked
+
+    private void menu_qlTheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTheLoaiMouseClicked
+        fTheLoai theLoaiFrame = new fTheLoai();
+        theLoaiFrame.setDefaultCloseOperation(fTheLoai.EXIT_ON_CLOSE);
+        theLoaiFrame.setLocationRelativeTo(null);
+        theLoaiFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_qlTheLoaiMouseClicked
+
+    private void cbb_tacGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_tacGiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbb_tacGiaActionPerformed
 
     public static void main(String args[]) {
 
@@ -588,6 +618,8 @@ public class fSach extends javax.swing.JFrame {
     private javax.swing.JMenu menu_Sach;
     private javax.swing.JMenu menu_khoSach;
     private javax.swing.JMenu menu_muonTra;
+    private javax.swing.JMenu menu_qlTacGia;
+    private javax.swing.JMenu menu_qlTheLoai;
     private javax.swing.JMenu menu_thongKe;
     private javax.swing.JTextField txt_giaTri;
     private javax.swing.JTextField txt_maSach;

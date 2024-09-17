@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import java.util.UUID;
 
 public class fDangKy extends javax.swing.JFrame {
 
@@ -168,6 +169,12 @@ public class fDangKy extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+  public boolean isValidEmailAddress(String email) {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
+    }
 
     private void btn_dkyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dkyActionPerformed
         String email = txt_email.getText();
@@ -179,11 +186,16 @@ public class fDangKy extends javax.swing.JFrame {
             return;
         }
 
-        String sql_check = "SELECT * FROM TaiKhoan WHERE email = ? OR ten_tai_khoan = ?";
-
-        String sql_dky = "INSERT INTO TaiKhoan(email, ten_tai_khoan, mat_khau) VALUES(?, ?, ?)";
-
+        String sql_check = "SELECT * FROM THU_THU WHERE email = ? OR ten_thu_thu = ?";
+        String sql_dky = "INSERT INTO THU_THU(email, ten_thu_thu, password, cmnd, sdt) VALUES( ?, ?, ?, NULL, NULL)";
+        
         try (Connection conn = ConnectToSQLServer.getConnection()) {
+            // Kiểm tra định dạng email
+            if (!isValidEmailAddress(email)) {
+                JOptionPane.showMessageDialog(this, "Email không hợp lệ!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                return; // Dừng lại nếu email không hợp lệ
+            }
+
             // Kiểm tra xem tài khoản đã tồn tại chưa
             PreparedStatement psCheck = conn.prepareStatement(sql_check);
             psCheck.setString(1, email);

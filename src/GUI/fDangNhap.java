@@ -57,26 +57,27 @@ public class fDangNhap extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(231, 231, 231)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(185, 185, 185)
-                        .addComponent(jLabel2)
-                        .addGap(6, 6, 6)
-                        .addComponent(txt_tendnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(185, 185, 185)
-                        .addComponent(jLabel3)
-                        .addGap(35, 35, 35)
-                        .addComponent(txt_mkhau, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(270, 270, 270)
                         .addComponent(cb_showPass))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(310, 310, 310)
-                        .addComponent(btn_dnhap)))
+                        .addComponent(btn_dnhap))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(185, 185, 185)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txt_mkhau)
+                                .addGap(55, 55, 55))
+                            .addComponent(txt_tendnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(189, 189, 189))
         );
         layout.setVerticalGroup(
@@ -117,11 +118,7 @@ public class fDangNhap extends javax.swing.JFrame {
     }//GEN-LAST:event_cb_showPassActionPerformed
 
     private void btn_dnhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dnhapActionPerformed
-
-    }//GEN-LAST:event_btn_dnhapActionPerformed
-
-    private void btn_dnhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dnhapMouseClicked
-        // Lấy giá trị từ các trường nhập liệu
+// Lấy giá trị từ các trường nhập liệu
         String tenDangNhap = txt_tendnhap.getText();
         String matKhau = new String(txt_mkhau.getPassword());
 
@@ -136,6 +133,10 @@ public class fDangNhap extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Sai tên tài khoản hoặc mật khẩu", "Thông báo", JOptionPane.ERROR_MESSAGE);
         }
+    }//GEN-LAST:event_btn_dnhapActionPerformed
+
+    private void btn_dnhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dnhapMouseClicked
+
     }//GEN-LAST:event_btn_dnhapMouseClicked
 
     public static void main(String args[]) {
