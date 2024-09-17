@@ -66,7 +66,7 @@ CREATE TABLE PHIEU_MUON (
     ma_phieu_muon INT PRIMARY KEY,      
     ma_thu_thu INT,
     ma_doc_gia INT,
-    ngay_muon DATE,
+    ngay_muon DATE DEFAULT GETDATE(),
     ngay_hen_tra DATE,
     ngay_tra DATE NULL,
 	trang_thai TINYINT, -- 0: Đang mượn, 1: Đã trả

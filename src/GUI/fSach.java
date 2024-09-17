@@ -417,6 +417,7 @@ public class fSach extends javax.swing.JFrame {
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         try {
+<<<<<<< HEAD
             Sach sach = new Sach(
                     // Bỏ qua mã sách vì mã sách sẽ tự động tăng
                     Integer.parseInt(txt_maSach.getText()),
@@ -441,6 +442,27 @@ public class fSach extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Thêm sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+=======
+        Sach sach = new Sach(
+            Integer.parseInt(txt_maSach.getText()),
+            txt_tenSach.getText(),
+            txt_ngonNgu.getText(),
+            Float.parseFloat(txt_giaTri.getText()),
+            Integer.parseInt(txt_soLuong.getText()),
+            cbb_tacGia.getSelectedIndex() + 1, 
+            cbb_theLoai.getSelectedIndex() + 1, 
+            txt_nhaXB.getText(),
+            java.sql.Date.valueOf(txt_namXB.getText())
+        );
+        SachDAL.themSach(sach);
+            JOptionPane.showMessageDialog(null, "Thêm sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
+        clearForm();
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Thêm sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
+>>>>>>> 2a97e38fdb1adf9c827f454c43c45c7fdd638a78
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
