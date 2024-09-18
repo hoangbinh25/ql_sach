@@ -1,6 +1,6 @@
 package DTO;
 
-class TheLoai {
+public class TheLoai {
     private int ma_the_loai;
     private String ten_the_loai;
 

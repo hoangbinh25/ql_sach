@@ -123,8 +123,8 @@ public class fMuonTra extends javax.swing.JFrame {
         try {
             DefaultTableModel model = new DefaultTableModel();
             model.addColumn("Mã phiếu mượn");
-            model.addColumn("Mã thủ thư");
-            model.addColumn("Mã độc giả");
+            model.addColumn("Tên thủ thư");
+            model.addColumn("Tên độc giả");
             model.addColumn("Ngày mượn");
             model.addColumn("Ngày hẹn trả");
             model.addColumn("Ngày trả");
@@ -318,7 +318,7 @@ public class fMuonTra extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã mượn", "Mã thủ thư", "Mã độc giả", "Ngày mượn", "Ngày hẹn trả", "Ngày trả", "Trạng thái"
+                "Mã mượn", "Tên thủ thư", "Tên độc giả", "Ngày mượn", "Ngày hẹn trả", "Ngày trả", "Trạng thái"
             }
         ));
         jTB_phieuMuon.addMouseListener(new java.awt.event.MouseAdapter() {

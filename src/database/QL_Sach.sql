@@ -141,15 +141,6 @@ UPDATE PHIEU_MUON
 SET ngay_tra = 0
 WHERE ngay_tra IS NULL;
 
--- Cập nhật cột ngày trả trong bảng Phiếu mượn
-UPDATE PHIEU_MUON
-SET ngay_tra = CASE 
-	WHEN ma_phieu_muon = 1 THEN '2024-09-19'
-    WHEN ma_phieu_muon = 2 THEN '2023-08-10'
-    WHEN ma_phieu_muon = 3 THEN '2024-09-15'
-    ELSE ngay_tra
-END
-WHERE ma_phieu_muon IN (1, 2, 3);
 GO
 
 SELECT ma_phieu_muon, ma_thu_thu, ma_doc_gia, ngay_muon, ngay_hen_tra, ngay_tra, 
