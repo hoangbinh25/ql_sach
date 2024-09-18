@@ -1,3 +1,4 @@
+
 package GUI;
 
 import java.text.SimpleDateFormat;
@@ -111,7 +112,7 @@ public class fDocGia extends javax.swing.JFrame {
         btn_sua = new javax.swing.JButton();
         jMenuBar_sach = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
-        menu_khoSach = new javax.swing.JMenu();
+        menu_thuThu = new javax.swing.JMenu();
         menu_muonTra = new javax.swing.JMenu();
         menu_qlTheLoai = new javax.swing.JMenu();
         menu_qlDocGia = new javax.swing.JMenu();
@@ -199,18 +200,18 @@ public class fDocGia extends javax.swing.JFrame {
         });
         jMenuBar_sach.add(menu_Sach);
 
-        menu_khoSach.setText("Quản lý kho sách");
-        menu_khoSach.addMouseListener(new java.awt.event.MouseAdapter() {
+        menu_thuThu.setText("Quản lý thủ thư");
+        menu_thuThu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menu_khoSachMouseClicked(evt);
+                menu_thuThuMouseClicked(evt);
             }
         });
-        menu_khoSach.addActionListener(new java.awt.event.ActionListener() {
+        menu_thuThu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_khoSachActionPerformed(evt);
+                menu_thuThuActionPerformed(evt);
             }
         });
-        jMenuBar_sach.add(menu_khoSach);
+        jMenuBar_sach.add(menu_thuThu);
 
         menu_muonTra.setText("Quản lý mượn trả sách");
         menu_muonTra.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -359,6 +360,8 @@ public class fDocGia extends javax.swing.JFrame {
             load();
             clearForm();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Thêm không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btn_themActionPerformed
 
@@ -434,17 +437,17 @@ public class fDocGia extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_menu_SachMouseClicked
 
-    private void menu_khoSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_khoSachMouseClicked
-        fKhoSach khoSachFrame = new fKhoSach();
-        khoSachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
-        khoSachFrame.setLocationRelativeTo(null);
-        khoSachFrame.setVisible(true);
+    private void menu_thuThuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_thuThuMouseClicked
+        fThuThu thuThuFrame = new fThuThu();
+        thuThuFrame.setDefaultCloseOperation(fThuThu.EXIT_ON_CLOSE);
+        thuThuFrame.setLocationRelativeTo(null);
+        thuThuFrame.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_menu_khoSachMouseClicked
+    }//GEN-LAST:event_menu_thuThuMouseClicked
 
-    private void menu_khoSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_khoSachActionPerformed
+    private void menu_thuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_thuThuActionPerformed
 
-    }//GEN-LAST:event_menu_khoSachActionPerformed
+    }//GEN-LAST:event_menu_thuThuActionPerformed
 
     private void menu_muonTraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_muonTraMouseClicked
         fMuonTra muonTraFrame = new fMuonTra();
@@ -505,12 +508,12 @@ public class fDocGia extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTB_docGia;
     private javax.swing.JMenu menu_Sach;
-    private javax.swing.JMenu menu_khoSach;
     private javax.swing.JMenu menu_muonTra;
     private javax.swing.JMenu menu_qlDocGia;
     private javax.swing.JMenu menu_qlTacGia;
     private javax.swing.JMenu menu_qlTheLoai;
     private javax.swing.JMenu menu_thongKe;
+    private javax.swing.JMenu menu_thuThu;
     private javax.swing.JTextField txt_CCCD;
     private javax.swing.JTextField txt_SDT;
     private javax.swing.JTextField txt_diaChi;

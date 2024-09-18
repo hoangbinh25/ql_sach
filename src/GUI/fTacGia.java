@@ -1,9 +1,67 @@
 package GUI;
 
+import javax.swing.table.DefaultTableModel;
+import DAL.TacGiaDAL;
+import DTO.TacGia;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 public class fTacGia extends javax.swing.JFrame {
 
     public fTacGia() {
         initComponents();
+        load();
+    }
+
+    public void load() {
+        loadTBL();
+    }
+
+    public void loadTBL() {
+        try {
+            DefaultTableModel md = new DefaultTableModel();
+            md.addColumn("Mã Tác Giả");
+            md.addColumn("Tên Tác Giả");
+
+            List<TacGia> tacGia = TacGiaDAL.loadTbaleData();
+
+            for (TacGia tg : tacGia) {
+                int ma = tg.getMa_tac_gia();
+                String ten = tg.getTen_tac_gia();
+
+                md.addRow(new Object[]{ma, ten});
+            }
+            jTB_tacGia.setModel(md);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi xử lý dữ liệu" + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    public void loadTBL_Search(String keyword) {
+        try {
+            DefaultTableModel md = new DefaultTableModel();
+            md.addColumn("Mã Tác Giả");
+            md.addColumn("Tên Tác Giả");
+
+            List<TacGia> tacgia = TacGiaDAL.loadTbaleDataSearch(keyword);
+
+            for (TacGia tg : tacgia) {
+                int ma = tg.getMa_tac_gia();
+                String ten = tg.getTen_tac_gia();
+
+                md.addRow(new Object[]{ma, ten});
+            }
+            jTB_tacGia.setModel(md);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi Load dữ liệu" + e.getMessage(), "lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    public void clearForm() {
+        txt_maTG.setText("");
+        txt_tenTG.setText("");
     }
 
     @SuppressWarnings("unchecked")
@@ -15,7 +73,7 @@ public class fTacGia extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txt_tenTG = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tb_tacGia = new javax.swing.JTable();
+        jTB_tacGia = new javax.swing.JTable();
         btn_xoa = new javax.swing.JButton();
         btn_them = new javax.swing.JButton();
         txt_timkiem = new javax.swing.JTextField();
@@ -23,7 +81,7 @@ public class fTacGia extends javax.swing.JFrame {
         btn_sua = new javax.swing.JButton();
         jMenuBar_sach = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
-        menu_khoSach = new javax.swing.JMenu();
+        menu_thuThu = new javax.swing.JMenu();
         menu_muonTra = new javax.swing.JMenu();
         menu_qlTheLoai = new javax.swing.JMenu();
         menu_qlDocGia = new javax.swing.JMenu();
@@ -43,7 +101,7 @@ public class fTacGia extends javax.swing.JFrame {
             }
         });
 
-        tb_tacGia.setModel(new javax.swing.table.DefaultTableModel(
+        jTB_tacGia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -54,7 +112,12 @@ public class fTacGia extends javax.swing.JFrame {
                 "Mã tên giả", "Tên tác giả"
             }
         ));
-        jScrollPane1.setViewportView(tb_tacGia);
+        jTB_tacGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTB_tacGiaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTB_tacGia);
 
         btn_xoa.setText("Xóa");
         btn_xoa.addActionListener(new java.awt.event.ActionListener() {
@@ -92,18 +155,18 @@ public class fTacGia extends javax.swing.JFrame {
         });
         jMenuBar_sach.add(menu_Sach);
 
-        menu_khoSach.setText("Quản lý kho sách");
-        menu_khoSach.addMouseListener(new java.awt.event.MouseAdapter() {
+        menu_thuThu.setText("Quản lý thủ thư");
+        menu_thuThu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menu_khoSachMouseClicked(evt);
+                menu_thuThuMouseClicked(evt);
             }
         });
-        menu_khoSach.addActionListener(new java.awt.event.ActionListener() {
+        menu_thuThu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_khoSachActionPerformed(evt);
+                menu_thuThuActionPerformed(evt);
             }
         });
-        jMenuBar_sach.add(menu_khoSach);
+        jMenuBar_sach.add(menu_thuThu);
 
         menu_muonTra.setText("Quản lý mượn trả sách");
         menu_muonTra.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -130,6 +193,11 @@ public class fTacGia extends javax.swing.JFrame {
         jMenuBar_sach.add(menu_qlDocGia);
 
         menu_qlTacGia.setText("Quản lý tác giả");
+        menu_qlTacGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_qlTacGiaMouseClicked(evt);
+            }
+        });
         jMenuBar_sach.add(menu_qlTacGia);
 
         menu_thongKe.setText("Thống kê");
@@ -196,20 +264,70 @@ public class fTacGia extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_tenTGActionPerformed
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
-
+        try {
+            int ma = Integer.parseInt(txt_maTG.getText());
+            TacGiaDAL.xoa(ma);
+            load();
+            clearForm();
+            JOptionPane.showMessageDialog(null, "Xóa Thành Công", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Mã không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Xóa thất bại! Vui lòng kiểm tra mã.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_xoaActionPerformed
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
-
+        try {
+            TacGia tg = new TacGia(
+                Integer.parseInt(txt_maTG.getText()),
+                txt_tenTG.getText()
+            );
+            
+            TacGiaDAL.them(tg);
+            load();
+            clearForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Thêm không thành công"+e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
-
+        try {
+            String search = txt_timkiem.getText();
+            if (search.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Chưa có dữ liệu đầu vào", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                TacGiaDAL.loadTbaleDataSearch(search);
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btn_timkiemActionPerformed
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
-
+        try {
+            TacGia tg = new TacGia(
+                Integer.parseInt(txt_maTG.getText()),
+                txt_tenTG.getText()
+            );
+            
+            TacGiaDAL.sua(tg);
+            JOptionPane.showMessageDialog(null, "Sửa Thành Công", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+            load();
+            clearForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Sửa không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btn_suaActionPerformed
+
+    private void jTB_tacGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTB_tacGiaMouseClicked
+        int current = jTB_tacGia.getSelectedRow();
+        txt_maTG.setText(String.valueOf(jTB_tacGia.getValueAt(current, 0)));
+        txt_tenTG.setText(String.valueOf(jTB_tacGia.getValueAt(current, 1)));
+    }//GEN-LAST:event_jTB_tacGiaMouseClicked
 
     private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
         fSach sachFrame = new fSach();
@@ -219,17 +337,17 @@ public class fTacGia extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_menu_SachMouseClicked
 
-    private void menu_khoSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_khoSachMouseClicked
-        fKhoSach khoSachFrame = new fKhoSach();
-        khoSachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
-        khoSachFrame.setLocationRelativeTo(null);
-        khoSachFrame.setVisible(true);
+    private void menu_thuThuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_thuThuMouseClicked
+        fThuThu thuThuFrame = new fThuThu();
+        thuThuFrame.setDefaultCloseOperation(fThuThu.EXIT_ON_CLOSE);
+        thuThuFrame.setLocationRelativeTo(null);
+        thuThuFrame.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_menu_khoSachMouseClicked
+    }//GEN-LAST:event_menu_thuThuMouseClicked
 
-    private void menu_khoSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_khoSachActionPerformed
+    private void menu_thuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_thuThuActionPerformed
 
-    }//GEN-LAST:event_menu_khoSachActionPerformed
+    }//GEN-LAST:event_menu_thuThuActionPerformed
 
     private void menu_muonTraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_muonTraMouseClicked
         fMuonTra muonTraFrame = new fMuonTra();
@@ -239,6 +357,14 @@ public class fTacGia extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_menu_muonTraMouseClicked
 
+    private void menu_qlTheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTheLoaiMouseClicked
+        fTheLoai theLoaiFrame = new fTheLoai();
+        theLoaiFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        theLoaiFrame.setLocationRelativeTo(null);
+        theLoaiFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_qlTheLoaiMouseClicked
+
     private void menu_qlDocGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlDocGiaMouseClicked
         fDocGia docGiaFrame = new fDocGia();
         docGiaFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -247,13 +373,13 @@ public class fTacGia extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_menu_qlDocGiaMouseClicked
 
-    private void menu_qlTheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTheLoaiMouseClicked
-        fTheLoai theLoaiFrame = new fTheLoai();
-        theLoaiFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        theLoaiFrame.setLocationRelativeTo(null);
-        theLoaiFrame.setVisible(true);
+    private void menu_qlTacGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTacGiaMouseClicked
+        fTacGia tacGiaFrame = new fTacGia();
+        tacGiaFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        tacGiaFrame.setLocationRelativeTo(null);
+        tacGiaFrame.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_menu_qlTheLoaiMouseClicked
+    }//GEN-LAST:event_menu_qlTacGiaMouseClicked
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -275,14 +401,14 @@ public class fTacGia extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenuBar jMenuBar_sach;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTB_tacGia;
     private javax.swing.JMenu menu_Sach;
-    private javax.swing.JMenu menu_khoSach;
     private javax.swing.JMenu menu_muonTra;
     private javax.swing.JMenu menu_qlDocGia;
     private javax.swing.JMenu menu_qlTacGia;
     private javax.swing.JMenu menu_qlTheLoai;
     private javax.swing.JMenu menu_thongKe;
-    private javax.swing.JTable tb_tacGia;
+    private javax.swing.JMenu menu_thuThu;
     private javax.swing.JTextField txt_maTG;
     private javax.swing.JTextField txt_tenTG;
     private javax.swing.JTextField txt_timkiem;

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class DocGiaDAL {
 
     public static List<DocGia> loadTbaleData() {

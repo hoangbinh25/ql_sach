@@ -28,6 +28,4 @@ public class TacGia {
         this.ma_tac_gia = ma_tac_gia;
         this.ten_tac_gia = ten_tac_gia;
     }
-    
-    
 }

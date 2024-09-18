@@ -141,7 +141,10 @@ UPDATE PHIEU_MUON
 SET ngay_tra = 0
 WHERE ngay_tra IS NULL;
 
+<<<<<<< HEAD
 GO
+=======
+>>>>>>> fe236fd8e0da0e19de25d565254c0f7c3be8a02a
 
 SELECT ma_phieu_muon, ma_thu_thu, ma_doc_gia, ngay_muon, ngay_hen_tra, ngay_tra, 
     CASE 
@@ -160,19 +163,4 @@ INSERT INTO CHI_TIET_PHIEU_MUON (ma_chi_tiet, ma_phieu_muon, ma_sach, so_luong, 
 GO
 
 SELECT * FROM CHI_TIET_PHIEU_MUON
-
-DECLARE @keyword NVARCHAR(255) = N'nguye';
-
-SELECT *
-FROM SACH s
-WHERE CAST(s.ma_sach AS NVARCHAR(255)) LIKE '%' + @keyword + '%'
-   OR s.ten_sach LIKE '%' + @keyword + '%'
-   OR s.ngon_ngu LIKE '%' + @keyword + '%'
-   OR CAST(s.gia_tri AS NVARCHAR(255)) LIKE '%' + @keyword + '%'
-   OR CAST(s.so_luong AS NVARCHAR(255)) LIKE '%' + @keyword + '%'
-   OR CAST(s.ma_tac_gia AS NVARCHAR(255)) LIKE '%' + @keyword + '%'
-   OR CAST(s.ma_the_loai AS NVARCHAR(255)) LIKE '%' + @keyword + '%'
-   OR s.nxb LIKE '%' + @keyword + '%'
-   OR CAST(s.nam_xuat_ban AS NVARCHAR(255)) LIKE '%' + @keyword + '%';
-
 
