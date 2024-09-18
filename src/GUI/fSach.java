@@ -6,7 +6,7 @@ import DAL.SachDAL;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import DTO.Sach;
-import GUI.fKhoSach;
+import GUI.fThuThu;
 import GUI.fTheLoai;
 import java.util.ArrayList;
 import java.util.Date;
@@ -164,7 +164,7 @@ public class fSach extends javax.swing.JFrame {
         cbb_tacGia = new javax.swing.JComboBox<>();
         jMenuBar_sach = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
-        menu_khoSach = new javax.swing.JMenu();
+        menu_thuThu = new javax.swing.JMenu();
         menu_muonTra = new javax.swing.JMenu();
         menu_qlTheLoai = new javax.swing.JMenu();
         menu_qlDocGia = new javax.swing.JMenu();
@@ -261,18 +261,18 @@ public class fSach extends javax.swing.JFrame {
         });
         jMenuBar_sach.add(menu_Sach);
 
-        menu_khoSach.setText("Quản lý kho sách");
-        menu_khoSach.addMouseListener(new java.awt.event.MouseAdapter() {
+        menu_thuThu.setText("Quản lý thủ thư");
+        menu_thuThu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menu_khoSachMouseClicked(evt);
+                menu_thuThuMouseClicked(evt);
             }
         });
-        menu_khoSach.addActionListener(new java.awt.event.ActionListener() {
+        menu_thuThu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_khoSachActionPerformed(evt);
+                menu_thuThuActionPerformed(evt);
             }
         });
-        jMenuBar_sach.add(menu_khoSach);
+        jMenuBar_sach.add(menu_thuThu);
 
         menu_muonTra.setText("Quản lý mượn trả sách");
         menu_muonTra.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -484,12 +484,17 @@ public class fSach extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
-        String search = txt_timkiem.getText();
+        String search = txt_timkiem.getText().trim();
         if (search.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Chưa có dữ liệu tìm kiếm đầu vào", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
         } else {
             loadTBL_SEARCH(search);
         }
+        
+         if (jTB_sach.getRowCount() == 0) { // Kiểm tra nếu bảng không có dữ liệu
+                JOptionPane.showMessageDialog(null, "Không tìm thấy kết quả nào phù hợp", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            }
     }//GEN-LAST:event_btn_timkiemActionPerformed
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
@@ -596,17 +601,17 @@ public class fSach extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_menu_SachMouseClicked
 
-    private void menu_khoSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_khoSachMouseClicked
-        fKhoSach khoSachFrame = new fKhoSach();
-        khoSachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
-        khoSachFrame.setLocationRelativeTo(null);
-        khoSachFrame.setVisible(true);
+    private void menu_thuThuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_thuThuMouseClicked
+        fThuThu thuThuFrame = new fThuThu();
+        thuThuFrame.setDefaultCloseOperation(fThuThu.EXIT_ON_CLOSE);
+        thuThuFrame.setLocationRelativeTo(null);
+        thuThuFrame.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_menu_khoSachMouseClicked
+    }//GEN-LAST:event_menu_thuThuMouseClicked
 
-    private void menu_khoSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_khoSachActionPerformed
+    private void menu_thuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_thuThuActionPerformed
 
-    }//GEN-LAST:event_menu_khoSachActionPerformed
+    }//GEN-LAST:event_menu_thuThuActionPerformed
 
     private void menu_muonTraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_muonTraMouseClicked
         fMuonTra muonTraFrame = new fMuonTra();
@@ -615,6 +620,14 @@ public class fSach extends javax.swing.JFrame {
         muonTraFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_menu_muonTraMouseClicked
+
+    private void menu_qlTheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTheLoaiMouseClicked
+        fTheLoai theLoaiFrame = new fTheLoai();
+        theLoaiFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        theLoaiFrame.setLocationRelativeTo(null);
+        theLoaiFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_qlTheLoaiMouseClicked
 
     private void menu_qlDocGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlDocGiaMouseClicked
         fDocGia docGiaFrame = new fDocGia();
@@ -631,14 +644,6 @@ public class fSach extends javax.swing.JFrame {
         tacGiaFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_menu_qlTacGiaMouseClicked
-
-    private void menu_qlTheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTheLoaiMouseClicked
-        fTheLoai theLoaiFrame = new fTheLoai();
-        theLoaiFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        theLoaiFrame.setLocationRelativeTo(null);
-        theLoaiFrame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_menu_qlTheLoaiMouseClicked
 
     public static void main(String args[]) {
 
@@ -672,12 +677,12 @@ public class fSach extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTB_sach;
     private javax.swing.JMenu menu_Sach;
-    private javax.swing.JMenu menu_khoSach;
     private javax.swing.JMenu menu_muonTra;
     private javax.swing.JMenu menu_qlDocGia;
     private javax.swing.JMenu menu_qlTacGia;
     private javax.swing.JMenu menu_qlTheLoai;
     private javax.swing.JMenu menu_thongKe;
+    private javax.swing.JMenu menu_thuThu;
     private javax.swing.JTextField txt_giaTri;
     private javax.swing.JTextField txt_maSach;
     private javax.swing.JTextField txt_namXB;
