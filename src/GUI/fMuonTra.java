@@ -53,6 +53,7 @@ public class fMuonTra extends javax.swing.JFrame {
                 String ngayHenTraFormatted = dateFormatter.format(ngayHenTra);
                 Date ngayTra = pm.getNgay_tra();
                 String ngayTraFormatted = dateFormatter.format(ngayTra);
+                
                 // Xác định trạng thái dựa trên ngày trả
                 String trangThai = (ngayTra == null) ? "Đang mượn" : "Đã trả";
 
@@ -86,7 +87,16 @@ public class fMuonTra extends javax.swing.JFrame {
                 }
             }
         });
+    }
 
+    private void clearForm() {
+        txt_maMuon.setText("");
+        txt_maThuThu.setText("");
+        txt_maDG.setText("");
+        txt_ngayMuon.setText("");
+        txt_ngayHen.setText("");
+        txt_ngayTra.setText("");
+        cbb_trangThai.setSelectedIndex(0);
     }
 
     @SuppressWarnings("unchecked")
@@ -132,6 +142,7 @@ public class fMuonTra extends javax.swing.JFrame {
         menu_khoSach = new javax.swing.JMenu();
         menu_muonTra = new javax.swing.JMenu();
         menu_qlTheLoai = new javax.swing.JMenu();
+        menu_qlDocGia = new javax.swing.JMenu();
         menu_qlTacGia = new javax.swing.JMenu();
         menu_thongKe = new javax.swing.JMenu();
 
@@ -293,7 +304,7 @@ public class fMuonTra extends javax.swing.JFrame {
         });
         jMenuBar_sach.add(menu_khoSach);
 
-        menu_muonTra.setLabel("Quản lý mượn trả sách");
+        menu_muonTra.setText("Quản lý mượn trả sách");
         menu_muonTra.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menu_muonTraMouseClicked(evt);
@@ -302,14 +313,22 @@ public class fMuonTra extends javax.swing.JFrame {
         jMenuBar_sach.add(menu_muonTra);
 
         menu_qlTheLoai.setText("Quản lý thể loại");
-        menu_qlTheLoai.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menu_qlTheLoaiMouseClicked(evt);
-            }
-        });
         jMenuBar_sach.add(menu_qlTheLoai);
 
+        menu_qlDocGia.setText("Quản lý độc giả");
+        menu_qlDocGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_qlDocGiaMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_qlDocGia);
+
         menu_qlTacGia.setText("Quản lý tác giả");
+        menu_qlTacGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_qlTacGiaMouseClicked(evt);
+            }
+        });
         jMenuBar_sach.add(menu_qlTacGia);
 
         menu_thongKe.setText("Thống kê");
@@ -502,20 +521,25 @@ public class fMuonTra extends javax.swing.JFrame {
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         try {
-            PhieuMuon pm = new PhieuMuon();
-            Integer.parseInt(txt_maMuon.getText());
-            Integer.parseInt(txt_maThuThu.getText());
-            Integer.parseInt(txt_maDG.getText());
-            java.sql.Date.valueOf(txt_ngayMuon.getText());
-            java.sql.Date.valueOf(txt_ngayHen.getText());
-            java.sql.Date.valueOf(txt_ngayTra.getText());
-            Integer.parseInt(cbb_trangThai.getItemAt(1));
+            PhieuMuon pm = new PhieuMuon(
+                    Integer.parseInt(txt_maMuon.getText()),
+                    Integer.parseInt(txt_maThuThu.getText()),
+                    Integer.parseInt(txt_maDG.getText()),
+                    java.sql.Date.valueOf(txt_ngayMuon.getText()), // Chuyển đổi sang kiểu Date
+                    java.sql.Date.valueOf(txt_ngayHen.getText()),
+                    java.sql.Date.valueOf(txt_ngayTra.getText()),
+                    cbb_trangThai.getSelectedIndex()
+            );
 
-
-
+            PhieuMuonDAL.themPM(pm);
             
+            // Thông báo thêm thành công
+            JOptionPane.showMessageDialog(null, "Thêm phiếu mượn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
+            clearForm();
         } catch (Exception e) {
             e.printStackTrace();
+//            JOptionPane.showMessageDialog(null, "Thêm phiếu mượn thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_themActionPerformed
 
@@ -526,42 +550,6 @@ public class fMuonTra extends javax.swing.JFrame {
     private void txt_maThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maThuThuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_maThuThuActionPerformed
-
-    private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
-        fSach sachFrame = new fSach();
-        sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
-        sachFrame.setLocationRelativeTo(null);
-        sachFrame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_menu_SachMouseClicked
-
-    private void menu_khoSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_khoSachMouseClicked
-        fKhoSach khoSachFrame = new fKhoSach();
-        khoSachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
-        khoSachFrame.setLocationRelativeTo(null);
-        khoSachFrame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_menu_khoSachMouseClicked
-
-    private void menu_khoSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_khoSachActionPerformed
-
-    }//GEN-LAST:event_menu_khoSachActionPerformed
-
-    private void menu_muonTraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_muonTraMouseClicked
-        fMuonTra muonTraFrame = new fMuonTra();
-        muonTraFrame.setDefaultCloseOperation(fMuonTra.EXIT_ON_CLOSE);
-        muonTraFrame.setLocationRelativeTo(null);
-        muonTraFrame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_menu_muonTraMouseClicked
-
-    private void menu_qlTheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTheLoaiMouseClicked
-        fTheLoai theLoaiFrame = new fTheLoai();
-        theLoaiFrame.setDefaultCloseOperation(fTheLoai.EXIT_ON_CLOSE);
-        theLoaiFrame.setLocationRelativeTo(null);
-        theLoaiFrame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_menu_qlTheLoaiMouseClicked
 
     private void txt_maPM1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maPM1ActionPerformed
         // TODO add your handling code here:
@@ -593,6 +581,50 @@ public class fMuonTra extends javax.swing.JFrame {
     private void btn_sua1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sua1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_sua1ActionPerformed
+
+    private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
+        fSach sachFrame = new fSach();
+        sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
+        sachFrame.setLocationRelativeTo(null);
+        sachFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_SachMouseClicked
+
+    private void menu_khoSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_khoSachMouseClicked
+        fKhoSach khoSachFrame = new fKhoSach();
+        khoSachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
+        khoSachFrame.setLocationRelativeTo(null);
+        khoSachFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_khoSachMouseClicked
+
+    private void menu_khoSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_khoSachActionPerformed
+
+    }//GEN-LAST:event_menu_khoSachActionPerformed
+
+    private void menu_muonTraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_muonTraMouseClicked
+        fMuonTra muonTraFrame = new fMuonTra();
+        muonTraFrame.setDefaultCloseOperation(fMuonTra.EXIT_ON_CLOSE);
+        muonTraFrame.setLocationRelativeTo(null);
+        muonTraFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_muonTraMouseClicked
+
+    private void menu_qlDocGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlDocGiaMouseClicked
+        fTacGia tacGiaFrame = new fTacGia();
+        tacGiaFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        tacGiaFrame.setLocationRelativeTo(null);
+        tacGiaFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_qlDocGiaMouseClicked
+
+    private void menu_qlTacGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTacGiaMouseClicked
+        fTacGia tacGiaFrame = new fTacGia();
+        tacGiaFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        tacGiaFrame.setLocationRelativeTo(null);
+        tacGiaFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_qlTacGiaMouseClicked
 
     public static void main(String args[]) {
 
@@ -635,6 +667,7 @@ public class fMuonTra extends javax.swing.JFrame {
     private javax.swing.JMenu menu_Sach;
     private javax.swing.JMenu menu_khoSach;
     private javax.swing.JMenu menu_muonTra;
+    private javax.swing.JMenu menu_qlDocGia;
     private javax.swing.JMenu menu_qlTacGia;
     private javax.swing.JMenu menu_qlTheLoai;
     private javax.swing.JMenu menu_thongKe;

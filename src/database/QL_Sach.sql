@@ -137,6 +137,10 @@ INSERT INTO PHIEU_MUON (ma_phieu_muon, ma_thu_thu, ma_doc_gia, ngay_muon, ngay_h
 (3, 1, 3, '2023-08-10', '2023-08-25', NULL, 0);
 GO
 
+UPDATE PHIEU_MUON
+SET ngay_tra = 0
+WHERE ngay_tra IS NULL;
+
 -- Cập nhật cột ngày trả trong bảng Phiếu mượn
 UPDATE PHIEU_MUON
 SET ngay_tra = CASE 
@@ -154,7 +158,6 @@ SELECT ma_phieu_muon, ma_thu_thu, ma_doc_gia, ngay_muon, ngay_hen_tra, ngay_tra,
         WHEN trang_thai = 1 THEN N'Đã trả'
     END AS trang_thai
 FROM PHIEU_MUON;
-
 
 SELECT * FROM PHIEU_MUON;
 

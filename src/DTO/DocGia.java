@@ -1,14 +1,7 @@
 package DTO;
 
-<<<<<<< HEAD
-=======
 import java.util.Date;
 
-/**
- *
- * @author admin
- */
->>>>>>> 2a97e38fdb1adf9c827f454c43c45c7fdd638a78
 public class DocGia {
     private int ma_doc_gia;
     private String ten_doc_gia;

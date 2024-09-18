@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import GUI.fMuonTra;
+import GUI.fMuonTra; 
 
 public class PhieuMuonDAL {
     public static List<PhieuMuon> loadTbaleData() {
@@ -37,7 +37,7 @@ public class PhieuMuonDAL {
     
     public static void themPM(PhieuMuon pm) {
         String query = "INSERT INTO PHIEU_MUON (ma_phieu_muon, ma_thu_thu, ma_doc_gia, ngay_muon, ngay_hen_tra, ngay_tra, trang_thai) "
-               + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, )";
+               + "VALUES(?, ?, ?, ?, ?, ?, ?)";
        
         try (Connection conn = ConnectToSQLServer.getConnection()){
             PreparedStatement ps = conn.prepareStatement(query);

@@ -23,7 +23,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menu_muonTra">
           <Properties>
-            <Property name="label" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; m&#x1b0;&#x1ee3;n tr&#x1ea3; s&#xe1;ch"/>
+            <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; m&#x1b0;&#x1ee3;n tr&#x1ea3; s&#xe1;ch"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menu_muonTraMouseClicked"/>
@@ -33,14 +33,22 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; th&#x1ec3; lo&#x1ea1;i"/>
           </Properties>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="menu_qlDocGia">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; &#x111;&#x1ed9;c gi&#x1ea3;"/>
+          </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menu_qlTheLoaiMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menu_qlDocGiaMouseClicked"/>
           </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menu_qlTacGia">
           <Properties>
             <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; t&#xe1;c gi&#x1ea3;"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menu_qlTacGiaMouseClicked"/>
+          </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menu_thongKe">
           <Properties>
@@ -125,13 +133,8 @@
                               </Group>
                               <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txt_ngayTra" min="-2" pref="225" max="-2" attributes="0"/>
-                                          <Component id="txt_ngayHen" alignment="0" min="-2" pref="225" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="txt_ngayTra" min="-2" pref="225" max="-2" attributes="0"/>
+                                  <Component id="txt_ngayHen" alignment="0" min="-2" pref="225" max="-2" attributes="0"/>
                                   <Component id="cbb_trangThai" min="-2" pref="226" max="-2" attributes="0"/>
                               </Group>
                           </Group>

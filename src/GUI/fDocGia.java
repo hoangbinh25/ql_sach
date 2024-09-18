@@ -17,8 +17,8 @@ public class fDocGia extends javax.swing.JFrame {
     public void load() {
         loadTBL();
     }
-    
-    public void clearForm(){
+
+    public void clearForm() {
         txt_maDG.setText("");
         txt_tenDG.setText("");
         txt_ngaySinh.setText("");
@@ -114,6 +114,7 @@ public class fDocGia extends javax.swing.JFrame {
         menu_khoSach = new javax.swing.JMenu();
         menu_muonTra = new javax.swing.JMenu();
         menu_qlTheLoai = new javax.swing.JMenu();
+        menu_qlDocGia = new javax.swing.JMenu();
         menu_qlTacGia = new javax.swing.JMenu();
         menu_thongKe = new javax.swing.JMenu();
 
@@ -211,7 +212,7 @@ public class fDocGia extends javax.swing.JFrame {
         });
         jMenuBar_sach.add(menu_khoSach);
 
-        menu_muonTra.setText("Mượn trả sách");
+        menu_muonTra.setText("Quản lý mượn trả sách");
         menu_muonTra.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menu_muonTraMouseClicked(evt);
@@ -227,7 +228,20 @@ public class fDocGia extends javax.swing.JFrame {
         });
         jMenuBar_sach.add(menu_qlTheLoai);
 
+        menu_qlDocGia.setText("Quản lý độc giả");
+        menu_qlDocGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_qlDocGiaMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_qlDocGia);
+
         menu_qlTacGia.setText("Quản lý tác giả");
+        menu_qlTacGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_qlTacGiaMouseClicked(evt);
+            }
+        });
         jMenuBar_sach.add(menu_qlTacGia);
 
         menu_thongKe.setText("Thống kê");
@@ -333,13 +347,13 @@ public class fDocGia extends javax.swing.JFrame {
         try {
             SimpleDateFormat fmDate = new SimpleDateFormat("yyyy-MM-dd");
             DocGia dg = new DocGia(
-            Integer.parseInt(txt_maDG.getText()),
-            txt_tenDG.getText(),
-            java.sql.Date.valueOf(txt_ngaySinh.getText()),
-            txt_diaChi.getText(),
-            txt_CCCD.getText(),
-            txt_SDT.getText()
-         );
+                    Integer.parseInt(txt_maDG.getText()),
+                    txt_tenDG.getText(),
+                    java.sql.Date.valueOf(txt_ngaySinh.getText()),
+                    txt_diaChi.getText(),
+                    txt_CCCD.getText(),
+                    txt_SDT.getText()
+            );
             DocGiaDAL.them(dg);
             JOptionPane.showMessageDialog(null, "Thêm độc giả thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             load();
@@ -350,17 +364,17 @@ public class fDocGia extends javax.swing.JFrame {
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
         try {
-        int maSach = Integer.parseInt(txt_maDG.getText()); 
-        DocGiaDAL.xoa(maSach);
-        JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        load();
-        clearForm();
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Mã không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Xóa thất bại! Vui lòng kiểm tra mã.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-    }
+            int maSach = Integer.parseInt(txt_maDG.getText());
+            DocGiaDAL.xoa(maSach);
+            JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            load();
+            clearForm();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Mã không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Xóa thất bại! Vui lòng kiểm tra mã.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_xoaActionPerformed
 
     private void jTB_docGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTB_docGiaMouseClicked
@@ -388,24 +402,24 @@ public class fDocGia extends javax.swing.JFrame {
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
         try {
-        DocGia dg = new DocGia(
-            Integer.parseInt(txt_maDG.getText()),
-            txt_tenDG.getText(),
-            java.sql.Date.valueOf(txt_ngaySinh.getText()),
-            txt_diaChi.getText(),
-            txt_CCCD.getText(),
-            txt_SDT.getText()
-         );
+            DocGia dg = new DocGia(
+                    Integer.parseInt(txt_maDG.getText()),
+                    txt_tenDG.getText(),
+                    java.sql.Date.valueOf(txt_ngaySinh.getText()),
+                    txt_diaChi.getText(),
+                    txt_CCCD.getText(),
+                    txt_SDT.getText()
+            );
             DocGiaDAL.capNhat(dg);
 
-        // Thông báo cập nhật thành công
-        JOptionPane.showMessageDialog(null, "Cập nhật sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        load();
-        clearForm();
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Cập nhật sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-    }
+            // Thông báo cập nhật thành công
+            JOptionPane.showMessageDialog(null, "Cập nhật sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            load();
+            clearForm();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Cập nhật sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_suaActionPerformed
 
     private void txt_ngaySinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_ngaySinhActionPerformed
@@ -429,7 +443,7 @@ public class fDocGia extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_khoSachMouseClicked
 
     private void menu_khoSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_khoSachActionPerformed
-        
+
     }//GEN-LAST:event_menu_khoSachActionPerformed
 
     private void menu_muonTraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_muonTraMouseClicked
@@ -440,9 +454,25 @@ public class fDocGia extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_menu_muonTraMouseClicked
 
+    private void menu_qlDocGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlDocGiaMouseClicked
+        fDocGia docGiaFrame = new fDocGia();
+        docGiaFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        docGiaFrame.setLocationRelativeTo(null);
+        docGiaFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_qlDocGiaMouseClicked
+
+    private void menu_qlTacGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTacGiaMouseClicked
+        fTacGia tacGiaFrame = new fTacGia();
+        tacGiaFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        tacGiaFrame.setLocationRelativeTo(null);
+        tacGiaFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_qlTacGiaMouseClicked
+
     private void menu_qlTheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTheLoaiMouseClicked
         fTheLoai theLoaiFrame = new fTheLoai();
-        theLoaiFrame.setDefaultCloseOperation(fTheLoai.EXIT_ON_CLOSE);
+        theLoaiFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         theLoaiFrame.setLocationRelativeTo(null);
         theLoaiFrame.setVisible(true);
         this.dispose();
@@ -477,6 +507,7 @@ public class fDocGia extends javax.swing.JFrame {
     private javax.swing.JMenu menu_Sach;
     private javax.swing.JMenu menu_khoSach;
     private javax.swing.JMenu menu_muonTra;
+    private javax.swing.JMenu menu_qlDocGia;
     private javax.swing.JMenu menu_qlTacGia;
     private javax.swing.JMenu menu_qlTheLoai;
     private javax.swing.JMenu menu_thongKe;

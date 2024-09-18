@@ -1,3 +1,4 @@
+
 package GUI;
 
 import javax.swing.JOptionPane;
@@ -8,6 +9,7 @@ import DTO.Sach;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
+
 
 public class fSach extends javax.swing.JFrame {
 
@@ -163,6 +165,7 @@ public class fSach extends javax.swing.JFrame {
         menu_khoSach = new javax.swing.JMenu();
         menu_muonTra = new javax.swing.JMenu();
         menu_qlTheLoai = new javax.swing.JMenu();
+        menu_qlDocGia = new javax.swing.JMenu();
         menu_qlTacGia = new javax.swing.JMenu();
         menu_thongKe = new javax.swing.JMenu();
 
@@ -269,7 +272,7 @@ public class fSach extends javax.swing.JFrame {
         });
         jMenuBar_sach.add(menu_khoSach);
 
-        menu_muonTra.setText("Mượn trả sách");
+        menu_muonTra.setText("Quản lý mượn trả sách");
         menu_muonTra.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menu_muonTraMouseClicked(evt);
@@ -285,7 +288,20 @@ public class fSach extends javax.swing.JFrame {
         });
         jMenuBar_sach.add(menu_qlTheLoai);
 
+        menu_qlDocGia.setText("Quản lý độc giả");
+        menu_qlDocGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_qlDocGiaMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_qlDocGia);
+
         menu_qlTacGia.setText("Quản lý tác giả");
+        menu_qlTacGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_qlTacGiaMouseClicked(evt);
+            }
+        });
         jMenuBar_sach.add(menu_qlTacGia);
 
         menu_thongKe.setText("Thống kê");
@@ -417,7 +433,6 @@ public class fSach extends javax.swing.JFrame {
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         try {
-<<<<<<< HEAD
             Sach sach = new Sach(
                     // Bỏ qua mã sách vì mã sách sẽ tự động tăng
                     Integer.parseInt(txt_maSach.getText()),
@@ -442,27 +457,6 @@ public class fSach extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Thêm sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-=======
-        Sach sach = new Sach(
-            Integer.parseInt(txt_maSach.getText()),
-            txt_tenSach.getText(),
-            txt_ngonNgu.getText(),
-            Float.parseFloat(txt_giaTri.getText()),
-            Integer.parseInt(txt_soLuong.getText()),
-            cbb_tacGia.getSelectedIndex() + 1, 
-            cbb_theLoai.getSelectedIndex() + 1, 
-            txt_nhaXB.getText(),
-            java.sql.Date.valueOf(txt_namXB.getText())
-        );
-        SachDAL.themSach(sach);
-            JOptionPane.showMessageDialog(null, "Thêm sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            Load();
-        clearForm();
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Thêm sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-    }
->>>>>>> 2a97e38fdb1adf9c827f454c43c45c7fdd638a78
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
@@ -566,6 +560,10 @@ public class fSach extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_tenSachActionPerformed
 
+    private void cbb_tacGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_tacGiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbb_tacGiaActionPerformed
+
     private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
         fSach sachFrame = new fSach();
         sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
@@ -594,29 +592,41 @@ public class fSach extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_menu_muonTraMouseClicked
 
+    private void menu_qlDocGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlDocGiaMouseClicked
+        fDocGia docGiaFrame = new fDocGia();
+        docGiaFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        docGiaFrame.setLocationRelativeTo(null);
+        docGiaFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_qlDocGiaMouseClicked
+
+    private void menu_qlTacGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTacGiaMouseClicked
+        fTacGia tacGiaFrame = new fTacGia();
+        tacGiaFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        tacGiaFrame.setLocationRelativeTo(null);
+        tacGiaFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_qlTacGiaMouseClicked
+
     private void menu_qlTheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTheLoaiMouseClicked
         fTheLoai theLoaiFrame = new fTheLoai();
-        theLoaiFrame.setDefaultCloseOperation(fTheLoai.EXIT_ON_CLOSE);
+        theLoaiFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         theLoaiFrame.setLocationRelativeTo(null);
         theLoaiFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_menu_qlTheLoaiMouseClicked
 
-    private void cbb_tacGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_tacGiaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbb_tacGiaActionPerformed
-
     public static void main(String args[]) {
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                fSach sachFrame = new fSach();
-                sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
-                sachFrame.setLocationRelativeTo(null);
-                sachFrame.setVisible(true);
-            }
-        });
-    }
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            fSach sachFrame = new fSach();
+            sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
+            sachFrame.setLocationRelativeTo(null);
+            sachFrame.setVisible(true);
+        }
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_sua;
@@ -640,6 +650,7 @@ public class fSach extends javax.swing.JFrame {
     private javax.swing.JMenu menu_Sach;
     private javax.swing.JMenu menu_khoSach;
     private javax.swing.JMenu menu_muonTra;
+    private javax.swing.JMenu menu_qlDocGia;
     private javax.swing.JMenu menu_qlTacGia;
     private javax.swing.JMenu menu_qlTheLoai;
     private javax.swing.JMenu menu_thongKe;
