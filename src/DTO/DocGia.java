@@ -1,12 +1,8 @@
 package DTO;
-
+   
 
 import java.util.Date;
 
-/**
- *
- * @author admin
- */
 public class DocGia {
     private int ma_doc_gia;
     private String ten_doc_gia;

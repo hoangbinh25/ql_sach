@@ -6,9 +6,9 @@ public class PhieuMuon {
     private int ma_phieu_muon;
     private int ma_thu_thu;
     private int ma_doc_gia;
-    private Date ngay_muon;
-    private Date ngay_hen_tra;
-    private Date ngay_tra;
+    private java.sql.Date ngay_muon;
+    private java.sql.Date ngay_hen_tra;
+    private java.sql.Date ngay_tra;
     private int trang_thai;
 
     public PhieuMuon() {
@@ -42,7 +42,7 @@ public class PhieuMuon {
         return ngay_muon;
     }
 
-    public void setNgay_muon(Date ngay_muon) {
+    public void setNgay_muon(java.sql.Date ngay_muon) {
         this.ngay_muon = ngay_muon;
     }
 
@@ -50,7 +50,7 @@ public class PhieuMuon {
         return ngay_hen_tra;
     }
 
-    public void setNgay_hen_tra(Date ngay_hen_tra) {
+    public void setNgay_hen_tra(java.sql.Date ngay_hen_tra) {
         this.ngay_hen_tra = ngay_hen_tra;
     }
 
@@ -58,7 +58,7 @@ public class PhieuMuon {
         return ngay_tra;
     }
 
-    public void setNgay_tra(Date ngay_tra) {
+    public void setNgay_tra(java.sql.Date ngay_tra) {
         this.ngay_tra = ngay_tra;
     }
 
@@ -70,7 +70,7 @@ public class PhieuMuon {
         this.trang_thai = trang_thai;
     }
 
-    public PhieuMuon(int ma_phieu_muon, int ma_thu_thu, int ma_doc_gia, Date ngay_muon, Date ngay_hen_tra, Date ngay_tra, int trang_thai) {
+    public PhieuMuon(int ma_phieu_muon, int ma_thu_thu, int ma_doc_gia, java.sql.Date ngay_muon, java.sql.Date ngay_hen_tra, java.sql.Date ngay_tra, int trang_thai) {
         this.ma_phieu_muon = ma_phieu_muon;
         this.ma_thu_thu = ma_thu_thu;
         this.ma_doc_gia = ma_doc_gia;

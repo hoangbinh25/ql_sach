@@ -1,6 +1,5 @@
 package DAL;
 
-
 import DTO.DocGia;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,10 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author admin
- */
+
 public class DocGiaDAL {
 
     public static List<DocGia> loadTbaleData() {

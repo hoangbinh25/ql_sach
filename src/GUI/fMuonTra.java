@@ -4,7 +4,6 @@ import DAL.ConnectToSQLServer;
 import javax.swing.JOptionPane;
 import DTO.PhieuMuon;
 import DAL.PhieuMuonDAL;
-import static DAL.PhieuMuonDAL.loadTbaleData;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -22,6 +21,30 @@ public class fMuonTra extends javax.swing.JFrame {
     }
 
     private void Load() {
+        // load cbb_ThuThu
+        cbb_maThuThu.removeAllItems();
+        try {
+            List<String> thuThuList = PhieuMuonDAL.load_cbb_thuTHUData();
+            for (String tenThuThu : thuThuList) {
+                cbb_maThuThu.addItem(tenThuThu);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xử lý dữ liệu từ bảng Thủ thư: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+
+        // load cbb_DocGia
+        cbb_maDocGia.removeAllItems();
+        try {
+            List<String> docGiaList = PhieuMuonDAL.load_cbb_docGiaData();
+            for (String tenDocGia : docGiaList) {
+                cbb_maDocGia.addItem(tenDocGia);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xử lý dữ liệu từ bảng Độc giả: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+
         try {
             DefaultTableModel model = new DefaultTableModel();
             model.addColumn("Mã phiếu mượn");
@@ -41,25 +64,32 @@ public class fMuonTra extends javax.swing.JFrame {
             cbb_trangThai.addItem("Đang mượn");
             cbb_trangThai.addItem("Đã trả");
 
-            List<PhieuMuon> PhieuMuonList = PhieuMuonDAL.loadTbaleData();
+            List<PhieuMuon> PhieuMuonList = PhieuMuonDAL.loadTableData();
 
             for (PhieuMuon pm : PhieuMuonList) {
                 int ma_PM = pm.getMa_phieu_muon();
-                int ma_thu_thu = pm.getMa_thu_thu();
-                int ma_doc_gia = pm.getMa_doc_gia();
+                String thu_thu = PhieuMuonDAL.getThuThuById(pm.getMa_thu_thu());
+                String doc_gia = PhieuMuonDAL.getDocGiaById(pm.getMa_doc_gia());
+
+                // Xử lý ngày mượn (ngayMuon) - Kiểm tra nếu khác null trước khi định dạng
                 Date ngayMuon = pm.getNgay_muon();
-                String ngayMuonFormatted = dateFormatter.format(ngayMuon);
+                String ngayMuonFormatted = (ngayMuon != null) ? dateFormatter.format(ngayMuon) : "N/A";
+
+                // Xử lý ngày hẹn trả (ngayHenTra) - Kiểm tra nếu khác null trước khi định dạng
                 Date ngayHenTra = pm.getNgay_hen_tra();
-                String ngayHenTraFormatted = dateFormatter.format(ngayHenTra);
+                String ngayHenTraFormatted = (ngayHenTra != null) ? dateFormatter.format(ngayHenTra) : "N/A";
+
+                // Xử lý ngày trả (ngayTra) - Định dạng nếu có, nếu không thì hiển thị "Chưa trả"
                 Date ngayTra = pm.getNgay_tra();
-                String ngayTraFormatted = dateFormatter.format(ngayTra);
+                String ngayTraFormatted = (ngayTra != null) ? dateFormatter.format(ngayTra) : "Chưa trả"; // Nếu null, hiển thị "Chưa trả"
+
                 // Xác định trạng thái dựa trên ngày trả
                 String trangThai = (ngayTra == null) ? "Đang mượn" : "Đã trả";
 
                 model.addRow(new Object[]{
                     ma_PM,
-                    ma_thu_thu,
-                    ma_doc_gia,
+                    thu_thu,
+                    doc_gia,
                     ngayMuonFormatted,
                     ngayHenTraFormatted,
                     ngayTraFormatted,
@@ -73,6 +103,7 @@ public class fMuonTra extends javax.swing.JFrame {
             e.printStackTrace();
         }
 
+        // xử lý comboBox trạng thái
         jTB_phieuMuon.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 int selectedRow = jTB_phieuMuon.getSelectedRow();
@@ -86,7 +117,75 @@ public class fMuonTra extends javax.swing.JFrame {
                 }
             }
         });
+    }
 
+    public void loadTBL_Search(String Search) {
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Mã phiếu mượn");
+            model.addColumn("Mã thủ thư");
+            model.addColumn("Mã độc giả");
+            model.addColumn("Ngày mượn");
+            model.addColumn("Ngày hẹn trả");
+            model.addColumn("Ngày trả");
+            model.addColumn("Trạng thái");
+
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+            List<PhieuMuon> PhieuMuonList = PhieuMuonDAL.loadTableDataSearch(Search);
+
+            // Kiểm tra nếu danh sách trả về rỗng
+            if (PhieuMuonList == null || PhieuMuonList.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Không tìm thấy dữ liệu", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            for (PhieuMuon pm : PhieuMuonList) {
+                int ma_PM = pm.getMa_phieu_muon();
+                String thu_thu = PhieuMuonDAL.getThuThuById(pm.getMa_thu_thu());
+                String doc_gia = PhieuMuonDAL.getDocGiaById(pm.getMa_doc_gia());
+
+                // Xử lý ngày mượn (ngayMuon) - Kiểm tra nếu khác null trước khi định dạng
+                Date ngayMuon = pm.getNgay_muon();
+                String ngayMuonFormatted = (ngayMuon != null) ? dateFormatter.format(ngayMuon) : "N/A";
+
+                // Xử lý ngày hẹn trả (ngayHenTra) - Kiểm tra nếu khác null trước khi định dạng
+                Date ngayHenTra = pm.getNgay_hen_tra();
+                String ngayHenTraFormatted = (ngayHenTra != null) ? dateFormatter.format(ngayHenTra) : "N/A";
+
+                // Xử lý ngày trả (ngayTra) - Định dạng nếu có, nếu không thì hiển thị "Chưa trả"
+                Date ngayTra = pm.getNgay_tra();
+                String ngayTraFormatted = (ngayTra != null) ? dateFormatter.format(ngayTra) : "Chưa trả"; // Nếu null, hiển thị "Chưa trả"
+
+                // Xác định trạng thái dựa trên ngày trả
+                String trangThai = (ngayTra == null) ? "Đang mượn" : "Đã trả";
+
+                model.addRow(new Object[]{
+                    ma_PM,
+                    thu_thu,
+                    doc_gia,
+                    ngayMuonFormatted,
+                    ngayHenTraFormatted,
+                    ngayTraFormatted,
+                    trangThai});
+            }
+
+            jTB_phieuMuon.setModel(model);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xử lý dữ liệu : " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    private void clearForm() {
+        txt_maMuon.setText("");
+        txt_ngayMuon.setText("");
+        txt_ngayHen.setText("");
+        txt_ngayTra.setText("");
+        cbb_maThuThu.setSelectedIndex(0);
+        cbb_maDocGia.setSelectedIndex(0);
+        cbb_trangThai.setSelectedIndex(0);
     }
 
     @SuppressWarnings("unchecked")
@@ -103,14 +202,12 @@ public class fMuonTra extends javax.swing.JFrame {
         txt_ngayMuon = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         btn_timkiem = new javax.swing.JButton();
-        txt_maDG = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         btn_them = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btn_xoa = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         txt_ngayHen = new javax.swing.JTextField();
-        txt_maThuThu = new javax.swing.JTextField();
         txt_timkiem = new javax.swing.JTextField();
         txt_soLuong = new javax.swing.JTextField();
         txt_maPM1 = new javax.swing.JTextField();
@@ -127,11 +224,14 @@ public class fMuonTra extends javax.swing.JFrame {
         cbb_trangThai1 = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         cbb_trangThai = new javax.swing.JComboBox<>();
+        cbb_maDocGia = new javax.swing.JComboBox<>();
+        cbb_maThuThu = new javax.swing.JComboBox<>();
         jMenuBar_sach = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
         menu_khoSach = new javax.swing.JMenu();
         menu_muonTra = new javax.swing.JMenu();
         menu_qlTheLoai = new javax.swing.JMenu();
+        menu_qlDocGia = new javax.swing.JMenu();
         menu_qlTacGia = new javax.swing.JMenu();
         menu_thongKe = new javax.swing.JMenu();
 
@@ -176,12 +276,6 @@ public class fMuonTra extends javax.swing.JFrame {
             }
         });
 
-        txt_maDG.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_maDGActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Mã thủ thư:");
 
         btn_them.setText("Thêm");
@@ -201,12 +295,6 @@ public class fMuonTra extends javax.swing.JFrame {
         });
 
         jLabel4.setText("Ngày hẹn trả:");
-
-        txt_maThuThu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_maThuThuActionPerformed(evt);
-            }
-        });
 
         txt_maPM1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -230,7 +318,7 @@ public class fMuonTra extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã mượn", "Mã sách", "Mã độc giả", "Ngày mượn", "Ngày hẹn trả", "Ngày trả", "Trạng thái"
+                "Mã mượn", "Mã thủ thư", "Mã độc giả", "Ngày mượn", "Ngày hẹn trả", "Ngày trả", "Trạng thái"
             }
         ));
         jTB_phieuMuon.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -239,15 +327,6 @@ public class fMuonTra extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jTB_phieuMuon);
-        if (jTB_phieuMuon.getColumnModel().getColumnCount() > 0) {
-            jTB_phieuMuon.getColumnModel().getColumn(0).setHeaderValue("Mã mượn");
-            jTB_phieuMuon.getColumnModel().getColumn(1).setHeaderValue("Mã sách");
-            jTB_phieuMuon.getColumnModel().getColumn(2).setHeaderValue("Mã độc giả");
-            jTB_phieuMuon.getColumnModel().getColumn(3).setHeaderValue("Ngày mượn");
-            jTB_phieuMuon.getColumnModel().getColumn(4).setHeaderValue("Ngày hẹn trả");
-            jTB_phieuMuon.getColumnModel().getColumn(5).setHeaderValue("Ngày trả");
-            jTB_phieuMuon.getColumnModel().getColumn(6).setHeaderValue("Trạng thái");
-        }
 
         btn_them2.setText("Thêm");
         btn_them2.addActionListener(new java.awt.event.ActionListener() {
@@ -293,7 +372,7 @@ public class fMuonTra extends javax.swing.JFrame {
         });
         jMenuBar_sach.add(menu_khoSach);
 
-        menu_muonTra.setLabel("Quản lý mượn trả sách");
+        menu_muonTra.setText("Quản lý mượn trả sách");
         menu_muonTra.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menu_muonTraMouseClicked(evt);
@@ -302,14 +381,22 @@ public class fMuonTra extends javax.swing.JFrame {
         jMenuBar_sach.add(menu_muonTra);
 
         menu_qlTheLoai.setText("Quản lý thể loại");
-        menu_qlTheLoai.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menu_qlTheLoaiMouseClicked(evt);
-            }
-        });
         jMenuBar_sach.add(menu_qlTheLoai);
 
+        menu_qlDocGia.setText("Quản lý độc giả");
+        menu_qlDocGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_qlDocGiaMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_qlDocGia);
+
         menu_qlTacGia.setText("Quản lý tác giả");
+        menu_qlTacGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_qlTacGiaMouseClicked(evt);
+            }
+        });
         jMenuBar_sach.add(menu_qlTacGia);
 
         menu_thongKe.setText("Thống kê");
@@ -328,13 +415,9 @@ public class fMuonTra extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel9)
-                                        .addComponent(jLabel1))
+                                    .addComponent(jLabel1)
                                     .addGap(76, 76, 76)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txt_maDG, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txt_maThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(cbb_maThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -342,7 +425,11 @@ public class fMuonTra extends javax.swing.JFrame {
                                     .addGap(50, 50, 50)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(txt_ngayMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txt_maMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(txt_maMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel9)
+                                    .addGap(76, 76, 76)
+                                    .addComponent(cbb_maDocGia, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
@@ -360,11 +447,8 @@ public class fMuonTra extends javax.swing.JFrame {
                                     .addComponent(jLabel12))
                                 .addGap(50, 50, 50)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txt_ngayTra, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txt_ngayHen, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(1, 1, 1))
+                                    .addComponent(txt_ngayTra, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_ngayHen, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cbb_trangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -428,17 +512,16 @@ public class fMuonTra extends javax.swing.JFrame {
                             .addComponent(txt_maMuon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txt_maThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_maDG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(cbb_maThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbb_maDocGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_ngayMuon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_timkiem)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -485,7 +568,33 @@ public class fMuonTra extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
+        try {
+            // Kiểm tra nếu ngày trả rỗng
+            java.sql.Date ngayTra = null;
+            if (!txt_ngayTra.getText().trim().isEmpty()) {
+                ngayTra = java.sql.Date.valueOf(txt_ngayTra.getText());
+            }
 
+            PhieuMuon pm = new PhieuMuon(
+                    Integer.parseInt(txt_maMuon.getText()), // Cập nhật dựa trên mã phiếu mượn
+                    cbb_maThuThu.getSelectedIndex() + 1,
+                    cbb_maDocGia.getSelectedIndex() + 1,
+                    java.sql.Date.valueOf(txt_ngayMuon.getText()), // Chuyển đổi sang kiểu Date
+                    java.sql.Date.valueOf(txt_ngayHen.getText()),
+                    ngayTra,
+                    cbb_trangThai.getSelectedIndex()
+            );
+
+            PhieuMuonDAL.capNhatPM(pm);
+
+            // Thông báo thêm thành công
+            JOptionPane.showMessageDialog(null, "Cập nhật phiếu mượn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
+            clearForm();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Cập nhật phiếu mượn thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_suaActionPerformed
 
     private void jTB_CTPMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTB_CTPMMouseClicked
@@ -493,39 +602,116 @@ public class fMuonTra extends javax.swing.JFrame {
     }//GEN-LAST:event_jTB_CTPMMouseClicked
 
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
+        String search = txt_timkiem.getText().trim(); //  Loại bỏ khoảng trắng đầu và cuối chuỗi
+        if (search.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Chưa có dữ liệu tìm kiếm đầu vào", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            loadTBL_Search(search);
 
+            if (jTB_phieuMuon.getRowCount() == 0) { // Kiểm tra nếu bảng không có dữ liệu
+                JOptionPane.showMessageDialog(null, "Không tìm thấy kết quả nào phù hợp", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btn_timkiemActionPerformed
 
-    private void txt_maDGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maDGActionPerformed
-
-    }//GEN-LAST:event_txt_maDGActionPerformed
-
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
+
         try {
-            PhieuMuon pm = new PhieuMuon();
-            Integer.parseInt(txt_maMuon.getText());
-            Integer.parseInt(txt_maThuThu.getText());
-            Integer.parseInt(txt_maDG.getText());
-            java.sql.Date.valueOf(txt_ngayMuon.getText());
-            java.sql.Date.valueOf(txt_ngayHen.getText());
-            java.sql.Date.valueOf(txt_ngayTra.getText());
-            Integer.parseInt(cbb_trangThai.getItemAt(1));
+            // Kiểm tra nếu ngày trả rỗng
+            java.sql.Date ngayTra = null;
+            if (!txt_ngayTra.getText().trim().isEmpty()) {
+                ngayTra = java.sql.Date.valueOf(txt_ngayTra.getText());
+            }
 
+            PhieuMuon pm = new PhieuMuon(
+                    Integer.parseInt(txt_maMuon.getText()),
+                    cbb_maThuThu.getSelectedIndex() + 1,
+                    cbb_maDocGia.getSelectedIndex() + 1,
+                    java.sql.Date.valueOf(txt_ngayMuon.getText()), // Chuyển đổi sang kiểu Date
+                    java.sql.Date.valueOf(txt_ngayHen.getText()),
+                    ngayTra,
+                    cbb_trangThai.getSelectedIndex()
+            );
 
+            PhieuMuonDAL.themPM(pm);
 
-            
+            // Thông báo thêm thành công
+            JOptionPane.showMessageDialog(null, "Thêm phiếu mượn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
+            clearForm();
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Thêm phiếu mượn thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
+        try {
+            int maPhieuMuon = Integer.parseInt(txt_maMuon.getText());
 
+            PhieuMuonDAL.xoaPM(maPhieuMuon);
+            JOptionPane.showMessageDialog(null, "Xóa phiếu mượn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
+            clearForm();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Mã phiếu mượn không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Xóa phiếu mượn thất bại! Vui lòng kiểm tra lại mã phiếu mươn", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_xoaActionPerformed
 
-    private void txt_maThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maThuThuActionPerformed
+    private void txt_maPM1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maPM1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_maThuThuActionPerformed
+    }//GEN-LAST:event_txt_maPM1ActionPerformed
+
+    private void jTB_phieuMuonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTB_phieuMuonMouseClicked
+
+        // Lấy hàng hiện tại
+        int current = jTB_phieuMuon.getSelectedRow();
+
+// Điền dữ liệu vào các JTextField
+        txt_maMuon.setText(String.valueOf(jTB_phieuMuon.getValueAt(current, 0)));
+
+// Lấy mã thủ thư từ bảng (cột 1)
+        String maThuThu = (String.valueOf(jTB_phieuMuon.getValueAt(current, 1)));
+
+// Duyệt qua các mục trong cbb_maThuThu để tìm item khớp với mã thủ thư
+        for (int i = 0; i < cbb_maThuThu.getItemCount(); i++) {
+            if (cbb_maThuThu.getItemAt(i).toString().equals(maThuThu)) {
+                cbb_maThuThu.setSelectedIndex(i);
+                break;
+            }
+        }
+
+// Lấy mã độc giả từ bảng (cột 2)
+        String maDocGia = (String.valueOf(jTB_phieuMuon.getValueAt(current, 2)));
+
+// Duyệt qua các mục trong cbb_DocGia để tìm item khớp với mã độc giả
+        for (int i = 0; i < cbb_maDocGia.getItemCount(); i++) {
+            if (cbb_maDocGia.getItemAt(i).toString().equals(maDocGia)) {
+                cbb_maDocGia.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        txt_ngayMuon.setText(String.valueOf(jTB_phieuMuon.getValueAt(current, 3)));
+        txt_ngayHen.setText(String.valueOf(jTB_phieuMuon.getValueAt(current, 4)));
+        txt_ngayTra.setText(String.valueOf(jTB_phieuMuon.getValueAt(current, 5)));
+
+    }//GEN-LAST:event_jTB_phieuMuonMouseClicked
+
+    private void btn_them2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_them2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_them2ActionPerformed
+
+    private void btn_xoa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoa2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_xoa2ActionPerformed
+
+    private void btn_sua1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sua1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_sua1ActionPerformed
 
     private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
         fSach sachFrame = new fSach();
@@ -555,44 +741,21 @@ public class fMuonTra extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_menu_muonTraMouseClicked
 
-    private void menu_qlTheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTheLoaiMouseClicked
-        fTheLoai theLoaiFrame = new fTheLoai();
-        theLoaiFrame.setDefaultCloseOperation(fTheLoai.EXIT_ON_CLOSE);
-        theLoaiFrame.setLocationRelativeTo(null);
-        theLoaiFrame.setVisible(true);
+    private void menu_qlDocGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlDocGiaMouseClicked
+        fTacGia tacGiaFrame = new fTacGia();
+        tacGiaFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        tacGiaFrame.setLocationRelativeTo(null);
+        tacGiaFrame.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_menu_qlTheLoaiMouseClicked
+    }//GEN-LAST:event_menu_qlDocGiaMouseClicked
 
-    private void txt_maPM1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maPM1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_maPM1ActionPerformed
-
-    private void jTB_phieuMuonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTB_phieuMuonMouseClicked
-        int current = jTB_phieuMuon.getSelectedRow();
-
-        // Lấy hàng hiện tại
-        //int curent = jTB_phieuMuon.getSelectedRow();
-// Điền dữ liệu vào các JTextField
-        txt_maMuon.setText(String.valueOf(jTB_phieuMuon.getValueAt(current, 0)));
-        txt_maThuThu.setText(String.valueOf(jTB_phieuMuon.getValueAt(current, 1)));
-        txt_maDG.setText(String.valueOf(jTB_phieuMuon.getValueAt(current, 2)));
-        txt_ngayMuon.setText(String.valueOf(jTB_phieuMuon.getValueAt(current, 3)));
-        txt_ngayHen.setText(String.valueOf(jTB_phieuMuon.getValueAt(current, 4)));
-        txt_ngayTra.setText(String.valueOf(jTB_phieuMuon.getValueAt(current, 5)));
-
-    }//GEN-LAST:event_jTB_phieuMuonMouseClicked
-
-    private void btn_them2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_them2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_them2ActionPerformed
-
-    private void btn_xoa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoa2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_xoa2ActionPerformed
-
-    private void btn_sua1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sua1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_sua1ActionPerformed
+    private void menu_qlTacGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTacGiaMouseClicked
+        fTacGia tacGiaFrame = new fTacGia();
+        tacGiaFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        tacGiaFrame.setLocationRelativeTo(null);
+        tacGiaFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_qlTacGiaMouseClicked
 
     public static void main(String args[]) {
 
@@ -614,6 +777,8 @@ public class fMuonTra extends javax.swing.JFrame {
     private javax.swing.JButton btn_timkiem;
     private javax.swing.JButton btn_xoa;
     private javax.swing.JButton btn_xoa2;
+    private javax.swing.JComboBox<String> cbb_maDocGia;
+    private javax.swing.JComboBox<String> cbb_maThuThu;
     private javax.swing.JComboBox<String> cbb_trangThai;
     private javax.swing.JComboBox<String> cbb_trangThai1;
     private javax.swing.JLabel jLabel1;
@@ -635,14 +800,13 @@ public class fMuonTra extends javax.swing.JFrame {
     private javax.swing.JMenu menu_Sach;
     private javax.swing.JMenu menu_khoSach;
     private javax.swing.JMenu menu_muonTra;
+    private javax.swing.JMenu menu_qlDocGia;
     private javax.swing.JMenu menu_qlTacGia;
     private javax.swing.JMenu menu_qlTheLoai;
     private javax.swing.JMenu menu_thongKe;
     private javax.swing.JTextField txt_maCTPM;
-    private javax.swing.JTextField txt_maDG;
     private javax.swing.JTextField txt_maMuon;
     private javax.swing.JTextField txt_maPM1;
-    private javax.swing.JTextField txt_maThuThu;
     private javax.swing.JTextField txt_ngayHen;
     private javax.swing.JTextField txt_ngayMuon;
     private javax.swing.JTextField txt_ngayTra;
