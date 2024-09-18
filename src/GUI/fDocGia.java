@@ -1,3 +1,4 @@
+
 package GUI;
 
 import java.text.SimpleDateFormat;
@@ -345,6 +346,8 @@ public class fDocGia extends javax.swing.JFrame {
             load();
             clearForm();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Thêm không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btn_themActionPerformed
 
