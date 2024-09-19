@@ -1,7 +1,6 @@
 package DTO;
 
 public class ThuThu {
-    private int ma_thu_thu;
     private String ten_thu_thu;
     private String cmnd;
     private String sdt;
@@ -9,14 +8,6 @@ public class ThuThu {
     private String password;
 
     public ThuThu() {
-    }
-
-    public int getMa_thu_thu() {
-        return ma_thu_thu;
-    }
-
-    public void setMa_thu_thu(int ma_thu_thu) {
-        this.ma_thu_thu = ma_thu_thu;
     }
 
     public String getTen_thu_thu() {
@@ -59,8 +50,7 @@ public class ThuThu {
         this.password = password;
     }
 
-    public ThuThu(int ma_thu_thu, String ten_thu_thu, String cmnd, String sdt, String email, String password) {
-        this.ma_thu_thu = ma_thu_thu;
+    public ThuThu(String ten_thu_thu, String cmnd, String sdt, String email, String password) {
         this.ten_thu_thu = ten_thu_thu;
         this.cmnd = cmnd;
         this.sdt = sdt;
@@ -68,5 +58,30 @@ public class ThuThu {
         this.password = password;
     }
     
+    public static class CTThuThu extends ThuThu{
+        private int ma_thu_thu;
+
+        public CTThuThu() {
+        }
+
+        public int getMa_thu_thu() {
+            return ma_thu_thu;
+        }
+
+        public void setMa_thu_thu(int ma_thu_thu) {
+            this.ma_thu_thu = ma_thu_thu;
+        }
+
+        public CTThuThu(int ma_thu_thu) {
+            this.ma_thu_thu = ma_thu_thu;
+        }
+
+        public CTThuThu(int ma_thu_thu, String ten_thu_thu, String cmnd, String sdt, String email, String password) {
+            super(ten_thu_thu, cmnd, sdt, email, password);
+            this.ma_thu_thu = ma_thu_thu;
+        }
+        
+        
+    }
     
 }
