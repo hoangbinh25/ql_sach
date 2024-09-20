@@ -83,7 +83,6 @@ CREATE TABLE CHI_TIET_PHIEU_MUON (
     ma_phieu_muon INT,
     ma_sach INT,
     so_luong INT,
-    trang_thai TINYINT, -- 0: Đang mượn, 1: Đã trả
     FOREIGN KEY (ma_phieu_muon) REFERENCES PHIEU_MUON(ma_phieu_muon),
     FOREIGN KEY (ma_sach) REFERENCES SACH(ma_sach)
 );
@@ -152,11 +151,61 @@ FROM PHIEU_MUON;
 SELECT * FROM PHIEU_MUON;
 
 -- Thêm dữ liệu vào bảng Chi tiết phiếu mượn
-INSERT INTO CHI_TIET_PHIEU_MUON (ma_chi_tiet, ma_phieu_muon, ma_sach, so_luong, trang_thai) VALUES
-(4, 1, 1, 1, 0),
-(5, 1, 2, 1, 1),
-(6, 1, 3, 1, 0);
+INSERT INTO CHI_TIET_PHIEU_MUON (ma_chi_tiet, ma_phieu_muon, ma_sach, so_luong) VALUES
+(4, 1, 1, 1),
+(5, 1, 2, 1),
+(6, 1, 3, 1);
 GO
 
+SELECT * FROM PHIEU_MUON
 SELECT * FROM CHI_TIET_PHIEU_MUON
 
+
+	-- Thống kê số lượng sách, tên độc giả, thủ thư, ngày mượn, ngày hẹn trả, và tình trạng mượn
+SELECT 
+    S.ten_sach,
+	DG.ten_doc_gia,
+    TT.ten_thu_thu,
+    PM.ngay_muon,
+    PM.ngay_hen_tra,
+    S.so_luong AS tong_so_sach,
+    COALESCE(SUM(CASE 
+                 WHEN PM.trang_thai = 0 THEN CTPM.so_luong 
+                 END), 0) AS so_luong_da_cho_muon,
+    COALESCE(SUM(CASE 
+                 WHEN PM.trang_thai = 1 THEN CTPM.so_luong 
+                 END), 0) AS so_luong_da_tra,
+    (S.so_luong - COALESCE(SUM(CASE 
+                 WHEN PM.trang_thai = 0 THEN CTPM.so_luong 
+                 END), 0)) AS so_luong_con_lai,
+    
+    CASE
+        -- Trường hợp sách chưa trả và quá hạn
+        WHEN PM.trang_thai = 0 AND GETDATE() > PM.ngay_hen_tra THEN 
+            N'Quá hạn ' + CAST(DATEDIFF(DAY, PM.ngay_hen_tra, GETDATE()) AS NVARCHAR) + N' ngày'
+        
+        -- Trường hợp sách chưa trả và còn trong thời hạn mượn
+        WHEN PM.trang_thai = 0 AND GETDATE() <= PM.ngay_hen_tra THEN 
+            N'Còn ' + CAST(DATEDIFF(DAY, GETDATE(), PM.ngay_hen_tra) AS NVARCHAR) + N' ngày'
+        
+        -- Trường hợp sách đã trả
+        ELSE N'Đã trả'
+    END AS tinh_trang,
+	-- Cột tiền phạt: Chỉ áp dụng khi quá hạn và sách chưa trả
+    CASE
+        WHEN PM.trang_thai = 0 AND GETDATE() > PM.ngay_hen_tra THEN 
+            DATEDIFF(DAY, PM.ngay_hen_tra, GETDATE()) * 5000
+        ELSE 0
+    END AS tien_phat
+FROM 
+    SACH S
+LEFT JOIN 
+    CHI_TIET_PHIEU_MUON CTPM ON S.ma_sach = CTPM.ma_sach
+LEFT JOIN 
+    PHIEU_MUON PM ON CTPM.ma_phieu_muon = PM.ma_phieu_muon
+LEFT JOIN 
+    DOC_GIA DG ON PM.ma_doc_gia = DG.ma_doc_gia
+LEFT JOIN 
+    THU_THU TT ON PM.ma_thu_thu = TT.ma_thu_thu
+GROUP BY 
+    S.ten_sach, S.so_luong, DG.ten_doc_gia, TT.ten_thu_thu, PM.ngay_muon, PM.ngay_hen_tra, PM.trang_thai;
