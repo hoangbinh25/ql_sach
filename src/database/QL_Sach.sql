@@ -1,6 +1,7 @@
 ﻿USE master;
 DROP DATABASE IF EXISTS QL_SACH;
 DROP TABLE IF EXISTS THU_THU;
+DROP TABLE IF EXISTS CHI_TIET_PHIEU_MUON;
 
 CREATE DATABASE QL_SACH;
 GO
@@ -79,15 +80,15 @@ SELECT * FROM PHIEU_MUON;
 
 -- Bảng Chi tiết phiếu mượn
 CREATE TABLE CHI_TIET_PHIEU_MUON (
-    ma_chi_tiet INT PRIMARY KEY,
-    ma_phieu_muon INT,
+    ma_chi_tiet INT IDENTITY(1,1) PRIMARY KEY,
+    ma_phieu_muon INT ,
     ma_sach INT,
-    so_luong INT,
-    trang_thai TINYINT, -- 0: Đang mượn, 1: Đã trả
     FOREIGN KEY (ma_phieu_muon) REFERENCES PHIEU_MUON(ma_phieu_muon),
     FOREIGN KEY (ma_sach) REFERENCES SACH(ma_sach)
 );
-GO
+
+
+DROP TABLE CHI_TIET_PHIEU_MUON;
 
 -- Thêm dữ liệu vào bảng Tác giả
 INSERT INTO TAC_GIA (ma_tac_gia, ten_tac_gia) VALUES
@@ -141,10 +142,7 @@ UPDATE PHIEU_MUON
 SET ngay_tra = 0
 WHERE ngay_tra IS NULL;
 
-<<<<<<< HEAD
 GO
-=======
->>>>>>> fe236fd8e0da0e19de25d565254c0f7c3be8a02a
 
 SELECT ma_phieu_muon, ma_thu_thu, ma_doc_gia, ngay_muon, ngay_hen_tra, ngay_tra, 
     CASE 
@@ -156,11 +154,11 @@ FROM PHIEU_MUON;
 SELECT * FROM PHIEU_MUON;
 
 -- Thêm dữ liệu vào bảng Chi tiết phiếu mượn
-INSERT INTO CHI_TIET_PHIEU_MUON (ma_chi_tiet, ma_phieu_muon, ma_sach, so_luong, trang_thai) VALUES
-(1, 1, 1, 1, 0),
-(2, 2, 2, 1, 1),
-(3, 3, 3, 1, 0);
-GO
+INSERT INTO CHI_TIET_PHIEU_MUON (ma_phieu_muon, ma_sach) VALUES
+(1, 1),
+(1, 2),
+(3, 3),
+(4, 1);
 
-SELECT * FROM CHI_TIET_PHIEU_MUON
 
+SELECT * FROM CHI_TIET_PHIEU_MUON;

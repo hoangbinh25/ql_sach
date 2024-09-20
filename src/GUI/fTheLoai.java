@@ -1,22 +1,26 @@
+
 package GUI;
 
 import DAL.TheLoaiDAL;
-import javax.swing.table.*;
-import java.util.*;
 import DTO.TheLoai;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class fTheLoai extends javax.swing.JFrame {
+
 
     public fTheLoai() {
         initComponents();
         Load();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btn_timkiem = new javax.swing.JButton();
+        btn_sua = new javax.swing.JButton();
         txt_maTheLoai = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -26,8 +30,6 @@ public class fTheLoai extends javax.swing.JFrame {
         btn_xoa = new javax.swing.JButton();
         btn_them = new javax.swing.JButton();
         txt_timkiem = new javax.swing.JTextField();
-        btn_timkiem = new javax.swing.JButton();
-        btn_sua = new javax.swing.JButton();
         jMenuBar_sach = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
         menu_thuThu = new javax.swing.JMenu();
@@ -38,7 +40,20 @@ public class fTheLoai extends javax.swing.JFrame {
         menu_thongKe = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Quản lý thể loại");
+
+        btn_timkiem.setText("Tìm Kiếm");
+        btn_timkiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_timkiemActionPerformed(evt);
+            }
+        });
+
+        btn_sua.setText("Sửa");
+        btn_sua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_suaActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Mã thể loại:");
 
@@ -79,20 +94,6 @@ public class fTheLoai extends javax.swing.JFrame {
         btn_them.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_themActionPerformed(evt);
-            }
-        });
-
-        btn_timkiem.setText("Tìm Kiếm");
-        btn_timkiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_timkiemActionPerformed(evt);
-            }
-        });
-
-        btn_sua.setText("Sửa");
-        btn_sua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_suaActionPerformed(evt);
             }
         });
 
@@ -180,7 +181,7 @@ public class fTheLoai extends javax.swing.JFrame {
                                 .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(31, 31, 31)
                                 .addComponent(btn_timkiem))
-                            .addComponent(txt_maTheLoai)
+                            .addComponent(txt_maTheLoai, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
                             .addComponent(txt_tenTheLoai))))
                 .addGap(74, 74, 74))
         );
@@ -204,7 +205,7 @@ public class fTheLoai extends javax.swing.JFrame {
                     .addComponent(btn_timkiem))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         pack();
@@ -258,38 +259,51 @@ public class fTheLoai extends javax.swing.JFrame {
         txt_maTheLoai.setText("");
         txt_tenTheLoai.setText("");
     }
+    
+    private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
+        String search = txt_timkiem.getText().trim(); //Loại bỏ khoảng trắng đầu và cuối chuỗi mỗi khi ng dùng nhập
+        if (search.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Chưa có dữ liệu tìm kiếm đầu vào", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
+        } else {
+            loadTBL_Search(search);
+
+            if (jTBtheLoai.getRowCount() == 0) { // Kiểm tra nếu bảng không có dữ liệu
+                JOptionPane.showMessageDialog(null, "Không tìm thấy kết quả nào phù hợp", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btn_timkiemActionPerformed
+
+    private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
+        try {
+            TheLoai theloai = new TheLoai(
+                Integer.parseInt(txt_maTheLoai.getText()),
+                txt_tenTheLoai.getText()
+            );
+
+            TheLoaiDAL.suaTheLoai(theloai);
+
+            JOptionPane.showMessageDialog(null, "Cập nhật thể loại thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
+            clearForm();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Cập nhật thể loại thất bại! Vui lòng kiểm tra mã sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_btn_suaActionPerformed
 
     private void txt_tenTheLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tenTheLoaiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_tenTheLoaiActionPerformed
 
-    private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {                                       
-        fSach sachFrame = new fSach();
-        sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
-        sachFrame.setLocationRelativeTo(null);
-        sachFrame.setVisible(true);
-        this.dispose();
-    }                                      
+    private void jTBtheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTBtheLoaiMouseClicked
+        int current = jTBtheLoai.getSelectedRow(); // Lấy hàng hiện tại
 
-    private void menu_khoSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_khoSachMouseClicked
-        fKhoSach khoSachFrame = new fKhoSach();
-        khoSachFrame.setDefaultCloseOperation(fKhoSach.EXIT_ON_CLOSE);
-        khoSachFrame.setLocationRelativeTo(null);
-        khoSachFrame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_menu_khoSachMouseClicked
-
-    private void menu_khoSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_khoSachActionPerformed
-
-    }//GEN-LAST:event_menu_khoSachActionPerformed
-
-    private void menu_muonTraMouseClicked(java.awt.event.MouseEvent evt) {                                          
-        fMuonTra muonTraFrame = new fMuonTra();
-        muonTraFrame.setDefaultCloseOperation(fMuonTra.EXIT_ON_CLOSE);
-        muonTraFrame.setLocationRelativeTo(null);
-        muonTraFrame.setVisible(true);
-        this.dispose();
-    }                                         
+        //      Điền dữ liệu vào JTextField
+        txt_maTheLoai.setText(String.valueOf(jTBtheLoai.getValueAt(current, 0)));
+        txt_tenTheLoai.setText(String.valueOf(jTBtheLoai.getValueAt(current, 1)));
+    }//GEN-LAST:event_jTBtheLoaiMouseClicked
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
         try {
@@ -311,8 +325,8 @@ public class fTheLoai extends javax.swing.JFrame {
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         try {
             TheLoai theloai = new TheLoai(
-                    Integer.parseInt(txt_maTheLoai.getText()),
-                    txt_tenTheLoai.getText()
+                Integer.parseInt(txt_maTheLoai.getText()),
+                txt_tenTheLoai.getText()
             );
 
             TheLoaiDAL.themTheLoai(theloai);
@@ -325,40 +339,6 @@ public class fTheLoai extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Thêm thể loại thất bại! Vui lòng kiểm tra lại dữ liệu đầu vào", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_themActionPerformed
-
-    private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
-        String search = txt_timkiem.getText().trim(); //Loại bỏ khoảng trắng đầu và cuối chuỗi mỗi khi ng dùng nhập
-        if (search.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Chưa có dữ liệu tìm kiếm đầu vào", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
-            Load();
-        } else {
-            loadTBL_Search(search);
-            
-            if (jTBtheLoai.getRowCount() == 0) { // Kiểm tra nếu bảng không có dữ liệu
-                JOptionPane.showMessageDialog(null, "Không tìm thấy kết quả nào phù hợp", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-
-    }//GEN-LAST:event_btn_timkiemActionPerformed
-
-    private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
-        try {
-            TheLoai theloai = new TheLoai(
-                    Integer.parseInt(txt_maTheLoai.getText()),
-                    txt_tenTheLoai.getText()
-            );
-
-            TheLoaiDAL.suaTheLoai(theloai);
-
-            JOptionPane.showMessageDialog(null, "Cập nhật thể loại thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            Load();
-            clearForm();
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Cập nhật thể loại thất bại! Vui lòng kiểm tra mã sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-
-        }
-    }//GEN-LAST:event_btn_suaActionPerformed
 
     private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
         fSach sachFrame = new fSach();
@@ -412,21 +392,38 @@ public class fTheLoai extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_menu_qlTacGiaMouseClicked
 
-    private void jTBtheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTBtheLoaiMouseClicked
-        int current = jTBtheLoai.getSelectedRow(); // Lấy hàng hiện tại
-
-//      Điền dữ liệu vào JTextField
-        txt_maTheLoai.setText(String.valueOf(jTBtheLoai.getValueAt(current, 0)));
-        txt_tenTheLoai.setText(String.valueOf(jTBtheLoai.getValueAt(current, 1)));
-    }//GEN-LAST:event_jTBtheLoaiMouseClicked
-
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(fTheLoai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(fTheLoai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(fTheLoai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(fTheLoai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                fTheLoai theLoaiFrame = new fTheLoai();
-                theLoaiFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-                theLoaiFrame.setLocationRelativeTo(null);
-                theLoaiFrame.setVisible(true);
+                new fTheLoai().setVisible(true);
             }
         });
     }
@@ -447,11 +444,7 @@ public class fTheLoai extends javax.swing.JFrame {
     private javax.swing.JMenu menu_qlTacGia;
     private javax.swing.JMenu menu_qlTheLoai;
     private javax.swing.JMenu menu_thongKe;
-<<<<<<< HEAD
-=======
     private javax.swing.JMenu menu_thuThu;
-    private javax.swing.JTable tb_theLoai;
->>>>>>> fe236fd8e0da0e19de25d565254c0f7c3be8a02a
     private javax.swing.JTextField txt_maTheLoai;
     private javax.swing.JTextField txt_tenTheLoai;
     private javax.swing.JTextField txt_timkiem;

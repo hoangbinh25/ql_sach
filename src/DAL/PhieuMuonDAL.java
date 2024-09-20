@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import GUI.fMuonTra;
+import DTO.Sach;
+import DTO.CTPM.ChiTietPM;
+import DTO.CTPM;
+       
+
 import java.sql.Date;
 
 public class PhieuMuonDAL {
@@ -141,6 +146,21 @@ public class PhieuMuonDAL {
         }
         return thuThuList;
     }
+    
+    public static List<String> load_cbb_tenSachData() {
+        List<String> sachList = new ArrayList<>();
+        String sqlQuery = "SELECT ten_sach FROM Sach";
+        try (Connection conn = ConnectToSQLServer.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sqlQuery);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+                sachList.add(rs.getString("ten_sach"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sachList;
+    }
 
     public static void themPM(PhieuMuon pm) {
         String query = "INSERT INTO PHIEU_MUON (ma_phieu_muon, ma_thu_thu, ma_doc_gia, ngay_muon, ngay_hen_tra, ngay_tra, trang_thai)"
@@ -164,7 +184,7 @@ public class PhieuMuonDAL {
             e.printStackTrace();
         }
     }
-
+ 
     public static void capNhatPM(PhieuMuon pm) {
         String query = "UPDATE PHIEU_MUON SET ma_thu_thu = ?, ma_doc_gia = ?, ngay_muon = ?, ngay_hen_tra = ?, ngay_tra = ?, trang_thai = ? WHERE ma_phieu_muon = ?";
 
