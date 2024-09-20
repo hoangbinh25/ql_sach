@@ -154,11 +154,17 @@ FROM PHIEU_MUON;
 SELECT * FROM PHIEU_MUON;
 
 -- Thêm dữ liệu vào bảng Chi tiết phiếu mượn
+
 INSERT INTO CHI_TIET_PHIEU_MUON (ma_phieu_muon, ma_sach) VALUES
 (1, 1),
 (1, 2),
 (3, 3),
 (4, 1);
 
+INSERT INTO CHI_TIET_PHIEU_MUON (ma_chi_tiet, ma_phieu_muon, ma_sach, so_luong, trang_thai) VALUES
+(4, 1, 1, 1, 0),
+(5, 1, 2, 1, 1),
+(6, 1, 3, 1, 0);
+GO
 
 SELECT * FROM CHI_TIET_PHIEU_MUON;
