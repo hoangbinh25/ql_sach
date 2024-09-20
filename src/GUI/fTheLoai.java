@@ -1,26 +1,35 @@
+
 package GUI;
 
+import DAL.TheLoaiDAL;
+import DTO.TheLoai;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class fTheLoai extends javax.swing.JFrame {
-    
+
+
     public fTheLoai() {
         initComponents();
+        Load();
     }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btn_timkiem = new javax.swing.JButton();
+        btn_sua = new javax.swing.JButton();
         txt_maTheLoai = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         txt_tenTheLoai = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tb_theLoai = new javax.swing.JTable();
+        jTBtheLoai = new javax.swing.JTable();
         btn_xoa = new javax.swing.JButton();
         btn_them = new javax.swing.JButton();
         txt_timkiem = new javax.swing.JTextField();
-        btn_timkiem = new javax.swing.JButton();
-        btn_sua = new javax.swing.JButton();
         jMenuBar_sach = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
         menu_thuThu = new javax.swing.JMenu();
@@ -31,44 +40,6 @@ public class fTheLoai extends javax.swing.JFrame {
         menu_thongKe = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Quản lý thể loại");
-
-        jLabel6.setText("Mã thể loại:");
-
-        jLabel1.setText("Tên thể loại: ");
-
-        txt_tenTheLoai.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_tenTheLoaiActionPerformed(evt);
-            }
-        });
-
-        tb_theLoai.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Mã thể loại", "Tên thể loại"
-            }
-        ));
-        jScrollPane1.setViewportView(tb_theLoai);
-
-        btn_xoa.setText("Xóa");
-        btn_xoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_xoaActionPerformed(evt);
-            }
-        });
-
-        btn_them.setText("Thêm");
-        btn_them.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_themActionPerformed(evt);
-            }
-        });
 
         btn_timkiem.setText("Tìm Kiếm");
         btn_timkiem.addActionListener(new java.awt.event.ActionListener() {
@@ -81,6 +52,48 @@ public class fTheLoai extends javax.swing.JFrame {
         btn_sua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_suaActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Mã thể loại:");
+
+        jLabel1.setText("Tên thể loại: ");
+
+        txt_tenTheLoai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_tenTheLoaiActionPerformed(evt);
+            }
+        });
+
+        jTBtheLoai.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Mã thể loại", "Tên thể loại"
+            }
+        ));
+        jTBtheLoai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTBtheLoaiMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTBtheLoai);
+
+        btn_xoa.setText("Xóa");
+        btn_xoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_xoaActionPerformed(evt);
+            }
+        });
+
+        btn_them.setText("Thêm");
+        btn_them.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_themActionPerformed(evt);
             }
         });
 
@@ -147,30 +160,30 @@ public class fTheLoai extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(49, 49, 49)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_tenTheLoai, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
-                            .addComponent(txt_maTheLoai)))
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_them)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_sua)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_xoa)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(btn_timkiem)
-                        .addGap(59, 59, 59)))
-                .addGap(70, 70, 70))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btn_them)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_sua)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_xoa)
+                                .addGap(18, 18, 18)
+                                .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(btn_timkiem))
+                            .addComponent(txt_maTheLoai, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
+                            .addComponent(txt_tenTheLoai))))
+                .addGap(74, 74, 74))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,41 +196,149 @@ public class fTheLoai extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_tenTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addGap(30, 30, 30)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_them)
                     .addComponent(btn_sua)
                     .addComponent(btn_xoa)
                     .addComponent(btn_timkiem))
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void Load() {
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Mã thể loại");
+            model.addColumn("Tên thể loại");
+
+            List<TheLoai> TheLoaiList = TheLoaiDAL.loadTableData();
+            for (TheLoai theLoai : TheLoaiList) {
+                int ma_TheLoai = theLoai.getMa_the_loai();
+                String ten_TheLoai = theLoai.getTen_the_loai();
+                model.addRow(new Object[]{
+                    ma_TheLoai,
+                    ten_TheLoai
+                });
+            }
+            jTBtheLoai.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xử lý dữ liệu: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void loadTBL_Search(String Search) {
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Mã thể loại");
+            model.addColumn("Tên thể loại");
+
+            List<TheLoai> TheLoaiList = TheLoaiDAL.loadTableDataSearch(Search);
+            for (TheLoai theLoai : TheLoaiList) {
+                int ma_TheLoai = theLoai.getMa_the_loai();
+                String ten_TheLoai = theLoai.getTen_the_loai();
+                model.addRow(new Object[]{
+                    ma_TheLoai,
+                    ten_TheLoai
+                });
+            }
+            jTBtheLoai.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xử lý dữ liệu: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void clearForm() {
+        txt_maTheLoai.setText("");
+        txt_tenTheLoai.setText("");
+    }
+    
+    private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
+        String search = txt_timkiem.getText().trim(); //Loại bỏ khoảng trắng đầu và cuối chuỗi mỗi khi ng dùng nhập
+        if (search.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Chưa có dữ liệu tìm kiếm đầu vào", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
+        } else {
+            loadTBL_Search(search);
+
+            if (jTBtheLoai.getRowCount() == 0) { // Kiểm tra nếu bảng không có dữ liệu
+                JOptionPane.showMessageDialog(null, "Không tìm thấy kết quả nào phù hợp", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btn_timkiemActionPerformed
+
+    private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
+        try {
+            TheLoai theloai = new TheLoai(
+                Integer.parseInt(txt_maTheLoai.getText()),
+                txt_tenTheLoai.getText()
+            );
+
+            TheLoaiDAL.suaTheLoai(theloai);
+
+            JOptionPane.showMessageDialog(null, "Cập nhật thể loại thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
+            clearForm();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Cập nhật thể loại thất bại! Vui lòng kiểm tra mã sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_btn_suaActionPerformed
+
     private void txt_tenTheLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tenTheLoaiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_tenTheLoaiActionPerformed
 
+    private void jTBtheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTBtheLoaiMouseClicked
+        int current = jTBtheLoai.getSelectedRow(); // Lấy hàng hiện tại
+
+        //      Điền dữ liệu vào JTextField
+        txt_maTheLoai.setText(String.valueOf(jTBtheLoai.getValueAt(current, 0)));
+        txt_tenTheLoai.setText(String.valueOf(jTBtheLoai.getValueAt(current, 1)));
+    }//GEN-LAST:event_jTBtheLoaiMouseClicked
+
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
-        
+        try {
+            int maTheLoai = Integer.parseInt(txt_maTheLoai.getText()); // Lấy mã thể loại
+
+            TheLoaiDAL.xoaTheLoai(maTheLoai);
+            JOptionPane.showMessageDialog(null, "Xóa thể loại thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            Load();
+            clearForm();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Mã thể loại không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Xóa sách thất bại! Vui lòng kiểm tra mã sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_xoaActionPerformed
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
-        
+        try {
+            TheLoai theloai = new TheLoai(
+                Integer.parseInt(txt_maTheLoai.getText()),
+                txt_tenTheLoai.getText()
+            );
+
+            TheLoaiDAL.themTheLoai(theloai);
+
+            JOptionPane.showMessageDialog(null, "Thêm thể loại thành công!", "Thông báop", JOptionPane.INFORMATION_MESSAGE);
+            Load();
+            clearForm();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Thêm thể loại thất bại! Vui lòng kiểm tra lại dữ liệu đầu vào", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_themActionPerformed
-
-    private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
-        
-
-    }//GEN-LAST:event_btn_timkiemActionPerformed
-
-    private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
-
-    }//GEN-LAST:event_btn_suaActionPerformed
 
     private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
         fSach sachFrame = new fSach();
@@ -270,14 +391,39 @@ public class fTheLoai extends javax.swing.JFrame {
         tacGiaFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_menu_qlTacGiaMouseClicked
-    
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(fTheLoai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(fTheLoai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(fTheLoai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(fTheLoai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                fTheLoai theLoaiFrame = new fTheLoai();
-                theLoaiFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-                theLoaiFrame.setLocationRelativeTo(null);
-                theLoaiFrame.setVisible(true);
+                new fTheLoai().setVisible(true);
             }
         });
     }
@@ -291,6 +437,7 @@ public class fTheLoai extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenuBar jMenuBar_sach;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTBtheLoai;
     private javax.swing.JMenu menu_Sach;
     private javax.swing.JMenu menu_muonTra;
     private javax.swing.JMenu menu_qlDocGia;
@@ -298,7 +445,6 @@ public class fTheLoai extends javax.swing.JFrame {
     private javax.swing.JMenu menu_qlTheLoai;
     private javax.swing.JMenu menu_thongKe;
     private javax.swing.JMenu menu_thuThu;
-    private javax.swing.JTable tb_theLoai;
     private javax.swing.JTextField txt_maTheLoai;
     private javax.swing.JTextField txt_tenTheLoai;
     private javax.swing.JTextField txt_timkiem;

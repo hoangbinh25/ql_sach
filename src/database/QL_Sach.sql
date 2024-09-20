@@ -1,6 +1,7 @@
 ﻿USE master;
 DROP DATABASE IF EXISTS QL_SACH;
 DROP TABLE IF EXISTS THU_THU;
+DROP TABLE IF EXISTS CHI_TIET_PHIEU_MUON;
 
 CREATE DATABASE QL_SACH;
 GO
@@ -79,14 +80,19 @@ SELECT * FROM PHIEU_MUON;
 
 -- Bảng Chi tiết phiếu mượn
 CREATE TABLE CHI_TIET_PHIEU_MUON (
-    ma_chi_tiet INT PRIMARY KEY,
-    ma_phieu_muon INT,
+    ma_chi_tiet INT IDENTITY(1,1) PRIMARY KEY,
+    ma_phieu_muon INT ,
     ma_sach INT,
+<<<<<<< HEAD
     so_luong INT,
+=======
+>>>>>>> 9fa625ead1b6a1acad17c1c39175aa9e4f0dfe99
     FOREIGN KEY (ma_phieu_muon) REFERENCES PHIEU_MUON(ma_phieu_muon),
     FOREIGN KEY (ma_sach) REFERENCES SACH(ma_sach)
 );
-GO
+
+
+DROP TABLE CHI_TIET_PHIEU_MUON;
 
 -- Thêm dữ liệu vào bảng Tác giả
 INSERT INTO TAC_GIA (ma_tac_gia, ten_tac_gia) VALUES
@@ -140,6 +146,7 @@ UPDATE PHIEU_MUON
 SET ngay_tra = 0
 WHERE ngay_tra IS NULL;
 
+GO
 
 SELECT ma_phieu_muon, ma_thu_thu, ma_doc_gia, ngay_muon, ngay_hen_tra, ngay_tra, 
     CASE 
@@ -151,6 +158,7 @@ FROM PHIEU_MUON;
 SELECT * FROM PHIEU_MUON;
 
 -- Thêm dữ liệu vào bảng Chi tiết phiếu mượn
+<<<<<<< HEAD
 INSERT INTO CHI_TIET_PHIEU_MUON (ma_chi_tiet, ma_phieu_muon, ma_sach, so_luong) VALUES
 (4, 1, 1, 1),
 (5, 1, 2, 1),
@@ -209,3 +217,19 @@ LEFT JOIN
     THU_THU TT ON PM.ma_thu_thu = TT.ma_thu_thu
 GROUP BY 
     S.ten_sach, S.so_luong, DG.ten_doc_gia, TT.ten_thu_thu, PM.ngay_muon, PM.ngay_hen_tra, PM.trang_thai;
+=======
+
+INSERT INTO CHI_TIET_PHIEU_MUON (ma_phieu_muon, ma_sach) VALUES
+(1, 1),
+(1, 2),
+(3, 3),
+(4, 1);
+
+INSERT INTO CHI_TIET_PHIEU_MUON (ma_chi_tiet, ma_phieu_muon, ma_sach, so_luong, trang_thai) VALUES
+(4, 1, 1, 1, 0),
+(5, 1, 2, 1, 1),
+(6, 1, 3, 1, 0);
+GO
+
+SELECT * FROM CHI_TIET_PHIEU_MUON;
+>>>>>>> 9fa625ead1b6a1acad17c1c39175aa9e4f0dfe99
