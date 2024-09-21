@@ -1,4 +1,3 @@
-
 package GUI;
 
 import javax.swing.JOptionPane;
@@ -11,7 +10,13 @@ import GUI.fTheLoai;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.JFileChooser;
+import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class fSach extends javax.swing.JFrame {
 
@@ -59,7 +64,7 @@ public class fSach extends javax.swing.JFrame {
 
             SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
-            List<Sach> tacGiaList = SachDAL.loadTbaleData();
+            List<Sach> tacGiaList = SachDAL.loadTableData();
 
             for (Sach s : tacGiaList) {
                 int maSach = s.getMa_sach();
@@ -98,7 +103,7 @@ public class fSach extends javax.swing.JFrame {
 
             SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
-            List<Sach> tacGiaList = SachDAL.loadTbaleDataSearch(search);
+            List<Sach> tacGiaList = SachDAL.loadTableDataSearch(search);
             for (Sach s : tacGiaList) {
                 int maSach = s.getMa_sach();
                 String ten_sach = s.getTen_sach();
@@ -162,6 +167,7 @@ public class fSach extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         cbb_theLoai = new javax.swing.JComboBox<>();
         cbb_tacGia = new javax.swing.JComboBox<>();
+        btn_inExcel = new javax.swing.JButton();
         jMenuBar_sach = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
         menu_thuThu = new javax.swing.JMenu();
@@ -253,6 +259,13 @@ public class fSach extends javax.swing.JFrame {
             }
         });
 
+        btn_inExcel.setText("In");
+        btn_inExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_inExcelActionPerformed(evt);
+            }
+        });
+
         menu_Sach.setText("Quản lý sách");
         menu_Sach.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -317,39 +330,6 @@ public class fSach extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_maSach, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_tenSach, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(156, 156, 156)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_namXB)
-                            .addComponent(txt_nhaXB, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cbb_tacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addComponent(btn_them)
-                        .addGap(84, 84, 84)
-                        .addComponent(btn_sua)
-                        .addGap(74, 74, 74)
-                        .addComponent(btn_xoa)
-                        .addGap(64, 64, 64)
-                        .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(btn_timkiem))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(80, 80, 80)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -365,7 +345,45 @@ public class fSach extends javax.swing.JFrame {
                         .addComponent(cbb_theLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(43, 43, 43)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 816, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 816, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(82, 82, 82)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txt_maSach, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txt_tenSach, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(156, 156, 156)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(69, 69, 69)
+                                .addComponent(btn_them)
+                                .addGap(31, 31, 31)
+                                .addComponent(btn_sua)
+                                .addGap(39, 39, 39)
+                                .addComponent(btn_xoa)
+                                .addGap(27, 27, 27)
+                                .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btn_timkiem)
+                                .addGap(29, 29, 29)
+                                .addComponent(btn_inExcel))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txt_namXB)
+                                .addComponent(txt_nhaXB, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(cbb_tacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -420,12 +438,13 @@ public class fSach extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(txt_soLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_them)
                     .addComponent(btn_sua)
                     .addComponent(btn_xoa)
                     .addComponent(txt_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_timkiem))
+                    .addComponent(btn_timkiem)
+                    .addComponent(btn_inExcel))
                 .addGap(63, 63, 63)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -491,10 +510,10 @@ public class fSach extends javax.swing.JFrame {
         } else {
             loadTBL_SEARCH(search);
         }
-        
-         if (jTB_sach.getRowCount() == 0) { // Kiểm tra nếu bảng không có dữ liệu
-                JOptionPane.showMessageDialog(null, "Không tìm thấy kết quả nào phù hợp", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            }
+
+        if (jTB_sach.getRowCount() == 0) { // Kiểm tra nếu bảng không có dữ liệu
+            JOptionPane.showMessageDialog(null, "Không tìm thấy kết quả nào phù hợp", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btn_timkiemActionPerformed
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
@@ -645,19 +664,137 @@ public class fSach extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_menu_qlTacGiaMouseClicked
 
+    private void btn_inExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inExcelActionPerformed
+        try {
+
+            List<Sach> lSach = SachDAL.loadTableData();
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            XSSFWorkbook wordkbook = new XSSFWorkbook();
+            XSSFSheet sheet = wordkbook.createSheet("danhsach");
+            XSSFRow row = null;
+            Cell cell = null;
+
+            // Dòng tiêu đề
+            row = sheet.createRow(2);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("Danh sách độc giả");
+
+            // Dòng tiêu đề các cột
+            row = sheet.createRow(3);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("STT");
+
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("Mã sách");
+
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellValue("Tên sách");
+
+            cell = row.createCell(3, CellType.STRING);
+            cell.setCellValue("Ngôn ngữ");
+
+            cell = row.createCell(4, CellType.STRING);
+            cell.setCellValue("Giá trị");
+
+            cell = row.createCell(5, CellType.STRING);
+            cell.setCellValue("Số lượng");
+
+            cell = row.createCell(6, CellType.STRING);
+            cell.setCellValue("Tên tác giả");
+
+            cell = row.createCell(7, CellType.STRING);
+            cell.setCellValue("Tên thể loại");
+
+            cell = row.createCell(8, CellType.STRING);
+            cell.setCellValue("Nhà xuất bản");
+
+            cell = row.createCell(9, CellType.STRING);
+            cell.setCellValue("Năm xuất bản");
+
+            // Điền dữ liệu vào các hàng
+            for (int i = 0; i < lSach.size(); i++) {
+                Sach sach = lSach.get(i);
+                row = sheet.createRow(4 + i);
+
+                cell = row.createCell(0, CellType.NUMERIC);
+                cell.setCellValue(i + 1);
+
+                cell = row.createCell(1, CellType.STRING);
+                cell.setCellValue(sach.getMa_sach());
+
+                cell = row.createCell(2, CellType.STRING);
+                cell.setCellValue(sach.getTen_sach());
+
+                cell = row.createCell(3, CellType.STRING);
+                cell.setCellValue(sach.getNgon_ngu_sach());
+
+                cell = row.createCell(4, CellType.STRING);
+                cell.setCellValue(sach.getGia_tri());
+
+                cell = row.createCell(5, CellType.STRING);
+                cell.setCellValue(sach.getSo_luong());
+
+                String tenTG = SachDAL.getTacGiaById(sach.getTacgia());
+                cell = row.createCell(6, CellType.STRING);
+                cell.setCellValue(tenTG);
+                
+                String tenTL = SachDAL.getTheLoaiById(sach.getThe_loai());
+                cell = row.createCell(7, CellType.STRING);
+                cell.setCellValue(tenTL);
+                
+                cell = row.createCell(8, CellType.STRING);
+                cell.setCellValue(sach.getNha_xuat_ban());
+                
+                cell = row.createCell(9, CellType.STRING);
+                cell.setCellValue(dateFormat.format(sach.getNam_xuat_ban()));
+
+            }
+            // Sử dụng JFileChooser để chọn vị trí lưu file
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Chọn vị trí lưu file");
+            fileChooser.setSelectedFile(new File("danhsach.xlsx")); // Đặt tên file mặc định
+
+            int userSelection = fileChooser.showSaveDialog(this); // Hiển thị hộp thoại lưu file
+
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+
+                // Ghi dữ liệu vào file
+                try (FileOutputStream fis = new FileOutputStream(fileToSave)) {
+                    wordkbook.write(fis);
+                    fis.close();
+                    JOptionPane.showMessageDialog(this, "In ra file Excel thành công tại: " + fileToSave.getAbsolutePath());
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "File không thể mở hoặc ghi.");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Lỗi khi ghi file.");
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi mở file");
+        }
+    }//GEN-LAST:event_btn_inExcelActionPerformed
+
     public static void main(String args[]) {
 
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            fSach sachFrame = new fSach();
-            sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
-            sachFrame.setLocationRelativeTo(null);
-            sachFrame.setVisible(true);
-        }
-    });
-}
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                fSach sachFrame = new fSach();
+                sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
+                sachFrame.setLocationRelativeTo(null);
+                sachFrame.setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_inExcel;
     private javax.swing.JButton btn_sua;
     private javax.swing.JButton btn_them;
     private javax.swing.JButton btn_timkiem;

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DocGiaDAL {
 
-    public static List<DocGia> loadTbaleData() {
+    public static List<DocGia> loadTableData() {
         List<DocGia> lst_tbl = new ArrayList<>();
         String sqlQuery = "SELECT * FROM DOC_GIA";
         try (Connection conn = ConnectToSQLServer.getConnection()) {
@@ -33,7 +33,7 @@ public class DocGiaDAL {
         return lst_tbl;
     }
 
-    public static List<DocGia> loadTbaleDataSearch(String keyword) {
+    public static List<DocGia> loadTableDataSearch(String keyword) {
         List<DocGia> lst_tbl = new ArrayList<>();
 
         String sqlQuery = "SELECT * \n"

@@ -44,7 +44,7 @@ public class SachDAL {
         return theLoaiList;
     }
 
-    public static List<Sach> loadTbaleData() {
+    public static List<Sach> loadTableData() {
         List<Sach> lst_tbl = new ArrayList<>();
         String sqlQuery = "SELECT * FROM SACH";
         try (Connection conn = ConnectToSQLServer.getConnection()) {
@@ -69,7 +69,7 @@ public class SachDAL {
         return lst_tbl;
     }
 
-    public static List<Sach> loadTbaleDataSearch(String keyword) {
+    public static List<Sach> loadTableDataSearch(String keyword) {
         List<Sach> lst_tbl = new ArrayList<>();
 
         String sqlQuery = "SELECT *\n"
