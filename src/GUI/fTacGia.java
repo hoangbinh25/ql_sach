@@ -1,5 +1,6 @@
 package GUI;
 
+import BUS.TacGiaBUS;
 import javax.swing.table.DefaultTableModel;
 import DAL.TacGiaDAL;
 import DTO.TacGia;
@@ -23,7 +24,7 @@ public class fTacGia extends javax.swing.JFrame {
             md.addColumn("Mã Tác Giả");
             md.addColumn("Tên Tác Giả");
 
-            List<TacGia> tacGia = TacGiaDAL.loadTbaleData();
+            List<TacGia> tacGia = TacGiaBUS.loadTbaleData();
 
             for (TacGia tg : tacGia) {
                 int ma = tg.getMa_tac_gia();
@@ -44,7 +45,7 @@ public class fTacGia extends javax.swing.JFrame {
             md.addColumn("Mã Tác Giả");
             md.addColumn("Tên Tác Giả");
 
-            List<TacGia> tacgia = TacGiaDAL.loadTbaleDataSearch(keyword);
+            List<TacGia> tacgia = TacGiaBUS.loadTbaleDataSearch(keyword);
 
             for (TacGia tg : tacgia) {
                 int ma = tg.getMa_tac_gia();
@@ -285,7 +286,7 @@ public class fTacGia extends javax.swing.JFrame {
                 txt_tenTG.getText()
             );
             
-            TacGiaDAL.them(tg);
+            TacGiaBUS.them(tg);
             load();
             clearForm();
         } catch (Exception e) {
@@ -300,9 +301,10 @@ public class fTacGia extends javax.swing.JFrame {
             if (search.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Chưa có dữ liệu đầu vào", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
             }else{
-                TacGiaDAL.loadTbaleDataSearch(search);
+                TacGiaBUS.loadTbaleDataSearch(search);
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btn_timkiemActionPerformed
 
@@ -313,7 +315,7 @@ public class fTacGia extends javax.swing.JFrame {
                 txt_tenTG.getText()
             );
             
-            TacGiaDAL.sua(tg);
+            TacGiaBUS.sua(tg);
             JOptionPane.showMessageDialog(null, "Sửa Thành Công", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
             load();
             clearForm();

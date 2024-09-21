@@ -1,5 +1,7 @@
 package GUI;
 
+import BUS.ChiTietPMBUS;
+import BUS.PhieuMuonBUS;
 import DAL.ConnectToSQLServer;
 import javax.swing.JOptionPane;
 import DTO.PhieuMuon;
@@ -23,12 +25,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import javax.swing.JFileChooser;
-import org.apache.poi.xssf.usermodel.*;
-import org.apache.poi.ss.usermodel.*;
+//import org.apache.poi.xssf.usermodel.*;
+//import org.apache.poi.ss.usermodel.*;
 
 public class fMuonTra extends javax.swing.JFrame {
 
-    List<PhieuMuon> lst_tbl = PhieuMuonDAL.loadTableData();
+    List<PhieuMuon> lst_tbl = PhieuMuonBUS.loadTableData();
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -44,7 +46,7 @@ public class fMuonTra extends javax.swing.JFrame {
             md.addColumn("Mã Sách");
             md.addColumn("Tên Sách");
 
-            List<ChiTietPM> ctpms = ChiTietPMDAL.LoadTbl(ma);
+            List<ChiTietPM> ctpms = ChiTietPMBUS.LoadTbl(ma);
             for (ChiTietPM ctpm : ctpms) {
                 int maCTPM = ctpm.getMa_chi_tiet();
                 int maSach = ctpm.getMa_sach();
@@ -112,12 +114,12 @@ public class fMuonTra extends javax.swing.JFrame {
             cbb_trangThai.addItem("Đang mượn");
             cbb_trangThai.addItem("Đã trả");
 
-            List<PhieuMuon> PhieuMuonList = PhieuMuonDAL.loadTableData();
+            List<PhieuMuon> PhieuMuonList = PhieuMuonBUS.loadTableData();
 
             for (PhieuMuon pm : PhieuMuonList) {
                 int ma_PM = pm.getMa_phieu_muon();
-                String thu_thu = PhieuMuonDAL.getThuThuById(pm.getMa_thu_thu());
-                String doc_gia = PhieuMuonDAL.getDocGiaById(pm.getMa_doc_gia());
+                String thu_thu = PhieuMuonBUS.getThuThuById(pm.getMa_thu_thu());
+                String doc_gia = PhieuMuonBUS.getDocGiaById(pm.getMa_doc_gia());
 
                 // Xử lý ngày mượn (ngayMuon) - Kiểm tra nếu khác null trước khi định dạng
                 Date ngayMuon = pm.getNgay_muon();
@@ -155,7 +157,7 @@ public class fMuonTra extends javax.swing.JFrame {
     public void loadCbbTenSach() {
         cbb_tenSach.removeAllItems();
         try {
-            List<String> sachList = PhieuMuonDAL.load_cbb_tenSachData();
+            List<String> sachList = PhieuMuonBUS.load_cbb_tenSachData();
             for (String s : sachList) {
                 cbb_tenSach.addItem(s);
             }
@@ -168,7 +170,7 @@ public class fMuonTra extends javax.swing.JFrame {
     public void loadCbbThuThu() {
         cbb_maThuThu.removeAllItems();
         try {
-            List<String> thuThuList = PhieuMuonDAL.load_cbb_thuTHUData();
+            List<String> thuThuList = PhieuMuonBUS.load_cbb_thuTHUData();
             for (String tenThuThu : thuThuList) {
                 cbb_maThuThu.addItem(tenThuThu);
             }
@@ -182,7 +184,7 @@ public class fMuonTra extends javax.swing.JFrame {
     public void loadCbbDocGia() {
         cbb_maDocGia.removeAllItems();
         try {
-            List<String> docGiaList = PhieuMuonDAL.load_cbb_docGiaData();
+            List<String> docGiaList = PhieuMuonBUS.load_cbb_docGiaData();
             for (String tenDocGia : docGiaList) {
                 cbb_maDocGia.addItem(tenDocGia);
             }
@@ -205,7 +207,7 @@ public class fMuonTra extends javax.swing.JFrame {
 
             SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
-            List<PhieuMuon> PhieuMuonList = PhieuMuonDAL.loadTableDataSearch(Search);
+            List<PhieuMuon> PhieuMuonList = PhieuMuonBUS.loadTableDataSearch(Search);
 
             // Kiểm tra nếu danh sách trả về rỗng
             if (PhieuMuonList == null || PhieuMuonList.isEmpty()) {
@@ -215,8 +217,8 @@ public class fMuonTra extends javax.swing.JFrame {
 
             for (PhieuMuon pm : PhieuMuonList) {
                 int ma_PM = pm.getMa_phieu_muon();
-                String thu_thu = PhieuMuonDAL.getThuThuById(pm.getMa_thu_thu());
-                String doc_gia = PhieuMuonDAL.getDocGiaById(pm.getMa_doc_gia());
+                String thu_thu = PhieuMuonBUS.getThuThuById(pm.getMa_thu_thu());
+                String doc_gia = PhieuMuonBUS.getDocGiaById(pm.getMa_doc_gia());
 
                 // Xử lý ngày mượn (ngayMuon) - Kiểm tra nếu khác null trước khi định dạng
                 Date ngayMuon = pm.getNgay_muon();
@@ -653,7 +655,7 @@ public class fMuonTra extends javax.swing.JFrame {
                     cbb_trangThai.getSelectedIndex()
             );
 
-            PhieuMuonDAL.capNhatPM(pm);
+            PhieuMuonBUS.capNhatPM(pm);
 
             // Thông báo thêm thành công
             JOptionPane.showMessageDialog(null, "Cập nhật phiếu mượn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -749,7 +751,7 @@ public class fMuonTra extends javax.swing.JFrame {
                     cbb_trangThai.getSelectedIndex()
             );
 
-            PhieuMuonDAL.themPM(pm);
+            PhieuMuonBUS.themPM(pm);
 
             // Thông báo thêm thành công
             JOptionPane.showMessageDialog(null, "Thêm phiếu mượn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -765,7 +767,7 @@ public class fMuonTra extends javax.swing.JFrame {
         try {
             int maPhieuMuon = Integer.parseInt(txt_maMuon.getText());
 
-            PhieuMuonDAL.xoaPM(maPhieuMuon);
+            PhieuMuonBUS.xoaPM(maPhieuMuon);
             JOptionPane.showMessageDialog(null, "Xóa phiếu mượn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             Load();
             clearForm();
@@ -826,7 +828,7 @@ public class fMuonTra extends javax.swing.JFrame {
                     Integer.parseInt(txt_maMuon.getText()),
                     Integer.parseInt(txt_maSach.getText())
             );
-            ChiTietPMDAL.themCTPM(ctpm);
+            ChiTietPMBUS.themCTPM(ctpm);
 
             JOptionPane.showMessageDialog(null, "Thêm chi tiết phiếu mượn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             loadCTPM(maPM);
@@ -841,7 +843,7 @@ public class fMuonTra extends javax.swing.JFrame {
         try {
             int maCTPM = Integer.parseInt(txt_maCTPM.getText());
 
-            ChiTietPMDAL.xoaCTPM(maCTPM);
+            ChiTietPMBUS.xoaCTPM(maCTPM);
 
             JOptionPane.showMessageDialog(null, "Xóa chi tiết phiếu mượn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             loadCTPM(maCTPM);
@@ -909,109 +911,109 @@ public class fMuonTra extends javax.swing.JFrame {
     }//GEN-LAST:event_cbb_tenSachActionPerformed
 
     private void btn_inExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inExcelActionPerformed
-        try {
-            XSSFWorkbook wordkbook = new XSSFWorkbook();
-            XSSFSheet sheet = wordkbook.createSheet("danhsach");
-            XSSFRow row = null;
-            Cell cell = null;
-
-            // Dòng tiêu đề
-            row = sheet.createRow(2);
-            cell = row.createCell(0, CellType.STRING);
-            cell.setCellValue("Danh sách phiếu mượn");
-
-            // Dòng tiêu đề các cột
-            row = sheet.createRow(3);
-            cell = row.createCell(0, CellType.STRING);
-            cell.setCellValue("STT");
-
-            cell = row.createCell(1, CellType.STRING);
-            cell.setCellValue("Mã phiếu mượn");
-
-            cell = row.createCell(2, CellType.STRING);
-            cell.setCellValue("Mã thủ thư");
-
-            cell = row.createCell(3, CellType.STRING);
-            cell.setCellValue("Mã độc giả");
-
-            cell = row.createCell(4, CellType.STRING);
-            cell.setCellValue("Ngày mượn");
-
-            cell = row.createCell(5, CellType.STRING);
-            cell.setCellValue("Ngày hẹn trả");
-
-            cell = row.createCell(6, CellType.STRING);
-            cell.setCellValue("Ngày trả");
-
-            cell = row.createCell(7, CellType.STRING);
-            cell.setCellValue("Trạng thái");
-
-            // Điền dữ liệu vào các hàng
-            for (int i = 0; i < lst_tbl.size(); i++) {
-                PhieuMuon pm = lst_tbl.get(i);
-                row = sheet.createRow(4 + i);
-
-                cell = row.createCell(0, CellType.NUMERIC);
-                cell.setCellValue(i + 1);
-
-                cell = row.createCell(1, CellType.STRING);
-                cell.setCellValue(pm.getMa_phieu_muon());
-
-                String tenThuThu = PhieuMuonDAL.getThuThuById(pm.getMa_thu_thu());
-                cell = row.createCell(2, CellType.STRING);
-                cell.setCellValue(tenThuThu);
-
-                String tenDocGia = PhieuMuonDAL.getDocGiaById(pm.getMa_doc_gia());
-                cell = row.createCell(3, CellType.STRING);
-                cell.setCellValue(tenDocGia);
-
-                cell = row.createCell(4, CellType.STRING);
-                cell.setCellValue(dateFormat.format(pm.getNgay_muon()));
-
-                cell = row.createCell(5, CellType.STRING);
-                cell.setCellValue(dateFormat.format(pm.getNgay_hen_tra()));
-
-                // Kiểm tra null cho ngày trả (ngay_tra)
-                if (pm.getNgay_tra() != null) {
-                    cell = row.createCell(6, CellType.STRING);
-                    cell.setCellValue(dateFormat.format(pm.getNgay_tra()));
-                } else {
-                    cell = row.createCell(6, CellType.STRING);
-                    cell.setCellValue("");  // Đặt giá trị rỗng nếu ngay_tra là null
-                }
-
-                cell = row.createCell(7, CellType.STRING);
-                cell.setCellValue(pm.getTrang_thai() == 1 ? "Đã trả" : "Chưa trả");
-
-            }
-            // Sử dụng JFileChooser để chọn vị trí lưu file
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Chọn vị trí lưu file");
-            fileChooser.setSelectedFile(new File("danhsach.xlsx")); // Đặt tên file mặc định
-
-            int userSelection = fileChooser.showSaveDialog(this); // Hiển thị hộp thoại lưu file
-
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                File fileToSave = fileChooser.getSelectedFile();
-
-                // Ghi dữ liệu vào file
-                try (FileOutputStream fis = new FileOutputStream(fileToSave)) {
-                    wordkbook.write(fis);
-                    fis.close();
-                    JOptionPane.showMessageDialog(this, "In ra file Excel thành công tại: " + fileToSave.getAbsolutePath());
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(this, "File không thể mở hoặc ghi.");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(this, "Lỗi khi ghi file.");
-                }
-            }
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Lỗi mở file");
-        }
+//        try {
+//            XSSFWorkbook wordkbook = new XSSFWorkbook();
+//            XSSFSheet sheet = wordkbook.createSheet("danhsach");
+//            XSSFRow row = null;
+//            Cell cell = null;
+//
+//            // Dòng tiêu đề
+//            row = sheet.createRow(2);
+//            cell = row.createCell(0, CellType.STRING);
+//            cell.setCellValue("Danh sách phiếu mượn");
+//
+//            // Dòng tiêu đề các cột
+//            row = sheet.createRow(3);
+//            cell = row.createCell(0, CellType.STRING);
+//            cell.setCellValue("STT");
+//
+//            cell = row.createCell(1, CellType.STRING);
+//            cell.setCellValue("Mã phiếu mượn");
+//
+//            cell = row.createCell(2, CellType.STRING);
+//            cell.setCellValue("Mã thủ thư");
+//
+//            cell = row.createCell(3, CellType.STRING);
+//            cell.setCellValue("Mã độc giả");
+//
+//            cell = row.createCell(4, CellType.STRING);
+//            cell.setCellValue("Ngày mượn");
+//
+//            cell = row.createCell(5, CellType.STRING);
+//            cell.setCellValue("Ngày hẹn trả");
+//
+//            cell = row.createCell(6, CellType.STRING);
+//            cell.setCellValue("Ngày trả");
+//
+//            cell = row.createCell(7, CellType.STRING);
+//            cell.setCellValue("Trạng thái");
+//
+//            // Điền dữ liệu vào các hàng
+//            for (int i = 0; i < lst_tbl.size(); i++) {
+//                PhieuMuon pm = lst_tbl.get(i);
+//                row = sheet.createRow(4 + i);
+//
+//                cell = row.createCell(0, CellType.NUMERIC);
+//                cell.setCellValue(i + 1);
+//
+//                cell = row.createCell(1, CellType.STRING);
+//                cell.setCellValue(pm.getMa_phieu_muon());
+//
+//                String tenThuThu = PhieuMuonDAL.getThuThuById(pm.getMa_thu_thu());
+//                cell = row.createCell(2, CellType.STRING);
+//                cell.setCellValue(tenThuThu);
+//
+//                String tenDocGia = PhieuMuonDAL.getDocGiaById(pm.getMa_doc_gia());
+//                cell = row.createCell(3, CellType.STRING);
+//                cell.setCellValue(tenDocGia);
+//
+//                cell = row.createCell(4, CellType.STRING);
+//                cell.setCellValue(dateFormat.format(pm.getNgay_muon()));
+//
+//                cell = row.createCell(5, CellType.STRING);
+//                cell.setCellValue(dateFormat.format(pm.getNgay_hen_tra()));
+//
+//                // Kiểm tra null cho ngày trả (ngay_tra)
+//                if (pm.getNgay_tra() != null) {
+//                    cell = row.createCell(6, CellType.STRING);
+//                    cell.setCellValue(dateFormat.format(pm.getNgay_tra()));
+//                } else {
+//                    cell = row.createCell(6, CellType.STRING);
+//                    cell.setCellValue("");  // Đặt giá trị rỗng nếu ngay_tra là null
+//                }
+//
+//                cell = row.createCell(7, CellType.STRING);
+//                cell.setCellValue(pm.getTrang_thai() == 1 ? "Đã trả" : "Chưa trả");
+//
+//            }
+//            // Sử dụng JFileChooser để chọn vị trí lưu file
+//            JFileChooser fileChooser = new JFileChooser();
+//            fileChooser.setDialogTitle("Chọn vị trí lưu file");
+//            fileChooser.setSelectedFile(new File("danhsach.xlsx")); // Đặt tên file mặc định
+//
+//            int userSelection = fileChooser.showSaveDialog(this); // Hiển thị hộp thoại lưu file
+//
+//            if (userSelection == JFileChooser.APPROVE_OPTION) {
+//                File fileToSave = fileChooser.getSelectedFile();
+//
+//                // Ghi dữ liệu vào file
+//                try (FileOutputStream fis = new FileOutputStream(fileToSave)) {
+//                    wordkbook.write(fis);
+//                    fis.close();
+//                    JOptionPane.showMessageDialog(this, "In ra file Excel thành công tại: " + fileToSave.getAbsolutePath());
+//                } catch (FileNotFoundException ex) {
+//                    ex.printStackTrace();
+//                    JOptionPane.showMessageDialog(this, "File không thể mở hoặc ghi.");
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                    JOptionPane.showMessageDialog(this, "Lỗi khi ghi file.");
+//                }
+//            }
+//
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            JOptionPane.showMessageDialog(this, "Lỗi mở file");
+//        }
     }//GEN-LAST:event_btn_inExcelActionPerformed
 
     public static void main(String args[]) {

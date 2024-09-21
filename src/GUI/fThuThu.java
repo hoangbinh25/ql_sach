@@ -1,5 +1,6 @@
 package GUI;
 
+import BUS.ThuThuBUS;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 import DAL.ThuThuDAL;
@@ -29,7 +30,7 @@ public class fThuThu extends javax.swing.JFrame {
             md.addColumn("Email");
             md.addColumn("Password");
 
-            List<ThuThu.CTThuThu> cttt = ThuThuDAL.LoadTBDATA();
+            List<ThuThu.CTThuThu> cttt = ThuThuBUS.LoadTBDATA();
             for (ThuThu.CTThuThu tt : cttt) {
                 int ma = tt.getMa_thu_thu();
                 String ten = tt.getTen_thu_thu();
@@ -57,7 +58,7 @@ public class fThuThu extends javax.swing.JFrame {
             md.addColumn("Email");
             md.addColumn("Password");
 
-            List<ThuThu.CTThuThu> cttt = ThuThuDAL.LoadtTbDATA_Search(keyword);
+            List<ThuThu.CTThuThu> cttt = ThuThuBUS.LoadtTbDATA_Search(keyword);
             for (ThuThu.CTThuThu tt : cttt) {
                 int ma = tt.getMa_thu_thu();
                 String ten = tt.getTen_thu_thu();
@@ -359,7 +360,7 @@ public class fThuThu extends javax.swing.JFrame {
                     txt_password.getText()
             );
             
-            ThuThuDAL.sua(tt);
+            ThuThuBUS.sua(tt);
             JOptionPane.showMessageDialog(null, "Sửa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             load();
             clearForm();
@@ -372,7 +373,7 @@ public class fThuThu extends javax.swing.JFrame {
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
         int ma = Integer.parseInt(txt_ma.getText());
         try {
-            ThuThuDAL.xoa(ma);
+            ThuThuBUS.xoa(ma);
             JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             load();
             clearForm();
@@ -417,7 +418,7 @@ public class fThuThu extends javax.swing.JFrame {
                     txt_password.getText()
             );
             
-            ThuThuDAL.them(tt);
+            ThuThuBUS.them(tt);
             JOptionPane.showMessageDialog(null, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             load();
             clearForm();

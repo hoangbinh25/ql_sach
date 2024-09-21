@@ -1,6 +1,7 @@
 
 package GUI;
 
+import BUS.TheLoaiBUS;
 import DAL.TheLoaiDAL;
 import DTO.TheLoai;
 import java.util.List;
@@ -217,7 +218,7 @@ public class fTheLoai extends javax.swing.JFrame {
             model.addColumn("Mã thể loại");
             model.addColumn("Tên thể loại");
 
-            List<TheLoai> TheLoaiList = TheLoaiDAL.loadTableData();
+            List<TheLoai> TheLoaiList = TheLoaiBUS.loadTableData();
             for (TheLoai theLoai : TheLoaiList) {
                 int ma_TheLoai = theLoai.getMa_the_loai();
                 String ten_TheLoai = theLoai.getTen_the_loai();
@@ -239,7 +240,7 @@ public class fTheLoai extends javax.swing.JFrame {
             model.addColumn("Mã thể loại");
             model.addColumn("Tên thể loại");
 
-            List<TheLoai> TheLoaiList = TheLoaiDAL.loadTableDataSearch(Search);
+            List<TheLoai> TheLoaiList = TheLoaiBUS.loadTableDataSearch(Search);
             for (TheLoai theLoai : TheLoaiList) {
                 int ma_TheLoai = theLoai.getMa_the_loai();
                 String ten_TheLoai = theLoai.getTen_the_loai();
@@ -281,7 +282,7 @@ public class fTheLoai extends javax.swing.JFrame {
                 txt_tenTheLoai.getText()
             );
 
-            TheLoaiDAL.suaTheLoai(theloai);
+            TheLoaiBUS.suaTheLoai(theloai);
 
             JOptionPane.showMessageDialog(null, "Cập nhật thể loại thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             Load();
@@ -309,7 +310,7 @@ public class fTheLoai extends javax.swing.JFrame {
         try {
             int maTheLoai = Integer.parseInt(txt_maTheLoai.getText()); // Lấy mã thể loại
 
-            TheLoaiDAL.xoaTheLoai(maTheLoai);
+            TheLoaiBUS.xoaTheLoai(maTheLoai);
             JOptionPane.showMessageDialog(null, "Xóa thể loại thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             Load();
             clearForm();
@@ -329,7 +330,7 @@ public class fTheLoai extends javax.swing.JFrame {
                 txt_tenTheLoai.getText()
             );
 
-            TheLoaiDAL.themTheLoai(theloai);
+            TheLoaiBUS.themTheLoai(theloai);
 
             JOptionPane.showMessageDialog(null, "Thêm thể loại thành công!", "Thông báop", JOptionPane.INFORMATION_MESSAGE);
             Load();
