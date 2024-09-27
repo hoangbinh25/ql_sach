@@ -16,9 +16,6 @@ import javax.swing.JFileChooser;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 
-import org.apache.poi.xssf.usermodel.*;
-import org.apache.poi.ss.usermodel.*;
-
 public class fDocGia extends javax.swing.JFrame {
 
     public fDocGia() {
@@ -29,7 +26,7 @@ public class fDocGia extends javax.swing.JFrame {
     public void load() {
         loadTBL();
     }
-    
+
     SimpleDateFormat fmDate = new SimpleDateFormat("dd-MM-yyyy");
 
     public void clearForm() {
@@ -458,18 +455,14 @@ public class fDocGia extends javax.swing.JFrame {
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
         try {
-
-            int maSach = Integer.parseInt(txt_maDG.getText());
-            DocGiaBUS.xoaDG(maSach);
-
             if (DocGiaDAL.checkEmpty(txt_maDG.getText())) {
-            int maDG = Integer.parseInt(txt_maDG.getText());
-            DocGiaBUS.xoaDG(maDG);
+                int maDG = Integer.parseInt(txt_maDG.getText());
+                DocGiaBUS.xoaDG(maDG);
 
-            JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            load();
-            clearForm();
-            }else{
+                JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                load();
+                clearForm();
+            } else {
                 JOptionPane.showMessageDialog(null, "Xóa thất bại! Độc giả đang tồn tại phiếu mượn sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException e) {
@@ -507,19 +500,19 @@ public class fDocGia extends javax.swing.JFrame {
         try {
             if (valueDate()) {
                 DocGia dg = new DocGia(
-                    Integer.parseInt(txt_maDG.getText()),
-                    txt_tenDG.getText(),
-                    new java.sql.Date(fmDate.parse(txt_ngaySinh.getText()).getTime()),
-                    txt_diaChi.getText(),
-                    txt_CCCD.getText(),
-                    txt_SDT.getText()
-            );
-            DocGiaBUS.capNhatDG(dg);
+                        Integer.parseInt(txt_maDG.getText()),
+                        txt_tenDG.getText(),
+                        new java.sql.Date(fmDate.parse(txt_ngaySinh.getText()).getTime()),
+                        txt_diaChi.getText(),
+                        txt_CCCD.getText(),
+                        txt_SDT.getText()
+                );
+                DocGiaBUS.capNhatDG(dg);
 
-            // Thông báo cập nhật thành công
-            JOptionPane.showMessageDialog(null, "Cập nhật sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            load();
-            clearForm();
+                // Thông báo cập nhật thành công
+                JOptionPane.showMessageDialog(null, "Cập nhật sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                load();
+                clearForm();
             }
         } catch (Exception e) {
             e.printStackTrace();

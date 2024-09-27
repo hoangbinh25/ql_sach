@@ -36,8 +36,6 @@ public class fMuonTra extends javax.swing.JFrame {
         Load();
     }
 
-    SimpleDateFormat fmDate = new SimpleDateFormat("dd-MM-yyyy");
-
     private void loadCTPM(int ma) {
         try {
             DefaultTableModel md = new DefaultTableModel();
@@ -757,7 +755,6 @@ public class fMuonTra extends javax.swing.JFrame {
                 }
             }
         });
-
     }//GEN-LAST:event_jTB_CTPMMouseClicked
 
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
@@ -801,7 +798,6 @@ public class fMuonTra extends javax.swing.JFrame {
     }
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
-
         try {
             if (validateForm()) {
                 String ngayMuonStr = txt_ngayMuon.getText().trim();
@@ -815,7 +811,7 @@ public class fMuonTra extends javax.swing.JFrame {
                 PhieuMuon pm = new PhieuMuon(
                         Integer.parseInt(txt_maMuon.getText()),
                         cbb_maThuThu.getSelectedIndex() + 1,
-                        cbb_tenSach.getSelectedIndex() + 1,
+                        cbb_maDocGia.getSelectedIndex() + 1,
                         java.sql.Date.valueOf(ngayMuonStr), // Chuyển đổi sang kiểu Date
                         java.sql.Date.valueOf(txt_ngayHen.getText()),
                         !ngayTraStr.isEmpty() ? java.sql.Date.valueOf(ngayTraStr) : null,
@@ -959,7 +955,7 @@ public class fMuonTra extends javax.swing.JFrame {
             Cell cell = null;
 
             // Dòng tiêu đề
-            row = sheet.createRow(2);
+            row = sheet.createRow(1); // chỉ số row bắt đầu từ 0 -> row 2 sẽ là row 3 trong bảng
             cell = row.createCell(0, CellType.STRING);
             cell.setCellValue("Danh sách phiếu mượn");
 

@@ -25,7 +25,7 @@ public class ThuThuBUS {
         ThuThuDAL.xoa(ma);
     }
     
-     public static boolean checkEmpty(String id) {
+    public static boolean checkEmpty(String id) {
         if (ThuThuDAL.checkEmpty(id)) {
             return false;
         }

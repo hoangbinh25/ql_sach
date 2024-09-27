@@ -448,12 +448,6 @@ public class fThuThu extends javax.swing.JFrame {
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
         int ma = Integer.parseInt(txt_ma.getText());
         try {
-
-            ThuThuBUS.xoaTT(ma);
-            JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            load();
-            clearForm();
-
             if (ThuThuDAL.checkEmpty(txt_ma.getText())) {
                 ThuThuBUS.xoaTT(ma);
                 JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
