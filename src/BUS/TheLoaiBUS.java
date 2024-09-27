@@ -24,4 +24,11 @@ public class TheLoaiBUS {
     public static List<TheLoai> loadTableDataSearch(String key) {
         return TheLoaiDAL.loadTableDataSearch(key);
     }
+    
+     public static boolean checkEmpty(String id) {
+        if (TheLoaiDAL.checkEmpty(id)) {
+            return false;
+        }
+        return true;
+    }
 }

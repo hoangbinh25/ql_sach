@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class DocGiaDAL {
 
     public static List<DocGia> loadTableData() {
@@ -90,7 +89,6 @@ public class DocGiaDAL {
 
     public static void capNhat(DocGia dg) {
         String sqlQuery = "UPDATE DOC_GIA SET ten_doc_gia = ?, ngay_sinh = ? , dia_chi = ?,  cmnd = ?, sdt = ? WHERE ma_doc_gia = ?";
-        
 
         try (Connection conn = ConnectToSQLServer.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sqlQuery);
@@ -128,5 +126,26 @@ public class DocGiaDAL {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean checkEmpty(String id) {
+        String sqlQuery = "SELECT COUNT(*) as dem FROM PHIEU_MUON WHERE ma_doc_gia = ? and trang_thai = 0";
+        try (Connection conn = ConnectToSQLServer.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sqlQuery);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            // Kiểm tra kết quả truy vấn
+            if (rs.next()) {
+                int dem = rs.getInt("dem");
+                if (dem > 0) {
+                    System.err.println("Độc giả còn tồn tại " + dem + " phiếu mượn");
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }

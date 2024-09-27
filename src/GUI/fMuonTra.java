@@ -2,29 +2,20 @@ package GUI;
 
 import BUS.ChiTietPMBUS;
 import BUS.PhieuMuonBUS;
-import DAL.ConnectToSQLServer;
 import javax.swing.JOptionPane;
 import DTO.PhieuMuon;
 import DTO.CTPM.ChiTietPM;
 import DTO.CTPM;
 import DAL.ChiTietPMDAL;
 import DAL.PhieuMuonDAL;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import javax.swing.JFileChooser;
 //import org.apache.poi.xssf.usermodel.*;
 //import org.apache.poi.ss.usermodel.*;
 
@@ -38,6 +29,8 @@ public class fMuonTra extends javax.swing.JFrame {
         initComponents();
         Load();
     }
+
+    SimpleDateFormat fmDate = new SimpleDateFormat("dd-MM-yyyy");
 
     private void loadCTPM(int ma) {
         try {
@@ -64,16 +57,16 @@ public class fMuonTra extends javax.swing.JFrame {
     private void Load() {
         // load cbb_ThuThu
         loadCbbThuThu();
-        
+
         // load cbb_DocGia
         loadCbbDocGia();
-        
+
         // load cbb_TenSach
         loadCbbTenSach();
-        
+
         // load tbl
         loadTbl_PM();
-        
+
         // xử lý comboBox trạng thái
         loadTrangThai();
     }
@@ -261,6 +254,54 @@ public class fMuonTra extends javax.swing.JFrame {
         cbb_maThuThu.setSelectedIndex(0);
         cbb_maDocGia.setSelectedIndex(0);
         cbb_trangThai.setSelectedIndex(0);
+    }
+
+    private boolean validateForm() {
+        String mes = "";
+
+        // Kiểm tra mã mượn
+        if (txt_maMuon.getText().trim().isEmpty()) {
+            mes += " Mã mượn";
+            txt_maMuon.requestFocus();
+        }
+
+        // Kiểm tra ngày mượn
+        if (txt_ngayMuon.getText().trim().isEmpty()) {
+            mes += " Ngày mượn";
+            txt_ngayMuon.requestFocus();
+        } else if (!isValidDate(txt_ngayMuon.getText())) {
+            mes += " Ngày mượn không hợp lệ. Định dạng đúng là yyyy-MM-dd.\n";
+            txt_ngayMuon.requestFocus();
+        }
+
+        // Kiểm tra ngày hẹn trả
+        if (txt_ngayHen.getText().trim().isEmpty()) {
+            mes += " Ngày hẹn";
+            txt_ngayHen.requestFocus();
+        } else if (!isValidDate(txt_ngayHen.getText())) {
+            mes += " Ngày hẹn trả không hợp lệ. Định dạng đúng là yyyy-MM-dd.\n";
+            txt_ngayHen.requestFocus();
+        }
+
+        // Nếu có lỗi, hiển thị thông báo và trả về false
+        if (!mes.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Không để trống: " + mes, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+
+        return true; // Form hợp lệ
+    }
+
+// Hàm kiểm tra định dạng ngày
+    private boolean isValidDate(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false); // Không chấp nhận ngày không hợp lệ (ví dụ: 2022-02-30)
+        try {
+            sdf.parse(date); // Thử parse chuỗi ngày
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -636,31 +677,32 @@ public class fMuonTra extends javax.swing.JFrame {
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
         try {
+            if (validateForm()) {
+                String ngayMuonStr = txt_ngayMuon.getText().trim();
+                String ngayTraStr = txt_ngayTra.getText().trim();
 
-            String ngayMuonStr = txt_ngayMuon.getText().trim();
-            String ngayTraStr = txt_ngayTra.getText().trim();
+                // Gọi phương thức validateDates để kiểm tra ngày mượn và ngày trả
+                if (!validateDates(ngayMuonStr, ngayTraStr)) {
+                    return; // Nếu kiểm tra không thành công, dừng thực hiện
+                }
 
-            // Gọi phương thức validateDates để kiểm tra ngày mượn và ngày trả
-            if (!validateDates(ngayMuonStr, ngayTraStr)) {
-                return; // Nếu kiểm tra không thành công, dừng thực hiện
+                PhieuMuon pm = new PhieuMuon(
+                        Integer.parseInt(txt_maMuon.getText()), // Cập nhật dựa trên mã phiếu mượn
+                        cbb_maThuThu.getSelectedIndex() + 1,
+                        cbb_maDocGia.getSelectedIndex() + 1,
+                        java.sql.Date.valueOf(txt_ngayMuon.getText()), // Chuyển đổi sang kiểu Date
+                        java.sql.Date.valueOf(txt_ngayHen.getText()),
+                        !ngayTraStr.isEmpty() ? java.sql.Date.valueOf(ngayTraStr) : null,
+                        cbb_trangThai.getSelectedIndex()
+                );
+
+                PhieuMuonBUS.capNhatPM(pm);
+
+                // Thông báo thêm thành công
+                JOptionPane.showMessageDialog(null, "Cập nhật phiếu mượn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                Load();
+                clearForm();
             }
-
-            PhieuMuon pm = new PhieuMuon(
-                    Integer.parseInt(txt_maMuon.getText()), // Cập nhật dựa trên mã phiếu mượn
-                    cbb_maThuThu.getSelectedIndex() + 1,
-                    cbb_maDocGia.getSelectedIndex() + 1,
-                    java.sql.Date.valueOf(txt_ngayMuon.getText()), // Chuyển đổi sang kiểu Date
-                    java.sql.Date.valueOf(txt_ngayHen.getText()),
-                    !ngayTraStr.isEmpty() ? java.sql.Date.valueOf(ngayTraStr) : null,
-                    cbb_trangThai.getSelectedIndex()
-            );
-
-            PhieuMuonBUS.capNhatPM(pm);
-
-            // Thông báo thêm thành công
-            JOptionPane.showMessageDialog(null, "Cập nhật phiếu mượn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            Load();
-            clearForm();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cập nhật phiếu mượn thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -733,30 +775,32 @@ public class fMuonTra extends javax.swing.JFrame {
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
 
         try {
-            String ngayMuonStr = txt_ngayMuon.getText().trim();
-            String ngayTraStr = txt_ngayTra.getText().trim();
+            if (validateForm()) {
+                String ngayMuonStr = txt_ngayMuon.getText().trim();
+                String ngayTraStr = txt_ngayTra.getText().trim();
 
-            // Gọi phương thức validateDates để kiểm tra ngày mượn và ngày trả
-            if (!validateDates(ngayMuonStr, ngayTraStr)) {
-                return; // Nếu kiểm tra không thành công, dừng thực hiện
+                // Gọi phương thức validateDates để kiểm tra ngày mượn và ngày trả
+                if (!validateDates(ngayMuonStr, ngayTraStr)) {
+                    return; // Nếu kiểm tra không thành công, dừng thực hiện
+                }
+                // Tạo đối tượng PhieuMuon
+                PhieuMuon pm = new PhieuMuon(
+                        Integer.parseInt(txt_maMuon.getText()),
+                        cbb_maThuThu.getSelectedIndex() + 1,
+                        cbb_tenSach.getSelectedIndex() + 1,
+                        java.sql.Date.valueOf(ngayMuonStr), // Chuyển đổi sang kiểu Date
+                        java.sql.Date.valueOf(txt_ngayHen.getText()),
+                        !ngayTraStr.isEmpty() ? java.sql.Date.valueOf(ngayTraStr) : null,
+                        cbb_trangThai.getSelectedIndex()
+                );
+
+                PhieuMuonBUS.themPM(pm);
+
+                // Thông báo thêm thành công
+                JOptionPane.showMessageDialog(null, "Thêm phiếu mượn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                Load();
+                clearForm();
             }
-            // Tạo đối tượng PhieuMuon
-            PhieuMuon pm = new PhieuMuon(
-                    Integer.parseInt(txt_maMuon.getText()),
-                    cbb_maThuThu.getSelectedIndex() + 1,
-                    cbb_tenSach.getSelectedIndex() + 1,
-                    java.sql.Date.valueOf(ngayMuonStr), // Chuyển đổi sang kiểu Date
-                    java.sql.Date.valueOf(txt_ngayHen.getText()),
-                    !ngayTraStr.isEmpty() ? java.sql.Date.valueOf(ngayTraStr) : null,
-                    cbb_trangThai.getSelectedIndex()
-            );
-
-            PhieuMuonBUS.themPM(pm);
-
-            // Thông báo thêm thành công
-            JOptionPane.showMessageDialog(null, "Thêm phiếu mượn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            Load();
-            clearForm();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Thêm phiếu mượn thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -765,12 +809,16 @@ public class fMuonTra extends javax.swing.JFrame {
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
         try {
-            int maPhieuMuon = Integer.parseInt(txt_maMuon.getText());
+            if (PhieuMuonDAL.checkEmpty(txt_maMuon.getText())) {
+                int maPhieuMuon = Integer.parseInt(txt_maMuon.getText());
 
-            PhieuMuonBUS.xoaPM(maPhieuMuon);
-            JOptionPane.showMessageDialog(null, "Xóa phiếu mượn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            Load();
-            clearForm();
+                PhieuMuonBUS.xoaPM(maPhieuMuon);
+                JOptionPane.showMessageDialog(null, "Xóa phiếu mượn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                Load();
+                clearForm();
+            }else{
+                JOptionPane.showMessageDialog(null, "Không thể xóa! Phiếu mượn còn tồn tại chi tiết phiếu mượn", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Mã phiếu mượn không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
@@ -820,9 +868,25 @@ public class fMuonTra extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTB_phieuMuonMouseClicked
 
+    public boolean valiDateFormCTPM(){
+        String mes = "";
+        // Kiểm tra mã ctpm 
+        if (txt_maMuon.getText().trim().isEmpty()) {
+            mes += " Mã mượn";
+            txt_maMuon.requestFocus();
+        }
+        if (!mes.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Không để trống: " + mes, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+
+        return true; // Form hợp lệ
+    }
+    
     private void btn_themCTPMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themCTPMActionPerformed
         try {
-            // Lấy mã phiếu mượn từ form
+            if (valiDateFormCTPM()) {
+                // Lấy mã phiếu mượn từ form
             int maPM = Integer.parseInt(txt_maMuon.getText());
             CTPM ctpm = new CTPM(
                     Integer.parseInt(txt_maMuon.getText()),
@@ -833,6 +897,7 @@ public class fMuonTra extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Thêm chi tiết phiếu mượn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             loadCTPM(maPM);
             clearForm();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Thêm chi tiết phiếu mượn thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);

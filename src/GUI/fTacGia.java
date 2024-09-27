@@ -64,6 +64,31 @@ public class fTacGia extends javax.swing.JFrame {
         txt_maTG.setText("");
         txt_tenTG.setText("");
     }
+    
+    public boolean validateForm() {
+    String mes = "";
+
+    // Kiểm tra mã tác giả
+    if (txt_maTG.getText().trim().isEmpty()) {
+        mes += " Mã tác giả";
+        txt_maTG.requestFocus();
+    }
+
+    // Kiểm tra tên tác giả
+    if (txt_tenTG.getText().trim().isEmpty()) {
+        mes += " Tên tác giả";
+        txt_tenTG.requestFocus();
+    }
+
+    // Nếu có lỗi, hiển thị thông báo và trả về false
+    if (!mes.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Không để trống: "+mes, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        return false;
+    }
+
+    return true; // Form hợp lệ
+}
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -266,11 +291,15 @@ public class fTacGia extends javax.swing.JFrame {
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
         try {
-            int ma = Integer.parseInt(txt_maTG.getText());
+            if (TacGiaDAL.checkEmpty(txt_maTG.getText())) {
+                int ma = Integer.parseInt(txt_maTG.getText());
             TacGiaDAL.xoa(ma);
             load();
             clearForm();
             JOptionPane.showMessageDialog(null, "Xóa Thành Công", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(null, "Xóa thất bại! Tác giả đang tồn tại bảng sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Mã không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
@@ -281,7 +310,8 @@ public class fTacGia extends javax.swing.JFrame {
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         try {
-            TacGia tg = new TacGia(
+            if (validateForm()) {
+                 TacGia tg = new TacGia(
                 Integer.parseInt(txt_maTG.getText()),
                 txt_tenTG.getText()
             );
@@ -289,6 +319,7 @@ public class fTacGia extends javax.swing.JFrame {
             TacGiaBUS.them(tg);
             load();
             clearForm();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Thêm không thành công"+e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -301,7 +332,7 @@ public class fTacGia extends javax.swing.JFrame {
             if (search.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Chưa có dữ liệu đầu vào", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
             }else{
-                TacGiaBUS.loadTbaleDataSearch(search);
+                loadTBL_Search(search);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -310,7 +341,8 @@ public class fTacGia extends javax.swing.JFrame {
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
         try {
-            TacGia tg = new TacGia(
+            if (validateForm()) {
+                TacGia tg = new TacGia(
                 Integer.parseInt(txt_maTG.getText()),
                 txt_tenTG.getText()
             );
@@ -319,6 +351,7 @@ public class fTacGia extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Sửa Thành Công", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
             load();
             clearForm();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Sửa không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();

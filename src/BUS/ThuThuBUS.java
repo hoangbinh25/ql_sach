@@ -24,4 +24,11 @@ public class ThuThuBUS {
     public static void xoa(int ma) {
         ThuThuDAL.xoa(ma);
     }
+    
+     public static boolean checkEmpty(String id) {
+        if (ThuThuDAL.checkEmpty(id)) {
+            return false;
+        }
+        return true;
+    }
 }

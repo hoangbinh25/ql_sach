@@ -24,4 +24,11 @@ public class TacGiaBUS {
     public static void xoa(int ma){
         TacGiaDAL.xoa(ma);
     }
+    
+    public static boolean checkEmpty(String id) {
+        if (TacGiaDAL.checkEmpty(id)) {
+            return false;
+        }
+        return true;
+    }
 }

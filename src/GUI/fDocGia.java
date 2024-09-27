@@ -1,18 +1,12 @@
-
 package GUI;
 
 import BUS.DocGiaBUS;
+import DAL.DocGiaDAL;
 import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 import DTO.DocGia;
-import DAL.DocGiaDAL;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import javax.swing.JOptionPane;
-import javax.swing.JFileChooser;
 //import org.apache.poi.xssf.usermodel.*;
 //import org.apache.poi.ss.usermodel.*;
 
@@ -26,6 +20,8 @@ public class fDocGia extends javax.swing.JFrame {
     public void load() {
         loadTBL();
     }
+    
+    SimpleDateFormat fmDate = new SimpleDateFormat("dd-MM-yyyy");
 
     public void clearForm() {
         txt_maDG.setText("");
@@ -34,6 +30,55 @@ public class fDocGia extends javax.swing.JFrame {
         txt_diaChi.setText("");
         txt_CCCD.setText("");
         txt_SDT.setText("");
+    }
+
+    public boolean valueDate() {
+        String mes = " ";
+        if (txt_maDG.getText().trim().isEmpty()) {
+            mes = mes + " Mã độc giả";
+            txt_maDG.requestFocus();
+        }
+        if (txt_tenDG.getText().trim().isEmpty()) {
+            mes = mes + " Tên độc giả";
+            txt_tenDG.requestFocus();
+        }
+        if (txt_ngaySinh.getText().trim().isEmpty()) {
+            mes = mes + " Ngày sinh";
+            txt_ngaySinh.requestFocus();
+        } else if (txt_diaChi.getText().trim().isEmpty()) {
+            mes = mes + " Địa chỉ";
+            txt_diaChi.requestFocus();
+        }
+
+        // Kiểm tra CCCD
+        String cccd = txt_CCCD.getText().trim();
+        if (cccd.isEmpty()) {
+            mes = mes + " CCCD";
+            txt_CCCD.requestFocus();
+        } else if (cccd.length() < 9 || cccd.length() > 12) {
+            mes = mes + " CCCD phải có từ 9 đến 12 chữ số";
+            txt_CCCD.requestFocus();
+        }
+
+        // Kiểm tra số điện thoại
+        String sdt = txt_SDT.getText().trim();
+        if (sdt.isEmpty()) {
+            mes = mes + " Số điện thoại";
+            txt_SDT.requestFocus();
+        } else if (sdt.length() < 10 || sdt.length() > 12) {
+            mes = mes + " Số điện thoại phải có từ 10 đến 12 chữ số";
+            txt_SDT.requestFocus();
+        } else if (!sdt.startsWith("0")) {
+            mes = mes + " Số điện thoại phải bắt đầu bằng 0";
+            txt_SDT.requestFocus();
+        }
+
+        if (mes.trim().isEmpty()) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Không được để trống" + mes, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
     }
 
     public void loadTBL() {
@@ -366,19 +411,21 @@ public class fDocGia extends javax.swing.JFrame {
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         try {
-            SimpleDateFormat fmDate = new SimpleDateFormat("yyyy-MM-dd");
-            DocGia dg = new DocGia(
-                    Integer.parseInt(txt_maDG.getText()),
-                    txt_tenDG.getText(),
-                    java.sql.Date.valueOf(txt_ngaySinh.getText()),
-                    txt_diaChi.getText(),
-                    txt_CCCD.getText(),
-                    txt_SDT.getText()
-            );
-            DocGiaBUS.them(dg);
-            JOptionPane.showMessageDialog(null, "Thêm độc giả thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            load();
-            clearForm();
+            if (valueDate()) {
+                DocGia dg = new DocGia(
+                        Integer.parseInt(txt_maDG.getText()),
+                        txt_tenDG.getText(),
+                        new java.sql.Date(fmDate.parse(txt_ngaySinh.getText()).getTime()),
+                        txt_diaChi.getText(),
+                        txt_CCCD.getText(),
+                        txt_SDT.getText()
+                );
+
+                DocGiaBUS.them(dg);
+                JOptionPane.showMessageDialog(null, "Thêm độc giả thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                load();
+                clearForm();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Thêm không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -387,11 +434,15 @@ public class fDocGia extends javax.swing.JFrame {
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
         try {
-            int maSach = Integer.parseInt(txt_maDG.getText());
-            DocGiaBUS.xoa(maSach);
+            if (DocGiaDAL.checkEmpty(txt_maDG.getText())) {
+            int maDG = Integer.parseInt(txt_maDG.getText());
+            DocGiaBUS.xoa(maDG);
             JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             load();
             clearForm();
+            }else{
+                JOptionPane.showMessageDialog(null, "Xóa thất bại! Độc giả đang tồn tại phiếu mượn sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Mã không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
@@ -425,10 +476,11 @@ public class fDocGia extends javax.swing.JFrame {
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
         try {
-            DocGia dg = new DocGia(
+            if (valueDate()) {
+                DocGia dg = new DocGia(
                     Integer.parseInt(txt_maDG.getText()),
                     txt_tenDG.getText(),
-                    java.sql.Date.valueOf(txt_ngaySinh.getText()),
+                    new java.sql.Date(fmDate.parse(txt_ngaySinh.getText()).getTime()),
                     txt_diaChi.getText(),
                     txt_CCCD.getText(),
                     txt_SDT.getText()
@@ -439,6 +491,7 @@ public class fDocGia extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Cập nhật sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             load();
             clearForm();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cập nhật sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);

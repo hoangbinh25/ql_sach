@@ -25,5 +25,10 @@ public class DocGiaBUS {
         DocGiaDAL.xoa(maDG);
     }
     
-    
+    public static boolean checkEmpty(String id) {
+        if (DocGiaDAL.checkEmpty(id)) {
+            return true;
+        }
+        return false;
+    }
 }
