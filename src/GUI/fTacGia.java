@@ -88,6 +88,7 @@ public class fTacGia extends javax.swing.JFrame {
         menu_qlDocGia = new javax.swing.JMenu();
         menu_qlTacGia = new javax.swing.JMenu();
         menu_thongKe = new javax.swing.JMenu();
+        menu_dxuat = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý tác giả");
@@ -202,7 +203,20 @@ public class fTacGia extends javax.swing.JFrame {
         jMenuBar_sach.add(menu_qlTacGia);
 
         menu_thongKe.setText("Thống kê");
+        menu_thongKe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_thongKeMouseClicked(evt);
+            }
+        });
         jMenuBar_sach.add(menu_thongKe);
+
+        menu_dxuat.setText("Đăng xuất");
+        menu_dxuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_dxuatMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_dxuat);
 
         setJMenuBar(jMenuBar_sach);
 
@@ -219,7 +233,7 @@ public class fTacGia extends javax.swing.JFrame {
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(49, 49, 49)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_tenTG)
+                            .addComponent(txt_tenTG, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
                             .addComponent(txt_maTG)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -254,7 +268,7 @@ public class fTacGia extends javax.swing.JFrame {
                     .addComponent(btn_timkiem))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -286,7 +300,7 @@ public class fTacGia extends javax.swing.JFrame {
                 txt_tenTG.getText()
             );
             
-            TacGiaBUS.them(tg);
+            TacGiaBUS.themTG(tg);
             load();
             clearForm();
         } catch (Exception e) {
@@ -315,7 +329,7 @@ public class fTacGia extends javax.swing.JFrame {
                 txt_tenTG.getText()
             );
             
-            TacGiaBUS.sua(tg);
+            TacGiaBUS.suaTG(tg);
             JOptionPane.showMessageDialog(null, "Sửa Thành Công", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
             load();
             clearForm();
@@ -383,6 +397,31 @@ public class fTacGia extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_menu_qlTacGiaMouseClicked
 
+    private void menu_thongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_thongKeMouseClicked
+        fThongKe thongKeFrame = new fThongKe();
+        thongKeFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        thongKeFrame.setLocationRelativeTo(null);
+        thongKeFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_thongKeMouseClicked
+
+    private void menu_dxuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_dxuatMouseClicked
+        // Hiển thị hộp thoại
+        int result = JOptionPane.showConfirmDialog(this,
+            "Bạn có muốn đăng xuất không?", "Thông báo",
+            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        // Nếu click "yes"
+        if (result == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "Bạn đã đăng xuất tài khoản thành công");
+            this.dispose();
+
+            fDangNhap login = new fDangNhap();
+            login.setLocationRelativeTo(null);
+            login.setVisible(true);
+        }
+    }//GEN-LAST:event_menu_dxuatMouseClicked
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -405,6 +444,7 @@ public class fTacGia extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTB_tacGia;
     private javax.swing.JMenu menu_Sach;
+    private javax.swing.JMenu menu_dxuat;
     private javax.swing.JMenu menu_muonTra;
     private javax.swing.JMenu menu_qlDocGia;
     private javax.swing.JMenu menu_qlTacGia;

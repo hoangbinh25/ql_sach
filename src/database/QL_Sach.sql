@@ -201,29 +201,3 @@ SELECT
             DATEDIFF(DAY, PM.ngay_hen_tra, GETDATE()) * 5000
         ELSE 0
     END AS tien_phat
-FROM 
-    SACH S
-LEFT JOIN 
-    CHI_TIET_PHIEU_MUON CTPM ON S.ma_sach = CTPM.ma_sach
-LEFT JOIN 
-    PHIEU_MUON PM ON CTPM.ma_phieu_muon = PM.ma_phieu_muon
-LEFT JOIN 
-    DOC_GIA DG ON PM.ma_doc_gia = DG.ma_doc_gia
-LEFT JOIN 
-    THU_THU TT ON PM.ma_thu_thu = TT.ma_thu_thu
-GROUP BY 
-    S.ten_sach, S.so_luong, DG.ten_doc_gia, TT.ten_thu_thu, PM.ngay_muon, PM.ngay_hen_tra, PM.trang_thai;
-
-INSERT INTO CHI_TIET_PHIEU_MUON (ma_phieu_muon, ma_sach) VALUES
-(1, 1),
-(1, 2),
-(3, 3),
-(4, 1);
-
-INSERT INTO CHI_TIET_PHIEU_MUON (ma_phieu_muon, ma_sach, so_luong) VALUES
-(1, 1, 1),
-(1, 2, 1),
-(1, 3, 1);
-GO
-
-SELECT * FROM CHI_TIET_PHIEU_MUON;

@@ -25,8 +25,8 @@ public class PhieuMuonBUS {
         return PhieuMuonDAL.load_cbb_docGiaData();
     }
     
-    public static List<String> load_cbb_thuTHUData() {
-        return PhieuMuonDAL.load_cbb_thuTHUData();
+    public static List<String> load_cbb_thuThuData() {
+        return PhieuMuonDAL.load_cbb_thuThuData();
     }
     
     public static List<String> load_cbb_tenSachData() {

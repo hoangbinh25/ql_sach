@@ -13,15 +13,15 @@ public class ThuThuBUS {
         return ThuThuDAL.LoadtTbDATA_Search(keyword);
     }
     
-    public static void them(ThuThu tt) {
+    public static void themTT(ThuThu tt) {
         ThuThuDAL.them(tt);
     }
     
-    public static void sua(ThuThu.CTThuThu cttt) {
+    public static void suaTT(ThuThu.CTThuThu cttt) {
         ThuThuDAL.sua(cttt);
     }
     
-    public static void xoa(int ma) {
+    public static void xoaTT(int ma) {
         ThuThuDAL.xoa(ma);
     }
 }

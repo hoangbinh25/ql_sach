@@ -2,7 +2,7 @@ package DTO;
 
 import GUI.fDangNhap;
 
-public class LoginAndSignUp {
+public class Login {
     public static void main(String []args) {
         fDangNhap DnhapFrame = new fDangNhap();
         DnhapFrame.setVisible(true);

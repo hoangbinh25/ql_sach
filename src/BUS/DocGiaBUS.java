@@ -13,15 +13,15 @@ public class DocGiaBUS {
         return DocGiaDAL.loadTableDataSearch(keyword);
     }
     
-    public static void them(DocGia dg) {
+    public static void themDG(DocGia dg) {
         DocGiaDAL.them(dg);
     }
     
-    public static void capNhat(DocGia dg) {
+    public static void capNhatDG(DocGia dg) {
         DocGiaDAL.capNhat(dg);
     }
     
-    public static void xoa(int maDG) {
+    public static void xoaDG(int maDG) {
         DocGiaDAL.xoa(maDG);
     }
     

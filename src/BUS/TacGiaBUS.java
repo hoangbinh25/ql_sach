@@ -13,15 +13,15 @@ public class TacGiaBUS {
         return TacGiaDAL.loadTbaleDataSearch(keyword);
     }
     
-    public static void them(TacGia tg){
+    public static void themTG(TacGia tg){
         TacGiaDAL.them(tg);
     }
     
-    public static void sua(TacGia tg){
+    public static void suaTG(TacGia tg){
         TacGiaDAL.sua(tg);
     }
     
-    public static void xoa(int ma){
+    public static void xoaTG(int ma){
         TacGiaDAL.xoa(ma);
     }
 }

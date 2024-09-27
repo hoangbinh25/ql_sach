@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JFileChooser;
-//import org.apache.poi.xssf.usermodel.*;
-//import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -177,6 +177,7 @@ public class fSach extends javax.swing.JFrame {
         menu_qlDocGia = new javax.swing.JMenu();
         menu_qlTacGia = new javax.swing.JMenu();
         menu_thongKe = new javax.swing.JMenu();
+        menu_dxuat = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý sách");
@@ -321,7 +322,20 @@ public class fSach extends javax.swing.JFrame {
         jMenuBar_sach.add(menu_qlTacGia);
 
         menu_thongKe.setText("Thống kê");
+        menu_thongKe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_thongKeMouseClicked(evt);
+            }
+        });
         jMenuBar_sach.add(menu_thongKe);
+
+        menu_dxuat.setText("Đăng xuất");
+        menu_dxuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_dxuatMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_dxuat);
 
         setJMenuBar(jMenuBar_sach);
 
@@ -479,28 +493,6 @@ public class fSach extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Thêm sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-
-        try {
-            Sach sach = new Sach(
-                    Integer.parseInt(txt_maSach.getText()),
-                    txt_tenSach.getText(),
-                    txt_ngonNgu.getText(),
-                    Float.parseFloat(txt_giaTri.getText()),
-                    Integer.parseInt(txt_soLuong.getText()),
-                    cbb_tacGia.getSelectedIndex() + 1,
-                    cbb_theLoai.getSelectedIndex() + 1,
-                    txt_nhaXB.getText(),
-                    java.sql.Date.valueOf(txt_namXB.getText())
-            );
-            SachBUS.themSach(sach);
-            JOptionPane.showMessageDialog(null, "Thêm sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            Load();
-            clearForm();
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Thêm sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        }
-
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
@@ -613,6 +605,123 @@ public class fSach extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbb_tacGiaActionPerformed
 
+    private void btn_inExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inExcelActionPerformed
+        try {
+
+            List<Sach> lSach = SachDAL.loadTableData();
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            XSSFWorkbook wordkbook = new XSSFWorkbook();
+            XSSFSheet sheet = wordkbook.createSheet("danhsach");
+            XSSFRow row = null;
+            Cell cell = null;
+
+            // Dòng tiêu đề
+            row = sheet.createRow(2);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("Danh sách độc giả");
+
+            // Dòng tiêu đề các cột
+            row = sheet.createRow(3);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("STT");
+
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("Mã sách");
+
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellValue("Tên sách");
+
+            cell = row.createCell(3, CellType.STRING);
+            cell.setCellValue("Ngôn ngữ");
+
+            cell = row.createCell(4, CellType.STRING);
+            cell.setCellValue("Giá trị");
+
+            cell = row.createCell(5, CellType.STRING);
+            cell.setCellValue("Số lượng");
+
+            cell = row.createCell(6, CellType.STRING);
+            cell.setCellValue("Tên tác giả");
+
+            cell = row.createCell(7, CellType.STRING);
+            cell.setCellValue("Tên thể loại");
+
+            cell = row.createCell(8, CellType.STRING);
+            cell.setCellValue("Nhà xuất bản");
+
+            cell = row.createCell(9, CellType.STRING);
+            cell.setCellValue("Năm xuất bản");
+
+            // Điền dữ liệu vào các hàng
+            for (int i = 0; i < lSach.size(); i++) {
+                Sach sach = lSach.get(i);
+                row = sheet.createRow(4 + i);
+
+                cell = row.createCell(0, CellType.NUMERIC);
+                cell.setCellValue(i + 1);
+
+                cell = row.createCell(1, CellType.STRING);
+                cell.setCellValue(sach.getMa_sach());
+
+                cell = row.createCell(2, CellType.STRING);
+                cell.setCellValue(sach.getTen_sach());
+
+                cell = row.createCell(3, CellType.STRING);
+                cell.setCellValue(sach.getNgon_ngu_sach());
+
+                cell = row.createCell(4, CellType.STRING);
+                cell.setCellValue(sach.getGia_tri());
+
+                cell = row.createCell(5, CellType.STRING);
+                cell.setCellValue(sach.getSo_luong());
+
+                String tenTG = SachDAL.getTacGiaById(sach.getTacgia());
+                cell = row.createCell(6, CellType.STRING);
+                cell.setCellValue(tenTG);
+                
+                String tenTL = SachDAL.getTheLoaiById(sach.getThe_loai());
+                cell = row.createCell(7, CellType.STRING);
+                cell.setCellValue(tenTL);
+                
+                cell = row.createCell(8, CellType.STRING);
+                cell.setCellValue(sach.getNha_xuat_ban());
+                
+                cell = row.createCell(9, CellType.STRING);
+                cell.setCellValue(dateFormat.format(sach.getNam_xuat_ban()));
+
+            }
+            // Sử dụng JFileChooser để chọn vị trí lưu file
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Chọn vị trí lưu file");
+            fileChooser.setSelectedFile(new File("danhsach.xlsx")); // Đặt tên file mặc định
+
+            int userSelection = fileChooser.showSaveDialog(this); // Hiển thị hộp thoại lưu file
+
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+
+                // Ghi dữ liệu vào file
+                try (FileOutputStream fis = new FileOutputStream(fileToSave)) {
+                    wordkbook.write(fis);
+                    fis.close();
+                    JOptionPane.showMessageDialog(this, "In ra file Excel thành công tại: " + fileToSave.getAbsolutePath());
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "File không thể mở hoặc ghi.");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Lỗi khi ghi file.");
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi mở file");
+        }
+    }//GEN-LAST:event_btn_inExcelActionPerformed
+
     private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
         fSach sachFrame = new fSach();
         sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
@@ -665,122 +774,30 @@ public class fSach extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_menu_qlTacGiaMouseClicked
 
-    private void btn_inExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inExcelActionPerformed
-//        try {
-//
-//            List<Sach> lSach = SachDAL.loadTableData();
-//
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//
-//            XSSFWorkbook wordkbook = new XSSFWorkbook();
-//            XSSFSheet sheet = wordkbook.createSheet("danhsach");
-//            XSSFRow row = null;
-//            Cell cell = null;
-//
-//            // Dòng tiêu đề
-//            row = sheet.createRow(2);
-//            cell = row.createCell(0, CellType.STRING);
-//            cell.setCellValue("Danh sách độc giả");
-//
-//            // Dòng tiêu đề các cột
-//            row = sheet.createRow(3);
-//            cell = row.createCell(0, CellType.STRING);
-//            cell.setCellValue("STT");
-//
-//            cell = row.createCell(1, CellType.STRING);
-//            cell.setCellValue("Mã sách");
-//
-//            cell = row.createCell(2, CellType.STRING);
-//            cell.setCellValue("Tên sách");
-//
-//            cell = row.createCell(3, CellType.STRING);
-//            cell.setCellValue("Ngôn ngữ");
-//
-//            cell = row.createCell(4, CellType.STRING);
-//            cell.setCellValue("Giá trị");
-//
-//            cell = row.createCell(5, CellType.STRING);
-//            cell.setCellValue("Số lượng");
-//
-//            cell = row.createCell(6, CellType.STRING);
-//            cell.setCellValue("Tên tác giả");
-//
-//            cell = row.createCell(7, CellType.STRING);
-//            cell.setCellValue("Tên thể loại");
-//
-//            cell = row.createCell(8, CellType.STRING);
-//            cell.setCellValue("Nhà xuất bản");
-//
-//            cell = row.createCell(9, CellType.STRING);
-//            cell.setCellValue("Năm xuất bản");
-//
-//            // Điền dữ liệu vào các hàng
-//            for (int i = 0; i < lSach.size(); i++) {
-//                Sach sach = lSach.get(i);
-//                row = sheet.createRow(4 + i);
-//
-//                cell = row.createCell(0, CellType.NUMERIC);
-//                cell.setCellValue(i + 1);
-//
-//                cell = row.createCell(1, CellType.STRING);
-//                cell.setCellValue(sach.getMa_sach());
-//
-//                cell = row.createCell(2, CellType.STRING);
-//                cell.setCellValue(sach.getTen_sach());
-//
-//                cell = row.createCell(3, CellType.STRING);
-//                cell.setCellValue(sach.getNgon_ngu_sach());
-//
-//                cell = row.createCell(4, CellType.STRING);
-//                cell.setCellValue(sach.getGia_tri());
-//
-//                cell = row.createCell(5, CellType.STRING);
-//                cell.setCellValue(sach.getSo_luong());
-//
-//                String tenTG = SachDAL.getTacGiaById(sach.getTacgia());
-//                cell = row.createCell(6, CellType.STRING);
-//                cell.setCellValue(tenTG);
-//                
-//                String tenTL = SachDAL.getTheLoaiById(sach.getThe_loai());
-//                cell = row.createCell(7, CellType.STRING);
-//                cell.setCellValue(tenTL);
-//                
-//                cell = row.createCell(8, CellType.STRING);
-//                cell.setCellValue(sach.getNha_xuat_ban());
-//                
-//                cell = row.createCell(9, CellType.STRING);
-//                cell.setCellValue(dateFormat.format(sach.getNam_xuat_ban()));
-//
-//            }
-//            // Sử dụng JFileChooser để chọn vị trí lưu file
-//            JFileChooser fileChooser = new JFileChooser();
-//            fileChooser.setDialogTitle("Chọn vị trí lưu file");
-//            fileChooser.setSelectedFile(new File("danhsach.xlsx")); // Đặt tên file mặc định
-//
-//            int userSelection = fileChooser.showSaveDialog(this); // Hiển thị hộp thoại lưu file
-//
-//            if (userSelection == JFileChooser.APPROVE_OPTION) {
-//                File fileToSave = fileChooser.getSelectedFile();
-//
-//                // Ghi dữ liệu vào file
-//                try (FileOutputStream fis = new FileOutputStream(fileToSave)) {
-//                    wordkbook.write(fis);
-//                    fis.close();
-//                    JOptionPane.showMessageDialog(this, "In ra file Excel thành công tại: " + fileToSave.getAbsolutePath());
-//                } catch (FileNotFoundException ex) {
-//                    ex.printStackTrace();
-//                    JOptionPane.showMessageDialog(this, "File không thể mở hoặc ghi.");
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                    JOptionPane.showMessageDialog(this, "Lỗi khi ghi file.");
-//                }
-//            }
-//
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//            JOptionPane.showMessageDialog(this, "Lỗi mở file");
-//        }
-    }//GEN-LAST:event_btn_inExcelActionPerformed
+    private void menu_thongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_thongKeMouseClicked
+        fThongKe thongKeFrame = new fThongKe();
+        thongKeFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        thongKeFrame.setLocationRelativeTo(null);
+        thongKeFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_thongKeMouseClicked
+
+    private void menu_dxuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_dxuatMouseClicked
+        // Hiển thị hộp thoại
+        int result = JOptionPane.showConfirmDialog(this,
+            "Bạn có muốn đăng xuất không?", "Thông báo",
+            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        // Nếu click "yes"
+        if (result == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "Bạn đã đăng xuất tài khoản thành công");
+            this.dispose();
+
+            fDangNhap login = new fDangNhap();
+            login.setLocationRelativeTo(null);
+            login.setVisible(true);
+        }
+    }//GEN-LAST:event_menu_dxuatMouseClicked
 
     public static void main(String args[]) {
 
@@ -815,6 +832,7 @@ public class fSach extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTB_sach;
     private javax.swing.JMenu menu_Sach;
+    private javax.swing.JMenu menu_dxuat;
     private javax.swing.JMenu menu_muonTra;
     private javax.swing.JMenu menu_qlDocGia;
     private javax.swing.JMenu menu_qlTacGia;

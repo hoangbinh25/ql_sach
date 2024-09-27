@@ -1,4 +1,3 @@
-
 package GUI;
 
 import BUS.TheLoaiBUS;
@@ -10,12 +9,11 @@ import javax.swing.table.DefaultTableModel;
 
 public class fTheLoai extends javax.swing.JFrame {
 
-
     public fTheLoai() {
         initComponents();
         Load();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -39,8 +37,10 @@ public class fTheLoai extends javax.swing.JFrame {
         menu_qlDocGia = new javax.swing.JMenu();
         menu_qlTacGia = new javax.swing.JMenu();
         menu_thongKe = new javax.swing.JMenu();
+        menu_dxuat = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Quản lý thể loại");
 
         btn_timkiem.setText("Tìm Kiếm");
         btn_timkiem.addActionListener(new java.awt.event.ActionListener() {
@@ -152,7 +152,20 @@ public class fTheLoai extends javax.swing.JFrame {
         jMenuBar_sach.add(menu_qlTacGia);
 
         menu_thongKe.setText("Thống kê");
+        menu_thongKe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_thongKeMouseClicked(evt);
+            }
+        });
         jMenuBar_sach.add(menu_thongKe);
+
+        menu_dxuat.setText("Đăng xuất");
+        menu_dxuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_dxuatMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_dxuat);
 
         setJMenuBar(jMenuBar_sach);
 
@@ -260,7 +273,7 @@ public class fTheLoai extends javax.swing.JFrame {
         txt_maTheLoai.setText("");
         txt_tenTheLoai.setText("");
     }
-    
+
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
         String search = txt_timkiem.getText().trim(); //Loại bỏ khoảng trắng đầu và cuối chuỗi mỗi khi ng dùng nhập
         if (search.isEmpty()) {
@@ -278,8 +291,8 @@ public class fTheLoai extends javax.swing.JFrame {
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
         try {
             TheLoai theloai = new TheLoai(
-                Integer.parseInt(txt_maTheLoai.getText()),
-                txt_tenTheLoai.getText()
+                    Integer.parseInt(txt_maTheLoai.getText()),
+                    txt_tenTheLoai.getText()
             );
 
             TheLoaiBUS.suaTheLoai(theloai);
@@ -326,8 +339,8 @@ public class fTheLoai extends javax.swing.JFrame {
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         try {
             TheLoai theloai = new TheLoai(
-                Integer.parseInt(txt_maTheLoai.getText()),
-                txt_tenTheLoai.getText()
+                    Integer.parseInt(txt_maTheLoai.getText()),
+                    txt_tenTheLoai.getText()
             );
 
             TheLoaiBUS.themTheLoai(theloai);
@@ -393,38 +406,39 @@ public class fTheLoai extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_menu_qlTacGiaMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(fTheLoai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(fTheLoai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(fTheLoai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(fTheLoai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void menu_thongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_thongKeMouseClicked
+        fThongKe thongKeFrame = new fThongKe();
+        thongKeFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        thongKeFrame.setLocationRelativeTo(null);
+        thongKeFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_thongKeMouseClicked
 
-        /* Create and display the form */
+    private void menu_dxuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_dxuatMouseClicked
+        // Hiển thị hộp thoại
+        int result = JOptionPane.showConfirmDialog(this,
+            "Bạn có muốn đăng xuất không?", "Thông báo",
+            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        // Nếu click "yes"
+        if (result == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "Bạn đã đăng xuất tài khoản thành công");
+            this.dispose();
+
+            fDangNhap login = new fDangNhap();
+            login.setLocationRelativeTo(null);
+            login.setVisible(true);
+        }
+    }//GEN-LAST:event_menu_dxuatMouseClicked
+
+    public static void main(String args[]) {
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new fTheLoai().setVisible(true);
+                fTheLoai theLoaiFrame = new fTheLoai();
+                theLoaiFrame.setDefaultCloseOperation(fTheLoai.EXIT_ON_CLOSE);
+                theLoaiFrame.setLocationRelativeTo(null);
+                theLoaiFrame.setVisible(true);
             }
         });
     }
@@ -440,6 +454,7 @@ public class fTheLoai extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTBtheLoai;
     private javax.swing.JMenu menu_Sach;
+    private javax.swing.JMenu menu_dxuat;
     private javax.swing.JMenu menu_muonTra;
     private javax.swing.JMenu menu_qlDocGia;
     private javax.swing.JMenu menu_qlTacGia;

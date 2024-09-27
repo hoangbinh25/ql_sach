@@ -20,21 +20,19 @@ import java.sql.Date;
 public class PhieuMuonDAL {
 
     public static List<PhieuMuon> loadTableData() {
-
-        List<PhieuMuon> lst_tbl = new ArrayList<>();
+        List<PhieuMuon> lst_tbl = new ArrayList();
         String sqlQuery = "SELECT * FROM PHIEU_MUON";
-        try (Connection conn = ConnectToSQLServer.getConnection()) {
+        try (Connection conn = ConnectToSQLServer.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sqlQuery);
-            ResultSet res = ps.executeQuery();
-            while (res.next()) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
                 PhieuMuon pm = new PhieuMuon();
-                pm.setMa_phieu_muon(res.getInt("ma_phieu_muon"));
-                pm.setMa_thu_thu(res.getInt("ma_thu_thu"));
-                pm.setMa_doc_gia(res.getInt("ma_doc_gia"));
-                pm.setNgay_muon(res.getDate("ngay_muon"));
-                pm.setNgay_hen_tra(res.getDate("ngay_hen_tra"));
-                pm.setNgay_tra(res.getDate("ngay_tra"));
-                pm.setTrang_thai(res.getInt("trang_thai"));
+                pm.setMa_phieu_muon(rs.getInt("ma_phieu_muon"));
+                pm.setMa_thu_thu(rs.getInt("ma_thu_thu"));
+                pm.setMa_doc_gia(rs.getInt("ma_doc_gia"));
+                pm.setNgay_muon(rs.getDate("ngay_muon"));
+                pm.setNgay_hen_tra(rs.getDate("ngay_hen_tra"));
+                pm.setNgay_tra(rs.getDate("ngay_tra"));
                 lst_tbl.add(pm);
             }
         } catch (Exception e) {
@@ -130,7 +128,7 @@ public class PhieuMuonDAL {
         return docGiaList;
     }
 
-    public static List<String> load_cbb_thuTHUData() {
+    public static List<String> load_cbb_thuThuData() {
         List<String> thuThuList = new ArrayList<>();
         String sqlQuery = "SELECT ten_thu_thu FROM THU_THU";
         try (Connection conn = ConnectToSQLServer.getConnection()) {

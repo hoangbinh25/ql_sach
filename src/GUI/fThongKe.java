@@ -62,8 +62,18 @@ public class fThongKe extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTbl_ThongKe = new javax.swing.JTable();
+        jMenuBar_sach = new javax.swing.JMenuBar();
+        menu_Sach = new javax.swing.JMenu();
+        menu_thuThu = new javax.swing.JMenu();
+        menu_muonTra = new javax.swing.JMenu();
+        menu_qlTheLoai = new javax.swing.JMenu();
+        menu_qlDocGia = new javax.swing.JMenu();
+        menu_qlTacGia = new javax.swing.JMenu();
+        menu_thongKe = new javax.swing.JMenu();
+        menu_dxuat = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Thống kê");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("Thống Kê");
@@ -81,6 +91,77 @@ public class fThongKe extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(jTbl_ThongKe);
+
+        menu_Sach.setText("Quản lý sách");
+        menu_Sach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_SachMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_Sach);
+
+        menu_thuThu.setText("Quản lý thủ thư");
+        menu_thuThu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_thuThuMouseClicked(evt);
+            }
+        });
+        menu_thuThu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_thuThuActionPerformed(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_thuThu);
+
+        menu_muonTra.setText("Quản lý mượn trả sách");
+        menu_muonTra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_muonTraMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_muonTra);
+
+        menu_qlTheLoai.setText("Quản lý thể loại");
+        menu_qlTheLoai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_qlTheLoaiMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_qlTheLoai);
+
+        menu_qlDocGia.setText("Quản lý độc giả");
+        menu_qlDocGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_qlDocGiaMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_qlDocGia);
+
+        menu_qlTacGia.setText("Quản lý tác giả");
+        menu_qlTacGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_qlTacGiaMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_qlTacGia);
+
+        menu_thongKe.setText("Thống kê");
+        menu_thongKe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_thongKeMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_thongKe);
+
+        menu_dxuat.setText("Đăng xuất");
+        menu_dxuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_dxuatMouseClicked(evt);
+            }
+        });
+        jMenuBar_sach.add(menu_dxuat);
+
+        setJMenuBar(jMenuBar_sach);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,50 +183,114 @@ public class fThongKe extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(fThongKe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(fThongKe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(fThongKe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(fThongKe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void menu_SachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_SachMouseClicked
+        fSach sachFrame = new fSach();
+        sachFrame.setDefaultCloseOperation(fSach.EXIT_ON_CLOSE);
+        sachFrame.setLocationRelativeTo(null);
+        sachFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_SachMouseClicked
 
-        /* Create and display the form */
+    private void menu_thuThuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_thuThuMouseClicked
+        fThuThu thuThuFrame = new fThuThu();
+        thuThuFrame.setDefaultCloseOperation(fThuThu.EXIT_ON_CLOSE);
+        thuThuFrame.setLocationRelativeTo(null);
+        thuThuFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_thuThuMouseClicked
+
+    private void menu_thuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_thuThuActionPerformed
+
+    }//GEN-LAST:event_menu_thuThuActionPerformed
+
+    private void menu_muonTraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_muonTraMouseClicked
+        fMuonTra muonTraFrame = new fMuonTra();
+        muonTraFrame.setDefaultCloseOperation(fMuonTra.EXIT_ON_CLOSE);
+        muonTraFrame.setLocationRelativeTo(null);
+        muonTraFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_muonTraMouseClicked
+
+    private void menu_qlTheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTheLoaiMouseClicked
+        fTheLoai theLoaiFrame = new fTheLoai();
+        theLoaiFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        theLoaiFrame.setLocationRelativeTo(null);
+        theLoaiFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_qlTheLoaiMouseClicked
+
+    private void menu_qlDocGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlDocGiaMouseClicked
+        fDocGia docGiaFrame = new fDocGia();
+        docGiaFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        docGiaFrame.setLocationRelativeTo(null);
+        docGiaFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_qlDocGiaMouseClicked
+
+    private void menu_qlTacGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_qlTacGiaMouseClicked
+        fTacGia tacGiaFrame = new fTacGia();
+        tacGiaFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        tacGiaFrame.setLocationRelativeTo(null);
+        tacGiaFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_qlTacGiaMouseClicked
+
+    private void menu_thongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_thongKeMouseClicked
+        fThongKe thongKeFrame = new fThongKe();
+        thongKeFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        thongKeFrame.setLocationRelativeTo(null);
+        thongKeFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menu_thongKeMouseClicked
+
+    private void menu_dxuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_dxuatMouseClicked
+        // Hiển thị hộp thoại
+        int result = JOptionPane.showConfirmDialog(this,
+            "Bạn có muốn đăng xuất không?", "Thông báo",
+            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        // Nếu click "yes"
+        if (result == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "Bạn đã đăng xuất tài khoản thành công");
+            this.dispose();
+
+            fDangNhap login = new fDangNhap();
+            login.setLocationRelativeTo(null);
+            login.setVisible(true);
+        }
+    }//GEN-LAST:event_menu_dxuatMouseClicked
+
+    public static void main(String args[]) {
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new fThongKe().setVisible(true);
+                fThongKe thongKeFrame = new fThongKe();
+                thongKeFrame.setDefaultCloseOperation(fThongKe.EXIT_ON_CLOSE);
+                thongKeFrame.setLocationRelativeTo(null);
+                thongKeFrame.setVisible(true);
+                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuBar jMenuBar_sach;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTbl_ThongKe;
+    private javax.swing.JMenu menu_Sach;
+    private javax.swing.JMenu menu_dxuat;
+    private javax.swing.JMenu menu_muonTra;
+    private javax.swing.JMenu menu_qlDocGia;
+    private javax.swing.JMenu menu_qlTacGia;
+    private javax.swing.JMenu menu_qlTheLoai;
+    private javax.swing.JMenu menu_thongKe;
+    private javax.swing.JMenu menu_thuThu;
     // End of variables declaration//GEN-END:variables
 }
