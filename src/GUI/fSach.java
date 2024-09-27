@@ -6,11 +6,9 @@ import DAL.SachDAL;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import DTO.Sach;
-import GUI.fThuThu;
-import GUI.fTheLoai;
-import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
+
 import javax.swing.JFileChooser;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
@@ -18,6 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 
 public class fSach extends javax.swing.JFrame {
 
@@ -137,6 +136,63 @@ public class fSach extends javax.swing.JFrame {
         txt_namXB.setText("");
         cbb_tacGia.setSelectedIndex(0);
         cbb_theLoai.setSelectedIndex(0);
+    }
+
+    public boolean valiDateForm() {
+        String mes = "";
+
+        // Kiểm tra tên sách
+        if (txt_tenSach.getText().trim().isEmpty()) {
+            mes += "Tên sách không được để trống.\n";
+            txt_tenSach.requestFocus();
+        }
+
+        // Kiểm tra mã sách
+        if (txt_maSach.getText().trim().isEmpty()) {
+            mes += "Mã sách không được để trống.\n";
+            txt_maSach.requestFocus();
+        }
+
+        // Kiểm tra số lượng
+        if (txt_soLuong.getText().trim().isEmpty()) {
+            mes += "Số lượng không được để trống.\n";
+            txt_soLuong.requestFocus();
+        } else if (!txt_soLuong.getText().trim().matches("\\d+")) { // Kiểm tra số lượng phải là số
+            mes += "Số lượng phải là số.\n";
+            txt_soLuong.requestFocus();
+        }
+
+        // Kiểm tra giá trị
+        if (txt_giaTri.getText().trim().isEmpty()) {
+            mes += "Giá trị không được để trống.\n";
+            txt_giaTri.requestFocus();
+        } else if (!txt_giaTri.getText().trim().matches("\\d+")) { // Kiểm tra giá trị phải là số
+            mes += "Giá trị phải là số.\n";
+            txt_giaTri.requestFocus();
+        }
+
+        // Kiểm tra năm xuất bản
+        if (txt_namXB.getText().trim().isEmpty()) {
+            mes += "Năm xuất bản không được để trống.\n";
+            txt_namXB.requestFocus();
+        } else if (!txt_namXB.getText().trim().matches("\\d{4}")) { // Kiểm tra năm xuất bản phải là 4 chữ số
+            mes += "Năm xuất bản phải là 4 chữ số.\n";
+            txt_namXB.requestFocus();
+        }
+
+        // Kiểm tra nhà xuất bản
+        if (txt_nhaXB.getText().trim().isEmpty()) {
+            mes += "Nhà xuất bản không được để trống.\n";
+            txt_nhaXB.requestFocus();
+        }
+
+        // Nếu có lỗi, hiển thị thông báo và trả về false
+        if (!mes.isEmpty()) {
+            JOptionPane.showMessageDialog(null, mes, "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true; // Form hợp lệ
     }
 
     @SuppressWarnings("unchecked")
@@ -469,26 +525,24 @@ public class fSach extends javax.swing.JFrame {
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         try {
-            Sach sach = new Sach(
-                    // Bỏ qua mã sách vì mã sách sẽ tự động tăng
-                    Integer.parseInt(txt_maSach.getText()),
-                    txt_tenSach.getText(),
-                    txt_ngonNgu.getText(),
-                    Float.parseFloat(txt_giaTri.getText()),
-                    Integer.parseInt(txt_soLuong.getText()),
-                    cbb_tacGia.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của tác giả
-                    cbb_theLoai.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của thể loại
-                    txt_nhaXB.getText(),
-                    java.sql.Date.valueOf(txt_namXB.getText()) // Chuyển đổi sang kiểu Date
-            );
+            if (valiDateForm()) {
+                Sach sach = new Sach(
+                        Integer.parseInt(txt_maSach.getText()),
+                        txt_tenSach.getText(),
+                        txt_ngonNgu.getText(),
+                        Float.parseFloat(txt_giaTri.getText()),
+                        Integer.parseInt(txt_soLuong.getText()),
+                        cbb_tacGia.getSelectedIndex() + 1,
+                        cbb_theLoai.getSelectedIndex() + 1,
+                        txt_nhaXB.getText(),
+                        java.sql.Date.valueOf(txt_namXB.getText())
+                );
+                SachBUS.themSach(sach);
+                JOptionPane.showMessageDialog(null, "Thêm sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                Load();
+                clearForm();
+            }
 
-            // Gọi phương thức để thêm sách vào cơ sở dữ liệu
-            SachBUS.themSach(sach);
-
-            // Thông báo thêm thành công
-            JOptionPane.showMessageDialog(null, "Thêm sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            Load();
-            clearForm();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Thêm sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -511,25 +565,27 @@ public class fSach extends javax.swing.JFrame {
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
         try {
-            Sach sach = new Sach(
-                    Integer.parseInt(txt_maSach.getText()), // Cập nhật dựa trên mã sách
-                    txt_tenSach.getText(),
-                    txt_ngonNgu.getText(),
-                    Float.parseFloat(txt_giaTri.getText()),
-                    Integer.parseInt(txt_soLuong.getText()),
-                    cbb_tacGia.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của tác giả
-                    cbb_theLoai.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của thể loại
-                    txt_nhaXB.getText(),
-                    java.sql.Date.valueOf(txt_namXB.getText()) // Chuyển đổi sang kiểu Date
-            );
+            if (valiDateForm()) {
+                Sach sach = new Sach(
+                        Integer.parseInt(txt_maSach.getText()), // Cập nhật dựa trên mã sách
+                        txt_tenSach.getText(),
+                        txt_ngonNgu.getText(),
+                        Float.parseFloat(txt_giaTri.getText()),
+                        Integer.parseInt(txt_soLuong.getText()),
+                        cbb_tacGia.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của tác giả
+                        cbb_theLoai.getSelectedIndex() + 1, // Chỉnh lại chỉ số cho phù hợp với ID của thể loại
+                        txt_nhaXB.getText(),
+                        java.sql.Date.valueOf(txt_namXB.getText()) // Chuyển đổi sang kiểu Date
+                );
 
-            // Gọi phương thức để cập nhật sách vào cơ sở dữ liệu
-            SachBUS.capNhatSach(sach);
+                // Gọi phương thức để cập nhật sách vào cơ sở dữ liệu
+                SachBUS.capNhatSach(sach);
 
-            // Thông báo cập nhật thành công
-            JOptionPane.showMessageDialog(null, "Cập nhật sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            Load();
-            clearForm();
+                // Thông báo cập nhật thành công
+                JOptionPane.showMessageDialog(null, "Cập nhật sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                Load();
+                clearForm();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cập nhật sách thất bại! Vui lòng kiểm tra dữ liệu đầu vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -538,7 +594,8 @@ public class fSach extends javax.swing.JFrame {
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
         try {
-            int maSach = Integer.parseInt(txt_maSach.getText()); // Lấy mã sách từ giao diện người dùng
+            if (SachDAL.checkEmpty(txt_maSach.getText())) {
+                int maSach = Integer.parseInt(txt_maSach.getText()); // Lấy mã sách từ giao diện người dùng
 
             // Gọi phương thức để xóa sách khỏi cơ sở dữ liệu
             SachBUS.xoaSach(maSach);
@@ -547,6 +604,9 @@ public class fSach extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Xóa sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             Load();
             clearForm();
+            }else{
+            JOptionPane.showMessageDialog(null, "Xóa thất bại! Sách đang tồn tại chi tiết phiếu mượn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Mã sách không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {

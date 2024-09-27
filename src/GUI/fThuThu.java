@@ -85,6 +85,63 @@ public class fThuThu extends javax.swing.JFrame {
         txt_password.setText("");
     }
 
+    public boolean valiDateForm() {
+        String mes = "";
+
+        // Kiểm tra mã
+        if (txt_ma.getText().trim().isEmpty()) {
+            mes += "Mã không được để trống.\n";
+            txt_ma.requestFocus();
+        }
+
+        // Kiểm tra tên
+        if (txt_ten.getText().trim().isEmpty()) {
+            mes += "Tên không được để trống.\n";
+            txt_ten.requestFocus();
+        }
+
+        // Kiểm tra CMND
+        if (txt_cmnd.getText().trim().isEmpty()) {
+            mes += "CMND không được để trống.\n";
+            txt_cmnd.requestFocus();
+        } else if (!txt_cmnd.getText().trim().matches("\\d{9,12}")) { // CMND phải từ 9 đến 12 chữ số
+            mes += "CMND phải từ 9 đến 12 chữ số.\n";
+            txt_cmnd.requestFocus();
+        }
+
+        // Kiểm tra email
+        if (txt_email.getText().trim().isEmpty()) {
+            mes += "Email không được để trống.\n";
+            txt_email.requestFocus();
+        } else if (!txt_email.getText().trim().matches("^[\\w-\\.]+@[\\w-]+\\.[a-z]{2,4}$")) { // Kiểm tra định dạng email
+            mes += "Email không hợp lệ.\n";
+            txt_email.requestFocus();
+        }
+
+        // Kiểm tra số điện thoại
+        if (txt_sdt.getText().trim().isEmpty()) {
+            mes += "Số điện thoại không được để trống.\n";
+            txt_sdt.requestFocus();
+        } else if (!txt_sdt.getText().trim().matches("^0\\d{9,11}$")) { // Số điện thoại phải bắt đầu bằng 0 và có 10 đến 12 chữ số
+            mes += "Số điện thoại phải bắt đầu bằng 0 và có từ 10 đến 12 chữ số.\n";
+            txt_sdt.requestFocus();
+        }
+
+        // Kiểm tra mật khẩu
+        if (txt_password.getText().trim().isEmpty()) {
+            mes += "Mật khẩu không được để trống.\n";
+            txt_password.requestFocus();
+        }
+
+        // Nếu có lỗi, hiển thị thông báo và trả về false
+        if (!mes.isEmpty()) {
+            JOptionPane.showMessageDialog(null, mes, "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true; // Form hợp lệ
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -366,19 +423,22 @@ public class fThuThu extends javax.swing.JFrame {
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
         try {
-            ThuThu.CTThuThu tt = new ThuThu.CTThuThu(
-                    Integer.parseInt(txt_ma.getText()),
-                    txt_ten.getText(),
-                    txt_cmnd.getText(),
-                    txt_sdt.getText(),
-                    txt_email.getText(),
-                    txt_password.getText()
-            );
+            if (valiDateForm()) {
+                ThuThu.CTThuThu tt = new ThuThu.CTThuThu(
+                        Integer.parseInt(txt_ma.getText()),
+                        txt_ten.getText(),
+                        txt_cmnd.getText(),
+                        txt_sdt.getText(),
+                        txt_email.getText(),
+                        txt_password.getText()
+                );
 
-            ThuThuBUS.suaTT(tt);
-            JOptionPane.showMessageDialog(null, "Sửa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            load();
-            clearForm();
+                ThuThuBUS.suaTT(tt);
+                JOptionPane.showMessageDialog(null, "Sửa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                load();
+                clearForm();
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Sửa Không Thành Công !!!", "Thông Báo", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -388,10 +448,21 @@ public class fThuThu extends javax.swing.JFrame {
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
         int ma = Integer.parseInt(txt_ma.getText());
         try {
+
             ThuThuBUS.xoaTT(ma);
             JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             load();
             clearForm();
+
+            if (ThuThuDAL.checkEmpty(txt_ma.getText())) {
+                ThuThuBUS.xoaTT(ma);
+                JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                load();
+                clearForm();
+            }else{
+                JOptionPane.showMessageDialog(null, "Xóa thất bại! Thủ thư đang tồn tại ở bảng phiếu mượn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Mã không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
@@ -425,18 +496,21 @@ public class fThuThu extends javax.swing.JFrame {
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         try {
-            ThuThu tt = new ThuThu(
-                    txt_ten.getText(),
-                    txt_cmnd.getText(),
-                    txt_sdt.getText(),
-                    txt_email.getText(),
-                    txt_password.getText()
-            );
+            if (valiDateForm()) {
+                ThuThu tt = new ThuThu(
+                        txt_ten.getText(),
+                        txt_cmnd.getText(),
+                        txt_sdt.getText(),
+                        txt_email.getText(),
+                        txt_password.getText()
+                );
 
-            ThuThuBUS.themTT(tt);
-            JOptionPane.showMessageDialog(null, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            load();
-            clearForm();
+                ThuThuBUS.themTT(tt);
+                JOptionPane.showMessageDialog(null, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                load();
+                clearForm();
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Thêm Lỗi !!!", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
             e.printStackTrace();

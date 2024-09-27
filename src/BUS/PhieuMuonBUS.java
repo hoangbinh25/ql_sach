@@ -44,4 +44,11 @@ public class PhieuMuonBUS {
     public static void xoaPM(int maPhieuMuon) {
         PhieuMuonDAL.xoaPM(maPhieuMuon);
     }
+    
+    public static boolean checkEmpty(String id){
+        if (PhieuMuonBUS.checkEmpty(id)) {
+            return true;
+        }
+        return false;
+    }
 }

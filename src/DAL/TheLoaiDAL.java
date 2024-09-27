@@ -97,4 +97,25 @@ public class TheLoaiDAL {
         }
         return lst_tbl;
     }
+    
+    public static boolean checkEmpty(String id) {
+        String sqlQuery = "SELECT COUNT(*) AS dem FROM THE_LOAI WHERE ma_the_loai = ?";
+        try (Connection conn = ConnectToSQLServer.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sqlQuery);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            // Kiểm tra kết quả truy vấn
+            if (rs.next()) {
+                int dem = rs.getInt("dem");
+                if (dem > 0) {
+                    System.err.println("Thể loại còn tồn tại " + dem + " sách");
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 }

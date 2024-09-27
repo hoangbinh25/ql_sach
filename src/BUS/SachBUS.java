@@ -40,4 +40,11 @@ public class SachBUS {
     public static String getTheLoaiById(int id) {
         return SachDAL.getTheLoaiById(id);
     }
+    
+    public static boolean checkEmpty(String id) {
+        if (SachBUS.checkEmpty(id)) {
+            return false;
+        }
+        return true;
+    }
 }

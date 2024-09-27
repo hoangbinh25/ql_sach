@@ -274,6 +274,33 @@ public class fTheLoai extends javax.swing.JFrame {
         txt_tenTheLoai.setText("");
     }
 
+    public boolean valiDateForm(String id) {
+        String mes = "";
+
+        // Kiểm tra mã thể loại
+        if (txt_maTheLoai.getText().trim().isEmpty()) {
+            mes += "Mã thể loại không được để trống.\n";
+            txt_maTheLoai.requestFocus();
+        } else if (!txt_maTheLoai.getText().trim().matches("\\d+")) { // Kiểm tra mã thể loại chỉ chứa số
+            mes += "Mã thể loại phải là số.\n";
+            txt_maTheLoai.requestFocus();
+        }
+
+        // Kiểm tra tên thể loại
+        if (txt_tenTheLoai.getText().trim().isEmpty()) {
+            mes += "Tên thể loại không được để trống.\n";
+            txt_tenTheLoai.requestFocus();
+        }
+
+        // Nếu có lỗi, hiển thị thông báo và trả về false
+        if (!mes.isEmpty()) {
+            JOptionPane.showMessageDialog(null, mes, "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true; // Form hợp lệ
+    }
+
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
         String search = txt_timkiem.getText().trim(); //Loại bỏ khoảng trắng đầu và cuối chuỗi mỗi khi ng dùng nhập
         if (search.isEmpty()) {
@@ -290,16 +317,18 @@ public class fTheLoai extends javax.swing.JFrame {
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
         try {
-            TheLoai theloai = new TheLoai(
-                    Integer.parseInt(txt_maTheLoai.getText()),
-                    txt_tenTheLoai.getText()
-            );
+            if (valiDateForm(txt_maTheLoai.getText())) {
+                TheLoai theloai = new TheLoai(
+                        Integer.parseInt(txt_maTheLoai.getText()),
+                        txt_tenTheLoai.getText()
+                );
 
-            TheLoaiBUS.suaTheLoai(theloai);
+                TheLoaiBUS.suaTheLoai(theloai);
 
-            JOptionPane.showMessageDialog(null, "Cập nhật thể loại thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            Load();
-            clearForm();
+                JOptionPane.showMessageDialog(null, "Cập nhật thể loại thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                Load();
+                clearForm();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cập nhật thể loại thất bại! Vui lòng kiểm tra mã sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -321,12 +350,16 @@ public class fTheLoai extends javax.swing.JFrame {
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
         try {
-            int maTheLoai = Integer.parseInt(txt_maTheLoai.getText()); // Lấy mã thể loại
+            if (TheLoaiDAL.checkEmpty(txt_maTheLoai.getText())) {
+                int maTheLoai = Integer.parseInt(txt_maTheLoai.getText()); // Lấy mã thể loại
 
-            TheLoaiBUS.xoaTheLoai(maTheLoai);
-            JOptionPane.showMessageDialog(null, "Xóa thể loại thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            Load();
-            clearForm();
+                TheLoaiBUS.xoaTheLoai(maTheLoai);
+                JOptionPane.showMessageDialog(null, "Xóa thể loại thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                Load();
+                clearForm();
+            }else{
+                JOptionPane.showMessageDialog(null, "Xóa thất bại! Thể loại đang tồn tại bảng sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Mã thể loại không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
 
@@ -338,16 +371,18 @@ public class fTheLoai extends javax.swing.JFrame {
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         try {
-            TheLoai theloai = new TheLoai(
-                    Integer.parseInt(txt_maTheLoai.getText()),
-                    txt_tenTheLoai.getText()
-            );
+            if (valiDateForm(txt_maTheLoai.getText())) {
+                TheLoai theloai = new TheLoai(
+                        Integer.parseInt(txt_maTheLoai.getText()),
+                        txt_tenTheLoai.getText()
+                );
 
-            TheLoaiBUS.themTheLoai(theloai);
+                TheLoaiBUS.themTheLoai(theloai);
 
-            JOptionPane.showMessageDialog(null, "Thêm thể loại thành công!", "Thông báop", JOptionPane.INFORMATION_MESSAGE);
-            Load();
-            clearForm();
+                JOptionPane.showMessageDialog(null, "Thêm thể loại thành công!", "Thông báop", JOptionPane.INFORMATION_MESSAGE);
+                Load();
+                clearForm();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Thêm thể loại thất bại! Vui lòng kiểm tra lại dữ liệu đầu vào", "Lỗi", JOptionPane.ERROR_MESSAGE);

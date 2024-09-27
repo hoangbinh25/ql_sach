@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConnectToSQLServer {
-      private static SQLServerDataSource ds = null;
+    private static SQLServerDataSource ds = null;
 
     // Phương thức khởi tạo DataSource và trả về đối tượng kết nối
     public static Connection getConnection() throws SQLException {
