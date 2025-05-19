@@ -8,6 +8,8 @@ import DTO.CTPM.ChiTietPM;
 import DTO.CTPM;
 import DAL.ChiTietPMDAL;
 import DAL.PhieuMuonDAL;
+import DAL.SachDAL;
+import DTO.Sach;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -20,14 +22,15 @@ import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 
-
 public class fMuonTra extends javax.swing.JFrame {
 
     List<PhieuMuon> lst_tbl = PhieuMuonBUS.loadTableData();
+    private List<Sach> danhSachSach = new ArrayList<>();
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -78,7 +81,7 @@ public class fMuonTra extends javax.swing.JFrame {
     public void loadTrangThai() {
         // ListSelectionListener là một giao diện trong Java Swing, cho phép theo dõi các thay đổi trong sự chọn hàng (selection) của bảng.
         jTB_phieuMuon.getSelectionModel().addListSelectionListener(e -> {
-            
+
             //Kiểm tra xem sự kiện thay đổi lựa chọn
             if (!e.getValueIsAdjusting()) {
                 int selectedRow = jTB_phieuMuon.getSelectedRow();
@@ -158,7 +161,7 @@ public class fMuonTra extends javax.swing.JFrame {
         cbb_tenSach.removeAllItems();
         try {
             List<String> sachList = PhieuMuonBUS.load_cbb_tenSachData();
-            for(String s : sachList) {
+            for (String s : sachList) {
                 cbb_tenSach.addItem(s);
             }
         } catch (Exception e) {
@@ -467,6 +470,9 @@ public class fMuonTra extends javax.swing.JFrame {
                 cbb_tenSachActionPerformed(evt);
             }
         });
+
+        txt_maSach.setEditable(false);
+        txt_maSach.setEnabled(false);
 
         jLabel8.setText("Mã sách:");
 
@@ -840,7 +846,7 @@ public class fMuonTra extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Xóa phiếu mượn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 Load();
                 clearForm();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Không thể xóa! Phiếu mượn còn tồn tại chi tiết phiếu mượn", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException e) {
@@ -892,7 +898,7 @@ public class fMuonTra extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTB_phieuMuonMouseClicked
 
-    public boolean valiDateFormCTPM(){
+    public boolean valiDateFormCTPM() {
         String mes = "";
         // Kiểm tra mã ctpm 
         if (txt_maMuon.getText().trim().isEmpty()) {
@@ -906,21 +912,21 @@ public class fMuonTra extends javax.swing.JFrame {
 
         return true; // Form hợp lệ
     }
-    
+
     private void btn_themCTPMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themCTPMActionPerformed
         try {
             if (valiDateFormCTPM()) {
                 // Lấy mã phiếu mượn từ form
-            int maPM = Integer.parseInt(txt_maMuon.getText());
-            CTPM ctpm = new CTPM(
-                    Integer.parseInt(txt_maMuon.getText()),
-                    Integer.parseInt(txt_maSach.getText())
-            );
-            ChiTietPMBUS.themCTPM(ctpm);
+                int maPM = Integer.parseInt(txt_maMuon.getText());
+                CTPM ctpm = new CTPM(
+                        Integer.parseInt(txt_maMuon.getText()),
+                        Integer.parseInt(txt_maSach.getText())
+                );
+                ChiTietPMBUS.themCTPM(ctpm);
 
-            JOptionPane.showMessageDialog(null, "Thêm chi tiết phiếu mượn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            loadCTPM(maPM);
-            clearForm();
+                JOptionPane.showMessageDialog(null, "Thêm chi tiết phiếu mượn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                loadCTPM(maPM);
+                clearForm();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -944,7 +950,13 @@ public class fMuonTra extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_xoaCTPMActionPerformed
 
     private void cbb_tenSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_tenSachActionPerformed
-
+        danhSachSach = SachDAL.loadTableData();
+        
+        int selectedIndex = cbb_tenSach.getSelectedIndex();
+        if (selectedIndex >= 0 && selectedIndex < danhSachSach.size()) {
+            Sach sach = danhSachSach.get(selectedIndex);
+            txt_maSach.setText(String.valueOf(sach.getMa_sach()));
+        }
     }//GEN-LAST:event_cbb_tenSachActionPerformed
 
     private void btn_inExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inExcelActionPerformed
@@ -1116,8 +1128,8 @@ public class fMuonTra extends javax.swing.JFrame {
     private void menu_dxuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_dxuatMouseClicked
         // Hiển thị hộp thoại
         int result = JOptionPane.showConfirmDialog(this,
-            "Bạn có muốn đăng xuất không?", "Thông báo",
-            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                "Bạn có muốn đăng xuất không?", "Thông báo",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         // Nếu click "yes"
         if (result == JOptionPane.YES_OPTION) {

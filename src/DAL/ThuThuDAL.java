@@ -37,16 +37,17 @@ public class ThuThuDAL {
     public static List<ThuThu.CTThuThu> LoadtTbDATA_Search(String keyword) {
         String sqlQuery = "SELECT *\n"
                 + "FROM THU_THU\n"
-                + "WHERE ten_thu_thu LIKE @searchString\n"
-                + "   OR cmnd LIKE @searchString\n"
-                + "   OR sdt LIKE @searchString\n"
-                + "   OR email LIKE @searchString\n"
-                + "   OR password LIKE @searchString";
+                + "WHERE ten_thu_thu LIKE ? \n"
+                + "   OR cmnd LIKE ? \n"
+                + "   OR sdt LIKE ? \n"
+                + "   OR email LIKE ? \n"
+                + "   OR password LIKE ?";
         List<ThuThu.CTThuThu> lst_tbl = new ArrayList<>();
         try (Connection conn = ConnectToSQLServer.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sqlQuery);
+            String searchPattern = "%" + keyword + "%";
             for (int i = 1; i <= 5; i++) {
-                ps.setString(i, keyword);
+                ps.setString(i, searchPattern);
             }
 
             ResultSet res = ps.executeQuery();

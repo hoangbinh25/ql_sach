@@ -157,26 +157,35 @@ public class fSach extends javax.swing.JFrame {
         if (txt_soLuong.getText().trim().isEmpty()) {
             mes += "Số lượng không được để trống.\n";
             txt_soLuong.requestFocus();
-        } else if (!txt_soLuong.getText().trim().matches("\\d+")) { // Kiểm tra số lượng phải là số
-            mes += "Số lượng phải là số.\n";
-            txt_soLuong.requestFocus();
+        } else {
+            try {
+                Integer.parseInt(txt_soLuong.getText().trim());
+                
+            } catch (NumberFormatException e){
+                mes += "Số lượng phải là số nguyên \n";
+                txt_soLuong.requestFocus();
+            }
         }
 
         // Kiểm tra giá trị
         if (txt_giaTri.getText().trim().isEmpty()) {
             mes += "Giá trị không được để trống.\n";
             txt_giaTri.requestFocus();
-        } else if (!txt_giaTri.getText().trim().matches("\\d+")) { // Kiểm tra giá trị phải là số
-            mes += "Giá trị phải là số.\n";
-            txt_giaTri.requestFocus();
+        } else {
+            try {
+                Double.parseDouble(txt_giaTri.getText().trim()); 
+            } catch(NumberFormatException e) {
+                mes += "Giá trị phải là số.\n";
+                txt_giaTri.requestFocus();
+            } 
         }
 
         // Kiểm tra năm xuất bản
         if (txt_namXB.getText().trim().isEmpty()) {
             mes += "Năm xuất bản không được để trống.\n";
             txt_namXB.requestFocus();
-        } else if (!txt_namXB.getText().trim().matches("\\d{4}")) { // Kiểm tra năm xuất bản phải là 4 chữ số
-            mes += "Năm xuất bản phải là 4 chữ số.\n";
+        } else if (!txt_namXB.getText().trim().matches("\\d{4}(-\\d{2}-\\d{2}?)")) { 
+            mes += "Năm xuất bản phải đúng định dạng yyyy hoặc yyyy-MM-dd.\n";
             txt_namXB.requestFocus();
         }
 
