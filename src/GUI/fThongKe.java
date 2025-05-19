@@ -1,35 +1,47 @@
 package GUI;
 
 import BUS.ThongKeBUS;
+import DAL.SachDAL;
 import DAL.ThongKeDAL;
+import DTO.Sach;
 import DTO.ThongKe;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class fThongKe extends javax.swing.JFrame {
 
- 
     public fThongKe() {
         initComponents();
-         load();
+        load();
     }
 
     public void load() {
         try {
             DefaultTableModel md = new DefaultTableModel();
-            md.addColumn("Tên Sách");
-            md.addColumn("Tên Độc Giả");
-            md.addColumn("Tên Thủ Thư");
-            md.addColumn("Ngày Mượn");
-            md.addColumn("Ngày Hẹn Trả");
-            md.addColumn("Tong");
-            md.addColumn("Đã Cho Mượn");
-            md.addColumn("Đã Trả");
-            md.addColumn("Còn Lại");
-            md.addColumn("Tình Trạng");
-            md.addColumn("Tiền Phạt");
+            md.addColumn("Tên sách");
+            md.addColumn("Tên độc giả");
+            md.addColumn("Tên thủ thư");
+            md.addColumn("Ngày mượn");
+            md.addColumn("Ngày hẹn trả");
+            md.addColumn("Số lượng tổng");
+            md.addColumn("Đã cho mượn");
+            md.addColumn("Đã trả");
+            md.addColumn("Còn lại");
+            md.addColumn("Tình trạng");
+            md.addColumn("Tiền phạt");
 
             List<ThongKe> lst_tk = ThongKeBUS.loadTK();
 
@@ -45,16 +57,17 @@ public class fThongKe extends javax.swing.JFrame {
                 int sl_con = tk.getSl_con();
                 String tinh_trang = tk.getTinh_trang();
                 double tien_phat = tk.getTien_phat();
-                
+
                 md.addRow(new Object[]{ten_S, ten_DG, ten_TT, ngay_muon, ngay_hen_tra, sl_tong, sl_dachomuon, sl_datra, sl_con, tinh_trang, tien_phat});
             }
-            
+
             jTbl_ThongKe.setModel(md);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Lỗi xử lý dữ liệu: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -62,6 +75,7 @@ public class fThongKe extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTbl_ThongKe = new javax.swing.JTable();
+        btn_inExcel = new javax.swing.JButton();
         jMenuBar_sach = new javax.swing.JMenuBar();
         menu_Sach = new javax.swing.JMenu();
         menu_thuThu = new javax.swing.JMenu();
@@ -91,6 +105,13 @@ public class fThongKe extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(jTbl_ThongKe);
+
+        btn_inExcel.setText("In báo cáo");
+        btn_inExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_inExcelActionPerformed(evt);
+            }
+        });
 
         menu_Sach.setText("Quản lý sách");
         menu_Sach.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -168,22 +189,30 @@ public class fThongKe extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(499, 499, 499)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(555, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1228, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(499, 499, 499)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btn_inExcel)
+                .addGap(574, 574, 574))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                .addComponent(btn_inExcel)
+                .addGap(65, 65, 65))
         );
 
         pack();
@@ -252,8 +281,8 @@ public class fThongKe extends javax.swing.JFrame {
     private void menu_dxuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_dxuatMouseClicked
         // Hiển thị hộp thoại
         int result = JOptionPane.showConfirmDialog(this,
-            "Bạn có muốn đăng xuất không?", "Thông báo",
-            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                "Bạn có muốn đăng xuất không?", "Thông báo",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         // Nếu click "yes"
         if (result == JOptionPane.YES_OPTION) {
@@ -266,6 +295,132 @@ public class fThongKe extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menu_dxuatMouseClicked
 
+    private void btn_inExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inExcelActionPerformed
+        try {
+            List<ThongKe> lThongKe = ThongKeDAL.loadTK();
+            
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
+            
+            XSSFWorkbook wordkbook = new XSSFWorkbook();
+            XSSFSheet sheet = wordkbook.createSheet("baocaothongke");
+            XSSFRow row = null;
+            Cell cell = null;
+
+            // Dòng tiêu đề
+            row = sheet.createRow(2);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("Báo cáo thống kê");
+
+            // Dòng tiêu đề các cột
+            row = sheet.createRow(3);
+            
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("STT");
+            
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("Tên sách");
+            
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellValue("Tên độc giả");
+
+            cell = row.createCell(3, CellType.STRING);
+            cell.setCellValue("Tên thủ thư");
+
+            cell = row.createCell(4, CellType.STRING);
+            cell.setCellValue("Ngày mượn");
+
+            cell = row.createCell(5, CellType.STRING);
+            cell.setCellValue("Ngày hẹn trả");
+
+            cell = row.createCell(6, CellType.STRING);
+            cell.setCellValue("Tổng");
+
+            cell = row.createCell(7, CellType.STRING);
+            cell.setCellValue("Đã cho mượn");
+
+            cell = row.createCell(8, CellType.STRING);
+            cell.setCellValue("Đã trả");
+
+            cell = row.createCell(9, CellType.STRING);
+            cell.setCellValue("Còn lại");
+
+            cell = row.createCell(10, CellType.STRING);
+            cell.setCellValue("Tình trạng");
+
+            cell = row.createCell(11, CellType.STRING);
+            cell.setCellValue("Tiền phạt");
+
+            // Điền dữ liệu vào các hàng
+            for (int i = 0; i < lThongKe.size(); i++) {
+                ThongKe thongke = lThongKe.get(i);
+                row = sheet.createRow(4 + i);
+
+                cell = row.createCell(0, CellType.NUMERIC);
+                cell.setCellValue(i + 1);
+
+                cell = row.createCell(1, CellType.STRING);
+                cell.setCellValue(thongke.getTen_S());
+
+                cell = row.createCell(2, CellType.STRING);
+                cell.setCellValue(thongke.getTen_DG());
+
+                cell = row.createCell(3, CellType.STRING);
+                cell.setCellValue(thongke.getTen_TT());
+
+                cell = row.createCell(4, CellType.STRING);
+                cell.setCellValue(dateFormat.format(thongke.getNgay_muon()));
+
+                cell = row.createCell(5, CellType.STRING);
+                cell.setCellValue(dateFormat.format(thongke.getNgay_hen_tra()));
+
+                cell = row.createCell(6, CellType.STRING);
+                cell.setCellValue(thongke.getSl_tong());
+
+                cell = row.createCell(7, CellType.STRING);
+                cell.setCellValue(thongke.getSl_dachomuon());
+
+                cell = row.createCell(8, CellType.STRING);
+                cell.setCellValue(thongke.getSl_datra());
+
+                cell = row.createCell(9, CellType.STRING);
+                cell.setCellValue(thongke.getSl_con());
+
+                cell = row.createCell(10, CellType.STRING);
+                cell.setCellValue(thongke.getTinh_trang());
+
+                cell = row.createCell(11, CellType.STRING);
+                cell.setCellValue(thongke.getTien_phat());
+            }
+            // Sử dụng JFileChooser để chọn vị trí lưu file
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Chọn vị trí lưu file");
+            fileChooser.setSelectedFile(new File("baocaothongke.xlsx")); // Đặt tên file mặc định
+
+            int userSelection = fileChooser.showSaveDialog(this); // Hiển thị hộp thoại lưu file
+
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+
+                // Ghi dữ liệu vào file
+                try (FileOutputStream fis = new FileOutputStream(fileToSave)) {
+                    wordkbook.write(fis);
+                    fis.close();
+                    JOptionPane.showMessageDialog(this, "In ra file Excel thành công tại: " + fileToSave.getAbsolutePath());
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "File không thể mở hoặc ghi.");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Lỗi khi ghi file.");
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi mở file");
+        }
+    }//GEN-LAST:event_btn_inExcelActionPerformed
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -274,12 +429,13 @@ public class fThongKe extends javax.swing.JFrame {
                 thongKeFrame.setDefaultCloseOperation(fThongKe.EXIT_ON_CLOSE);
                 thongKeFrame.setLocationRelativeTo(null);
                 thongKeFrame.setVisible(true);
-                
+
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_inExcel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar_sach;
     private javax.swing.JScrollPane jScrollPane1;
